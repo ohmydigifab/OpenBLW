@@ -11,8 +11,9 @@ module seal1_2D()
 {
     difference()
     {
+    	echo(seal1_dia=DOME_DIA-DOME_THICK*2-ORING_DIA);
         translate([0, 0, 0])
-	        circle(r = r_from_dia(DOME_DIA-DOME_THICK-ORING_DIA), h = 5, $fn = 100);
+	        circle(r = r_from_dia(DOME_DIA-DOME_THICK*2-ORING_DIA), h = 5, $fn = 100);
         translate([0, -45, 0])
 	        circle(r = r_from_dia(31), h = 20, center=true, $fn = 100);
         translate([-15, 45, 0])
