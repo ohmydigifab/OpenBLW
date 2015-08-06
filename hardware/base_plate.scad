@@ -14,11 +14,16 @@ module base_plate_2D()
     difference()
     {
         translate([0, 0, 0])
-	        circle(r = r_from_dia(DOME_DIA+30), h = 5, $fn = 100);
+	        circle(r = r_from_dia(DOME_DIA+30), $fn = 100);
         translate([0, -45, 0])
-	        circle(r = r_from_dia(20), h = 20, center=true, $fn = 100);
+	        circle(r = r_from_dia(20), center=true, $fn = 100);
         translate([15, 45, 0])
-	        circle(r = r_from_dia(20), h = 20, center=true, $fn = 100);
+	        circle(r = r_from_dia(20), center=true, $fn = 100);
+	    for(i=[0:11])
+	    {
+	        translate([(DOME_DIA+13)/2*cos(i*30), (DOME_DIA+13)/2*sin(i*30), 0])
+		        circle(r = r_from_dia(2.6), center=true, $fn = 100);
+	    }
     }
 }
 
