@@ -4,6 +4,9 @@ use<camera.scad>
 use<amp.scad>
 use<base_plate_assembly.scad>
 use<LAN_connector.scad>
+use<arm.scad>
+use<motor.scad>
+use<ROVProp.scad>
 use<dome.scad>
 
 module assembly()
@@ -19,7 +22,19 @@ module assembly()
     translate([0, 0, 0])
         base_plate_assembly();
     translate([0, -45, 0])
-      LAN_connector();
+		LAN_connector();
+    for(i=[0:3])
+	{
+		rotate([0,0,90*i])
+		{
+		    translate([0, 120, -10])
+				arm();
+		    translate([0, 135, -5])
+				motor();
+		    translate([0, 135, 28])
+				import("ROVProp.stl");
+		}
+	}
     translate([0, 0, 0])
       dome();
 }
