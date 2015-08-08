@@ -12,7 +12,7 @@ module ROVProp()
 	//Parameters
 	res=180; //resolution for cylinders
 	
-	propRad=31.2;  //radius of propeller
+	propRad=44;  //radius of propeller
 	bladeTwist=5; //twist of blade from hub to outerrim, twist is the is the difference of bladeTwist and startAngle, follows left hand rule
 	startAngle=22;
 	avgAngle=(startAngle+(startAngle-bladeTwist/2))/2; 

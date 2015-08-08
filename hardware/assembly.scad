@@ -30,9 +30,9 @@ module assembly()
 		{
 		    translate([0, 0, -10])
 				arm();
-		    translate([0, 135, -5])
+		    translate([0, 150, -5])
 				motor();
-		    translate([0, 135, 28])
+		    translate([0, 150, 28])
 				import("ROVProp.stl");
 		}
 	}

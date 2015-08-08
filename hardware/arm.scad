@@ -16,18 +16,51 @@ module arm_2D()
 		    translate([0,DOME_DIA/2+15])
 		    union()
 		    {
-		    	translate([0,45])
-		    		circle(r=r_from_dia(20), $fn = 100);
-		    	translate([0,20])
-		    		square([20,50], center=true);
+		    	translate([0,60])
+		    	difference()
+		    	{
+		    		circle(r=r_from_dia(28), $fn = 100);
+		    		circle(r=r_from_dia(8), $fn = 100);
+			    	for(i=[0,2])
+			    	{
+			    		rotate(90*i+45)
+					    	translate([0,8])
+					    		circle(r=r_from_dia(3.1), $fn = 100);
+				    }
+			    	for(i=[1,3])
+			    	{
+			    		rotate(90*i+45)
+					    	translate([0,10])
+					    		circle(r=r_from_dia(3.1), $fn = 100);
+				    }
+		    	}
+			    translate([0,60])
+		    	for(i=[0,2,3,4])
+		    	{
+		    		rotate(60*i)
+			   		translate([0,13+33/2])
+			    		square([5,34], center=true);
+		    	}
+		    	difference()
+		    	{
+		    		union()
+		    		{
+				    	translate([0,20])
+				    		square([20,50], center=true);
+				    	translate([0,60])
+				    		circle(r=r_from_dia(100), $fn = 100);
+		    		}
+			    	translate([0,60])
+			    		circle(r=r_from_dia(90), $fn = 100);
+			   	}
 		    	difference()
 		    	{
 			    	translate([0,0])
-			    		square([42.5,25], center=true);
-			    	translate([25,12])
-			    		circle(r=r_from_dia(30), $fn = 100);
-			    	translate([-25,12])
-			    		circle(r=r_from_dia(30), $fn = 100);
+			    		square([42.5,30], center=true);
+			    	translate([23.5,6])
+			    		circle(r=r_from_dia(18), $fn = 100);
+			    	translate([-23.5,6])
+			    		circle(r=r_from_dia(18), $fn = 100);
 			   	}
 		    }
 		    translate([0,0])
