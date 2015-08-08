@@ -7,6 +7,7 @@ use<LAN_connector.scad>
 use<arm.scad>
 use<motor.scad>
 use<ROVProp.scad>
+use<bolt_nut_spacer.scad>
 use<dome.scad>
 
 module assembly()
@@ -25,9 +26,9 @@ module assembly()
 		LAN_connector();
     for(i=[0:3])
 	{
-		rotate([0,0,90*i])
+		rotate([0,0,90*i+45])
 		{
-		    translate([0, 120, -10])
+		    translate([0, 0, -10])
 				arm();
 		    translate([0, 135, -5])
 				motor();
@@ -35,6 +36,19 @@ module assembly()
 				import("ROVProp.stl");
 		}
 	}
+    for(i=[0:11])
+    {
+    	color([0,0,1,1])
+        translate([(DOME_DIA+15)/2*cos(i*30+45), (DOME_DIA+15)/2*sin(i*30+45), 0])
+	        spacer(5,3.1,2.5);
+    	color([0.5,0.5,0.5,1])
+        translate([(DOME_DIA+15)/2*cos(i*30+45), (DOME_DIA+15)/2*sin(i*30+45), 2.5])
+	        spacer(8,3.1,0.5);
+        translate([(DOME_DIA+15)/2*cos(i*30+45), (DOME_DIA+15)/2*sin(i*30+45), 3])
+	        bolt(5,3,3,16);
+        translate([(DOME_DIA+15)/2*cos(i*30+45), (DOME_DIA+15)/2*sin(i*30+45), -10])
+	        mirror([0,0,90]) nut(5,3,2.5);
+    }
     translate([0, 0, 0])
       dome();
 }
