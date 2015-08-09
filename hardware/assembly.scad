@@ -7,6 +7,7 @@ use<LAN_connector.scad>
 use<arm.scad>
 use<motor.scad>
 use<ROVProp.scad>
+use<prop_shroud.scad>
 use<bolt_nut_spacer.scad>
 use<dome.scad>
 
@@ -34,6 +35,9 @@ module assembly()
 				motor();
 		    translate([0, 150, 28])
 				import("ROVProp.stl");
+		    translate([0, 150, -5])
+				prop_shroud();
+				
 		}
 	}
     for(i=[0:11])
