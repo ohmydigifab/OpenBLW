@@ -57,4 +57,5 @@ module assembly()
       dome();
 }
 
+$fn = 100;
 assembly();

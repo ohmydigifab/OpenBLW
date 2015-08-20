@@ -5,6 +5,8 @@ use<oring.scad>
 use<base_plate.scad>
 use<arm.scad>
 
+$fn = 360;
+
 module dxf()
 {
     translate([DOME_DIA/2+25,DOME_DIA/2+20,-5])
