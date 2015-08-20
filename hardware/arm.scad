@@ -16,6 +16,7 @@ module arm_2D()
 		    translate([0,DOME_DIA/2+15])
 		    union()
 		    {
+		    	//motor bed
 		    	translate([0,60])
 		    	difference()
 		    	{
@@ -34,13 +35,15 @@ module arm_2D()
 					    		circle(r=r_from_dia(3.1));
 				    }
 		    	}
+		    	//support
 			    translate([0,60])
-		    	for(i=[0,2,3,4])
+		    	for(i=[1,3,5])
 		    	{
 		    		rotate(60*i)
-			   		translate([0,13+33/2])
-			    		square([5,34], center=true);
+			   		translate([0,r_from_dia(28-1)+35/2])
+			    		square([2.5,35], center=true);
 		    	}
+		    	//shroud flange
 		    	difference()
 		    	{
 		    		union()
@@ -48,19 +51,22 @@ module arm_2D()
 				    	translate([0,20])
 				    		square([20,50], center=true);
 				    	translate([0,60])
-				    		circle(r=r_from_dia(100));
+				    		circle(r=r_from_dia(100)+0.5);
 		    		}
 			    	translate([0,60])
-			    		circle(r=r_from_dia(90));
+			    		circle(r=r_from_dia(100)-2);
 			   	}
+			   	//base plate joint
 		    	difference()
 		    	{
 			    	translate([0,0])
-			    		square([42.5,30], center=true);
+			    		square([42.5,28], center=true);
 			    	translate([23.5,6])
 			    		circle(r=r_from_dia(18));
 			    	translate([-23.5,6])
 			    		circle(r=r_from_dia(18));
+			    	translate([0,60])
+			    		circle(r=r_from_dia(100)-2);
 			   	}
 		    }
 		    translate([0,0])
@@ -76,7 +82,7 @@ module arm_2D()
 		}
 	    for(i=[0:11])
 	    {
-	        translate([(DOME_DIA+15)/2*cos(i*30), (DOME_DIA+15)/2*sin(i*30), 0])
+	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
 		        circle(r = r_from_dia(3.1), center=true, $fn = 100);
 	    }
 	}

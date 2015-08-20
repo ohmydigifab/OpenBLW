@@ -11,11 +11,11 @@ module dome()
                 cube([200,200,200]);
         }
 
-        difference() {
-            cylinder(r = r_from_dia(DOME_DIA)+10, h = DOME_THICK);
-            translate([ 0, 0, -1 ])
-            cylinder(r = r_from_dia(DOME_DIA-DOME_THICK), h = DOME_THICK+2);
-        }
+//        difference() {
+//            cylinder(r = r_from_dia(DOME_DIA)+10, h = DOME_THICK);
+//            translate([ 0, 0, -1 ])
+//            cylinder(r = r_from_dia(DOME_DIA-DOME_THICK), h = DOME_THICK+2);
+//        }
     }
 }
 
