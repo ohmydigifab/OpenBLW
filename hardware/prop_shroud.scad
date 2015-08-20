@@ -6,9 +6,9 @@ module prop_shroud(height=85)
     difference()
     {
 		translate([0, 0, height/2])
-        	cylinder(r=r_from_dia(100), h=height, center=true, $fn = 100);
+        	cylinder(r=r_from_dia(100), h=height, center=true);
 		translate([0, 0, height/2])
-        	cylinder(r=r_from_dia(90), h=height+1, center=true, $fn = 100);
+        	cylinder(r=r_from_dia(90), h=height+1, center=true);
     }
 }
 
