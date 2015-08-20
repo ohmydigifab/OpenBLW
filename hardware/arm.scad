@@ -24,13 +24,13 @@ module arm_2D()
 			    	for(i=[0,2])
 			    	{
 			    		rotate(90*i+45)
-					    	translate([0,8])
+					    	translate([0,r_from_dia(16)])
 					    		circle(r=r_from_dia(3.1), $fn = 100);
 				    }
 			    	for(i=[1,3])
 			    	{
 			    		rotate(90*i+45)
-					    	translate([0,10])
+					    	translate([0,r_from_dia(19)])
 					    		circle(r=r_from_dia(3.1), $fn = 100);
 				    }
 		    	}
