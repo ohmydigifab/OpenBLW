@@ -4,7 +4,6 @@ use<oring.scad>
 use<base_plate.scad>
 use<arm.scad>
 
-$fn = 3600;
 
 module dxf()
 {
@@ -12,4 +11,5 @@ module dxf()
         oring_holder_2D();
 }
 
+$fn = 3600;
 dxf();

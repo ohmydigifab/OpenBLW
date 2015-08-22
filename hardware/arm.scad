@@ -20,7 +20,7 @@ module arm_2D()
 		}
 	}
 	prop_shroud_flange_2D();
-	translate([0,-DOME_DIA+12])
+	translate([0,-DOME_DIA+10])
 	difference()
 	{
 	    union()
@@ -29,12 +29,12 @@ module arm_2D()
 	   		translate([0,78])
 	    	difference()
 	    	{
-		    	translate([0,12])
-		    		square([50,10], center=true);
-		    	translate([27,12.25])
-		    		circle(r=r_from_dia(8.8));
-		    	translate([-27,12.25])
-		    		circle(r=r_from_dia(8.8));
+		    	translate([0,14])
+		    		square([48.5,15], center=true);
+		    	translate([26.5,13.2])
+		    		circle(r=r_from_dia(10.15));
+		    	translate([-26.5,13.2])
+		    		circle(r=r_from_dia(10.15));
 		    	translate([0,60])
 		    		circle(r=r_from_dia(100)-2);
 	  	 	}
@@ -50,7 +50,7 @@ module arm_2D()
 		}
 	    for(i=[0:7])
 	    {
-	        translate([(DOME_DIA+20)/2*cos(i*45+22.5), (DOME_DIA+20)/2*sin(i*45+22.5), 0])
+	        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 0])
 		        circle(r = r_from_dia(3.1), center=true, $fn = 100);
 	    }
 	}

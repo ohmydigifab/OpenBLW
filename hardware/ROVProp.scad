@@ -12,7 +12,7 @@ module ROVProp()
 	//Parameters
 	res=180; //resolution for cylinders
 	
-	propRad=44;  //radius of propeller
+	propRad=100/2-2-1;  //radius of propeller
 	bladeTwist=5; //twist of blade from hub to outerrim, twist is the is the difference of bladeTwist and startAngle, follows left hand rule
 	startAngle=22;
 	avgAngle=(startAngle+(startAngle-bladeTwist/2))/2; 
@@ -21,9 +21,9 @@ module ROVProp()
 	bladeThick=1.2; //thickness of fin, 1mm had been strong enough
 	bladeWidth=3; // starting blade width at origin
 	nBlade=4; //number of blades, must have two or more
-	hubRad=8; // nosecone radius diameter is 16mm 
+	hubRad=23/2; // nosecone radius diameter is 16mm 
 	//hubHeight=5;// use at least 6 for nose to have threads all the way
-	hubHeight=2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
+	hubHeight=10;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
 	shaftRad=2.5;// 5m bolt on motor
 	$fn=res;
 	
@@ -53,7 +53,7 @@ module ROVProp()
 	
 	//remove center hub for shaft
 	translate([0,0,-hubHeight/2-.1])
-	cylinder(h=9.5+.2, r=shaftRad, $fn=res);
+	cylinder(h=hubHeight+.2, r=shaftRad, $fn=res);
 	
 	}
 		
