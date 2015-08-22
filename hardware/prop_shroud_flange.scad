@@ -2,7 +2,7 @@ include<params.scad>
 
 module prop_shroud_flange()
 {
-    linear_extrude(height = 5, twist = 0, slices = 0)
+    linear_extrude(height = 2.5, twist = 0, slices = 0)
     {
         prop_shroud_flange_2D();
     }
@@ -18,6 +18,7 @@ module prop_shroud_flange_2D()
 		   		circle(r=width);
 		}
 	}
+	translate([0,-DOME_DIA])
 	difference()
 	{
 		union()
@@ -29,31 +30,31 @@ module prop_shroud_flange_2D()
 		    	translate([0,60])
 		    	difference()
 		    	{
-		    		circle(r=r_from_dia(28));
-		    		circle(r=r_from_dia(8));
+		    		circle(r=r_from_dia(23));
+		    		circle(r=r_from_dia(6));
 			    	for(i=[0,2])
 			    	{
 			    		rotate(90*i+45)
-					    	translate([0,r_from_dia(16)])
-					    		circle(r=r_from_dia(3.1));
+					    	translate([0,r_from_dia(12)])
+					    		circle(r=r_from_dia(2.1));
 				    }
 			    	for(i=[1,3])
 			    	{
 			    		rotate(90*i+45)
-					    	translate([0,r_from_dia(19)])
-					    		circle(r=r_from_dia(3.1));
+					    	translate([0,r_from_dia(16)])
+					    		circle(r=r_from_dia(2.1));
 				    }
 		    	}
 		    	//support
 		    	support_width = 2.5;
 			    translate([0,60])
-		    	for(i=[0,2,4])
+		    	for(i=[1,3,5])
 		    	{
 		    		rotate(60*i)
 		    		{
-				   		translate([0,r_from_dia(28-1)+35/2])
-				    		square([support_width,35], center=true);
-				   		translate([support_width,29.5/2])
+				   		translate([0,r_from_dia(28-1)+30/2])
+				    		square([support_width,40], center=true);
+				   		translate([support_width,24.5/2])
 				   		mirror([0,0])
 				   		difference()
 				   		{
@@ -61,7 +62,7 @@ module prop_shroud_flange_2D()
 				   			translate([0,-support_width+0.2])
 				    			square([support_width,support_width], center=true);
 				    	}
-				   		translate([-support_width,29.5/2])
+				   		translate([-support_width,24.5/2])
 				   		mirror([1,0])
 				   		difference()
 				   		{

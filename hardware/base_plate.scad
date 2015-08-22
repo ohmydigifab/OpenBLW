@@ -19,9 +19,9 @@ module base_plate_2D()
 	        circle(r = r_from_dia(20), center=true);
         translate([0, 45, 0])
 	        circle(r = r_from_dia(20), center=true);
-	    for(i=[0:11])
+	    for(i=[0:7])
 	    {
-	        translate([(DOME_DIA+20)/2*cos(i*30+45), (DOME_DIA+20)/2*sin(i*30+45), 0])
+	        translate([(DOME_DIA+20)/2*cos(i*45+22.5), (DOME_DIA+20)/2*sin(i*45+22.5), 0])
 		        circle(r = r_from_dia(3.1), center=true);
 	    }
     }

@@ -29,38 +29,41 @@ module assembly()
 		LAN_connector();
     translate([0, 45, 0])
 		LAN_connector();
+	//bolt & nut
+	translate([0, 0, 7.5])
+    for(i=[0:7])
+    {
+    	color([0.5,0.5,0.5,1])
+        translate([(DOME_DIA+20)/2*cos(i*45+22.5), (DOME_DIA+20)/2*sin(i*45+22.5), 2.5])
+	        spacer(8,3.1,0.5);
+        translate([(DOME_DIA+20)/2*cos(i*45+22.5), (DOME_DIA+20)/2*sin(i*45+22.5), 3])
+	        bolt(5,3,3,17.5);
+        translate([(DOME_DIA+20)/2*cos(i*45+22.5), (DOME_DIA+20)/2*sin(i*45+22.5), -10])
+	        mirror([0,0,90]) nut(5,3,2.5);
+    }
+	//arm
+	arm_pos = DOME_DIA-12;
 	translate([0, 0, 10])
     for(i=[0:3])
 	{
 		rotate([0,0,90*i+45])
 		{
-		    translate([0, 0, -5])
+		    translate([0, arm_pos, -5])
 				arm();
-		    translate([0, 0, 60])
+		    translate([0, arm_pos, 55])
 				prop_shroud_flange();
-		    translate([0, 150, 65])
+		    translate([0, arm_pos, 57.5])
 				prop_nose();
-		    translate([0, 150, -5])
+		    translate([0, arm_pos, -5])
 				mirror([0,0,1]) prop_nose();
-		    translate([0, 150, 0])
+		    translate([0, arm_pos, 0])
 				motor();
-		    translate([0, 150, 29])
+		    translate([0, arm_pos, 29])
 				import("ROVProp.stl");
-		    translate([0, 150, 0])
+		    translate([0, arm_pos, 0])
 				prop_shroud();
 		}
 	}
-	translate([0, 0, 7.5])
-    for(i=[0:11])
-    {
-    	color([0.5,0.5,0.5,1])
-        translate([(DOME_DIA+20)/2*cos(i*30+45), (DOME_DIA+20)/2*sin(i*30+45), 2.5])
-	        spacer(8,3.1,0.5);
-        translate([(DOME_DIA+20)/2*cos(i*30+45), (DOME_DIA+20)/2*sin(i*30+45), 3])
-	        bolt(5,3,3,20);
-        translate([(DOME_DIA+20)/2*cos(i*30+45), (DOME_DIA+20)/2*sin(i*30+45), -12.5])
-	        mirror([0,0,90]) nut(5,3,2.5);
-    }
     translate([0, 0, 0])
       dome();
 }

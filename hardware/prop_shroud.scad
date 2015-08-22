@@ -1,6 +1,6 @@
 include<params.scad>
 
-module prop_shroud(height=60)
+module prop_shroud(height=55)
 {
     color([1,1,1,0.3])
     difference()
