@@ -54,7 +54,7 @@ module prop_shroud_flange_2D()
 		    		{
 				   		translate([0,r_from_dia(28-1)+30/2])
 				    		square([support_width,40], center=true);
-				   		translate([support_width,24.5/2])
+				   		translate([support_width,24.4/2])
 				   		mirror([0,0])
 				   		difference()
 				   		{
@@ -62,7 +62,7 @@ module prop_shroud_flange_2D()
 				   			translate([0,-support_width+0.2])
 				    			square([support_width,support_width], center=true);
 				    	}
-				   		translate([-support_width,24.5/2])
+				   		translate([-support_width,24.4/2])
 				   		mirror([1,0])
 				   		difference()
 				   		{
