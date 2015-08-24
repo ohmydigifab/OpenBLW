@@ -51,17 +51,17 @@ module assembly()
 		{
 		    translate([0, arm_pos, -5])
 				arm();
-		    translate([0, arm_pos, 50])
+		    translate([0, arm_pos, 40])
 				prop_shroud_flange();
-		    translate([0, arm_pos, 52.5])
+		    translate([0, arm_pos, 43])
 				prop_nose();
 		    translate([0, arm_pos, -5])
 				mirror([0,0,1]) prop_nose();
 		    translate([0, arm_pos, 0])
 				motor();
-		    translate([0, arm_pos, 18.5+6])
+		    translate([0, arm_pos, 15.5+5])
 				import("ROVProp.stl");
-		    translate([0, arm_pos, 3*18.5/2+13])
+		    translate([0, arm_pos, 3*15.5/2+10])
 				flow_cylinder();
 		    translate([0, arm_pos, 0])
 				prop_shroud();

@@ -2,7 +2,7 @@ include<params.scad>
 
 module prop_shroud_flange()
 {
-    linear_extrude(height = 2.5, twist = 0, slices = 0)
+    linear_extrude(height = 3, twist = 0, slices = 0)
     {
         prop_shroud_flange_2D();
     }

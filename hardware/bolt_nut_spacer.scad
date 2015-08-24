@@ -36,6 +36,7 @@ module nut(outer=5, inner=3.1, hight=2.5)
 	}
 }
 
+$fn = 360;
 translate([0,0,0.5])
 bolt();
 spacer(7,3.1,0.5);
