@@ -27,4 +27,5 @@ module base_plate_2D()
     }
 }
 
-base_plate();
+$fn=1000;
+base_plate_2D();

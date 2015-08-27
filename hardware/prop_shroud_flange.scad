@@ -9,11 +9,12 @@ module prop_shroud_flange()
 }
 module prop_shroud_flange_2D()
 {
-	module round_corner(width)
-	{	
+	module round_corner(width, margin = 1)
+	{
 		difference()
 		{
-			square([width,width], center=true);
+			translate([-margin,-margin])
+			square([width+margin*2,width+margin*2], center=true);
 			translate([width/2,width/2])
 		   		circle(r=width);
 		}
@@ -46,7 +47,7 @@ module prop_shroud_flange_2D()
 				    }
 		    	}
 		    	//support
-		    	support_width = 2.5;
+		    	support_width = 3;
 			    translate([0,60])
 		    	for(i=[1,3,5])
 		    	{
@@ -54,7 +55,7 @@ module prop_shroud_flange_2D()
 		    		{
 				   		translate([0,r_from_dia(28-1)+30/2])
 				    		square([support_width,40], center=true);
-				   		translate([support_width,24.4/2])
+				   		translate([support_width,24.54/2])
 				   		mirror([0,0])
 				   		difference()
 				   		{
@@ -62,7 +63,7 @@ module prop_shroud_flange_2D()
 				   			translate([0,-support_width+0.2])
 				    			square([support_width,support_width], center=true);
 				    	}
-				   		translate([-support_width,24.4/2])
+				   		translate([-support_width,24.54/2])
 				   		mirror([1,0])
 				   		difference()
 				   		{
@@ -70,10 +71,10 @@ module prop_shroud_flange_2D()
 				   			translate([0,-support_width+0.2])
 				    			square([support_width,support_width], center=true);
 				    	}
-				   		translate([support_width,46.75])
+				   		translate([support_width,46.29])
 				   		mirror([0,1])
 				    		round_corner(support_width);
-				   		translate([-support_width,46.75])
+				   		translate([-support_width,46.29])
 				   		mirror([1,1])
 				    		round_corner(support_width);
 		    		}

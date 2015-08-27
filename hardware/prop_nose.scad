@@ -11,5 +11,6 @@ module prop_nose(radius=25)
 	}
 }
 
+$fn = 100;
 prop_nose();
 

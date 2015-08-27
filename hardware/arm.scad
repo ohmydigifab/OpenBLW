@@ -10,15 +10,6 @@ module arm()
 }
 module arm_2D()
 {
-	module round_corner(width)
-	{	
-		difference()
-		{
-			square([width,width], center=true);
-			translate([width/2,width/2])
-		   		circle(r=width);
-		}
-	}
 	prop_shroud_flange_2D();
 	translate([0,-DOME_DIA+10])
 	difference()
@@ -56,6 +47,6 @@ module arm_2D()
 	}
 }
 
-$fn = 360;
-arm();
+$fn = 1000;
+arm_2D();
 
