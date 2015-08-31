@@ -19,12 +19,12 @@ module prop_shroud_flange_2D()
 		   		circle(r=width);
 		}
 	}
-	translate([0,-DOME_DIA])
+	translate([0,-150])
 	difference()
 	{
 		union()
 		{
-		    translate([0,DOME_DIA/2+15])
+		    translate([0,150/2+15])
 		    union()
 		    {
 		    	//motor bed
@@ -54,14 +54,14 @@ module prop_shroud_flange_2D()
 		    		rotate(60*i)
 		    		{
 				   		translate([0,r_from_dia(28-1)+30/2])
-				    		square([support_width,40], center=true);
+				    		square([support_width,35], center=true);
 				   		translate([support_width,24.54/2])
 				   		mirror([0,0])
 				   		difference()
 				   		{
 				    		round_corner(support_width);
 				   			translate([0,-support_width+0.2])
-				    			square([support_width,support_width], center=true);
+				    			square([100,support_width], center=true);
 				    	}
 				   		translate([-support_width,24.54/2])
 				   		mirror([1,0])
@@ -69,7 +69,7 @@ module prop_shroud_flange_2D()
 				   		{
 				    		round_corner(support_width);
 				   			translate([0,-support_width+0.2])
-				    			square([support_width,support_width], center=true);
+				    			square([100,support_width], center=true);
 				    	}
 				   		translate([support_width,46.29])
 				   		mirror([0,1])

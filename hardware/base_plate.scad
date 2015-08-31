@@ -11,13 +11,14 @@ module base_plate()
 }
 module base_plate_2D()
 {
+    hole_pos = DOME_DIA*15/50;
     difference()
     {
         translate([0, 0, 0])
 	        circle(r = r_from_dia(DOME_DIA+30));
-        translate([0, -45, 0])
+        translate([0, -hole_pos, 0])
 	        circle(r = r_from_dia(20), center=true);
-        translate([0, 45, 0])
+        translate([0, hole_pos, 0])
 	        circle(r = r_from_dia(20), center=true);
 	    for(i=[0:7])
 	    {
