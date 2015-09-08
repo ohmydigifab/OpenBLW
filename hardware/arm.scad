@@ -60,6 +60,7 @@ module arm_2D()
 			    }
 		    }
 		}
+	   	translate([0,-(DOME_DIA+30)/2])
 	    for(i=[0:7])
 	    {
 	        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 0])

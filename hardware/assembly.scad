@@ -5,6 +5,7 @@ use<amp.scad>
 use<base_plate_assembly.scad>
 use<LAN_connector.scad>
 use<arm.scad>
+use<arm_upper.scad>
 use<prop_shroud_flange.scad>
 use<prop_nose.scad>
 use<motor.scad>
@@ -16,20 +17,19 @@ use<dome.scad>
 
 module assembly()
 {
-    hole_pos = DOME_DIA*15/50;
-    translate([0, 0, 45])
+    base_plate_thick = 7;
+    
+    translate([0, 0, 30])
         fish_eye_lens();
-    translate([0, -2.5, 33])
+    translate([0, -2.5, 20])
         camera();
-    translate([-38, 20, 25])
-        import("raspberry_pi_model_B.stl");
-    translate([0, 0, 15])
-        amp();
+    translate([-65/2, -56.5/2, 10])
+        import("a+stl.stl");
+//    translate([0, 0, 15])
+//        amp();
     translate([0, 0, 0])
         base_plate_assembly();
-    translate([0, -hole_pos, 0])
-		LAN_connector();
-    translate([0, hole_pos, 0])
+    translate([0, 0, 4-base_plate_thick])
 		LAN_connector();
 	//bolt & nut
 	translate([0, 0, 7.5])
@@ -39,9 +39,20 @@ module assembly()
         translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 2.5])
 	        spacer(8,3.1,0.5);
         translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 3])
-	        bolt(5,3,3,16);
-        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), -10])
-	        mirror([0,0,90]) nut(5,3,2.5);
+	        bolt(5,3,3,8);
+//        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), -10])
+//	        mirror([0,0,90]) nut(5,3,2.5);
+    }
+	mirror([0,0,1]) translate([0, 0, 14.5])
+    for(i=[0:7])
+    {
+    	color([0.5,0.5,0.5,1])
+        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 2.5])
+	        spacer(8,3.1,0.5);
+        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 3])
+	        bolt(5,3,3,8);
+//        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), -10])
+//	        mirror([0,0,90]) nut(5,3,2.5);
     }
 	//arm
 	arm_pos = (DOME_DIA+30)/2+100/2;
@@ -51,25 +62,29 @@ module assembly()
 		rotate([0,0,90*i+45])
 		{
 		    translate([0, arm_pos, -5])
-				arm();
-		    translate([0, arm_pos, 0])
+				arm_upper();
+		    translate([0, arm_pos, -15-base_plate_thick])
+				rotate([0,180,0]) arm();
+		    translate([0, arm_pos, -15-base_plate_thick])
 				motor();
-		    translate([0, arm_pos, 15.5+5])
-				import("ROVProp.stl");
-		    translate([0, arm_pos, 40])
-				prop_shroud_flange();
-		    translate([0, arm_pos, 43])
-				prop_nose();
+		    translate([0, arm_pos, 8-15-base_plate_thick])
+				import("ROVPropAdapter.stl");
+//		    translate([0, arm_pos, 40])
+//				prop_shroud_flange();
 		    translate([0, arm_pos, -5])
+				prop_nose();
+		    translate([0, arm_pos, -20-base_plate_thick])
 				mirror([0,0,1]) prop_nose();
-		    translate([0, arm_pos, 3*15.5/2+10])
-				flow_cylinder();
-		    translate([0, arm_pos, 0])
-				prop_shroud();
+//		    translate([0, arm_pos, 3*15.5/2+10])
+//				flow_cylinder();
+		    translate([0, arm_pos, -15-base_plate_thick])
+				prop_shroud(height=10+base_plate_thick);
 		}
 	}
     translate([0, 0, 0])
       dome();
+    translate([0, 0, -11])
+      rotate([180,0,0]) dome();
 }
 
 $fn = 100;

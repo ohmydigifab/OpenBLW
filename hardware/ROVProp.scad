@@ -18,12 +18,12 @@ module ROVProp()
 	avgAngle=(startAngle+(startAngle-bladeTwist/2))/2; 
 	nSlices=20; //20 has been good for printing
 	bladeScale=4; //amount of growth of blade moving out from the hub
-	bladeThick=1.2; //thickness of fin, 1mm had been strong enough
+	bladeThick=2; //thickness of fin, 1mm had been strong enough
 	bladeWidth=3; // starting blade width at origin
 	nBlade=4; //number of blades, must have two or more
-	hubRad=23/2; // nosecone radius diameter is 16mm 
+	hubRad=27/2; // nosecone radius diameter is 16mm 
 	//hubHeight=5;// use at least 6 for nose to have threads all the way
-	hubHeight=8.5;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
+	hubHeight=9;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
 	shaftRad=2.5;// 5m bolt on motor
 	$fn=res;
 	
