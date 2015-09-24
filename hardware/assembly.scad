@@ -56,7 +56,7 @@ module assembly()
 //	        mirror([0,0,90]) nut(5,3,2.5);
     }
 	//arm
-	arm_pos = (DOME_DIA+30)/2+100/2-5;
+	arm_pos = (DOME_DIA+30)/2+PROP_SHROUD_DIA/2-5;
 	translate([0, 0, 10])
     for(i=[0:3])
 	{

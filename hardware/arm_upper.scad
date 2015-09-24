@@ -13,9 +13,9 @@ module arm_upper_2D()
 	difference()
 	{
 	    prop_shroud_flange_2D();
-        circle(r=r_from_dia(100)-2);
+        circle(r=r_from_dia(PROP_SHROUD_DIA)-2);
     }
-	translate([0,-100/2])
+	translate([0,-PROP_SHROUD_DIA/2])
 	difference()
 	{
 	    union()
@@ -40,8 +40,8 @@ module arm_upper_2D()
                         circle(r=r_from_dia(10));
                     translate([-26.95,0.93])
                         circle(r=r_from_dia(10));
-                    translate([0,r_from_dia(100)-2])
-                        circle(r=r_from_dia(100)-2);
+                    translate([0,r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK])
+                        circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
                 }
                 else if(DOME_DIA == 100)
                 {
@@ -49,8 +49,8 @@ module arm_upper_2D()
                         circle(r=r_from_dia(7.25));
                     translate([-27.5,2.85])
                         circle(r=r_from_dia(7.25));
-                    translate([0,r_from_dia(100)-2])
-                        circle(r=r_from_dia(100)-2);
+                    translate([0,r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK])
+                        circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
                 }
 	  	 	}
 	        translate([0,-(DOME_DIA+30)/2+5])
@@ -62,8 +62,8 @@ module arm_upper_2D()
 			    	circle(r=r_from_dia(DOME_DIA+30));
 	        		translate([0,-ORING_DIA])
 		    		circle(r=r_from_dia(DOME_DIA)+ORING_DIA);
-	        		translate([0,(DOME_DIA+30)/2-5+100/2])
-		    			circle(r=r_from_dia(100));
+	        		translate([0,(DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2])
+		    			circle(r=r_from_dia(PROP_SHROUD_DIA));
 			    }
 		    }
 		}

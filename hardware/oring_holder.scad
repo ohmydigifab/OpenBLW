@@ -22,13 +22,13 @@ module oring_holder_2D()
 		        circle(r = r_from_dia(bolt_size+0.1), center=true);
 	    }
 		//arm
-		arm_pos = (DOME_DIA+30)/2-5+100/2;
+		arm_pos = (DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2;
 	    for(i=[0:3])
 		{
 			rotate([0,0,90*i+45])
 			{
 			    translate([0, arm_pos])
-	        		circle(r = r_from_dia(100));
+	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
     }

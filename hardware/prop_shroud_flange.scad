@@ -83,9 +83,9 @@ module prop_shroud_flange_2D()
 		    	difference()
 		    	{
 			    	translate([0,60])
-			    		circle(r=r_from_dia(100)+support_width-2);
+			    		circle(r=r_from_dia(PROP_SHROUD_DIA)+support_width-PROP_SHROUD_THICK);
 			    	translate([0,60])
-			    		circle(r=r_from_dia(100)-2);
+			    		circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
 			   	}
 		    }
 		}
