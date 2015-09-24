@@ -52,6 +52,16 @@ module base_plate_upper_2D()
 //	        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 0])
 //		        circle(r = r_from_dia(3.1), center=true);
 //	    }
+		//arm
+		arm_pos = (DOME_DIA+30)/2-5+100/2;
+	    for(i=[0:3])
+		{
+			rotate([0,0,90*i+45])
+			{
+			    translate([0, arm_pos])
+	        		circle(r = r_from_dia(100));
+			}
+		}
     }
 }
 

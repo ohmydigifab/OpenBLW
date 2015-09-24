@@ -1,7 +1,5 @@
 include<params.scad>
 use<tools.scad>
-use<dome.scad>
-use<seal_assembly.scad>
 
 module base_plate_middle()
 {
@@ -24,6 +22,7 @@ module base_plate_middle_2D()
                 translate([0, 0, 0])
                     circle(r = r_from_dia(DOME_DIA-16));
             }
+            //hole
             translate([0, -hole_pos, 0])
                 union()
                 {
@@ -40,25 +39,25 @@ module base_plate_middle_2D()
                 }
             for(i=[0,1])
             for(j=[0,1])
-            rotate([j*180,i*180,0]) translate([-65/2, -56.5/2, 0])
+            rotate([j*180,i*180,0]) translate([-17.98, -34.6, 0])
+                round_corner(r1=3,r2=6,t1=245,t2=355,debug=false);
+            //bolt hole for raspi
+            for(i=[0,1])
+            for(j=[0,1])
+            rotate([j*180,i*180,0])
+            translate([-58/2, -49/2, 0])
                 difference()
                 {
                     union()
                     {
-                        translate([3.5, 3.5, 0])
-                            circle(r = r_from_dia(13), center=true);
-                        translate([3.5-5.925, 3.5+7.42, 0])
-                            round_corner(r1=3,r2=6,t1=205,t2=310,debug=false);
-                        translate([3.5+6.35, 3.5-7.05, 0])
+                        circle(r = r_from_dia(13), center=true);
+                        translate([-6.016, 7.35, 0])
+                            round_corner(r1=3,r2=6,t1=205,t2=309,debug=false);
+                        translate([6.23, -7.165, 0])
                             round_corner(r1=3,r2=6,t1=132,t2=232,debug=false);
                     }
-                    translate([3.5, 3.5, 0])
-                        circle(r = r_from_dia(2.1), center=true);
+                    circle(r = r_from_dia(2.1), center=true);
                 }
-            for(i=[0,1])
-            for(j=[0,1])
-            rotate([j*180,i*180,0]) translate([-17.98, -34.6, 0])
-                round_corner(r1=3,r2=6,t1=245,t2=355,debug=false);
         }
         translate([0, -hole_pos, 0])
             union()
@@ -83,5 +82,5 @@ module base_plate_middle_2D()
     }
 }
 
-$fn=100;
+$fn=1000;
 base_plate_middle_2D();

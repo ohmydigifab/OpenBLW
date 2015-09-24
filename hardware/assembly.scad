@@ -32,30 +32,31 @@ module assembly()
     translate([0, 0, 4-base_plate_thick])
 		LAN_connector();
 	//bolt & nut
+	bolt_size = 2.6;
 	translate([0, 0, 7.5])
-    for(i=[0:7])
+    for(i=[0:11])
     {
     	color([0.5,0.5,0.5,1])
-        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 2.5])
-	        spacer(8,3.1,0.5);
-        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 3])
-	        bolt(5,3,3,8);
+        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 2.5])
+	        spacer(7,bolt_size,0.5);
+        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 3])
+	        bolt(5,bolt_size,bolt_size,8);
 //        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), -10])
 //	        mirror([0,0,90]) nut(5,3,2.5);
     }
 	mirror([0,0,1]) translate([0, 0, 14.5])
-    for(i=[0:7])
+    for(i=[0:11])
     {
     	color([0.5,0.5,0.5,1])
-        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 2.5])
-	        spacer(8,3.1,0.5);
-        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 3])
-	        bolt(5,3,3,8);
+        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 2.5])
+	        spacer(7,bolt_size,0.5);
+        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 3])
+	        bolt(5,bolt_size,bolt_size,8);
 //        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), -10])
 //	        mirror([0,0,90]) nut(5,3,2.5);
     }
 	//arm
-	arm_pos = (DOME_DIA+30)/2+100/2;
+	arm_pos = (DOME_DIA+30)/2+100/2-5;
 	translate([0, 0, 10])
     for(i=[0:3])
 	{

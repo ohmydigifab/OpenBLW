@@ -49,7 +49,7 @@ module prop_shroud_flange_2D()
 		    	//support
 		    	support_width = 3;
 			    translate([0,60])
-		    	for(i=[1,3,5])
+		    	for(i=[2,3,4,6])
 		    	{
 		    		rotate(60*i)
 		    		{
