@@ -10,6 +10,43 @@ module base_plate_middle()
 }
 module base_plate_middle_2D()
 {
+    roundess=6;
+    hole_pos = r_from_dia(DOME_DIA-16-14);
+    difference()
+    {
+        translate([0, 0, 0])
+            circle(r = r_from_dia(DOME_DIA+16));
+        minkowski()
+        {
+    	    $fn=100;
+            difference()
+            {
+                circle(r = r_from_dia(DOME_DIA+16-1));
+                base_plate_inner_2D(margin=roundess);
+            }
+            circle(r = roundess/2, center=true);
+        }
+        for(i=[0,1])
+        {
+            mirror([0,i])
+            translate([0, -hole_pos, 0])
+                union()
+                {
+                    circle(r = r_from_dia(14), center=true);
+                    translate([0, -20])
+                        square([14,40], center=true);
+                }
+        }
+        //bolt hole for raspi
+        //translate([-2, 0, 0])
+        for(i=[0,1])
+            mirror([0,i]) for(j=[0,1])
+                mirror([j,0]) translate([-58/2, -49/2, 0])
+                    circle(r = r_from_dia(3.5), center=true);
+    }
+}
+module base_plate_inner_2D(margin=0)
+{
     hole_pos = r_from_dia(DOME_DIA-16-14);
     difference()
     {
@@ -20,67 +57,40 @@ module base_plate_middle_2D()
                 translate([0, 0, 0])
                     circle(r = r_from_dia(DOME_DIA+16));
                 translate([0, 0, 0])
-                    circle(r = r_from_dia(DOME_DIA-16));
+                    circle(r = r_from_dia(DOME_DIA-DOME_THICK-margin));
             }
             //hole
-            translate([0, -hole_pos, 0])
-                union()
-                {
-                    circle(r = r_from_dia(30), center=true);
-                    translate([0, -10])
-                        square([30,20], center=true);
-                }
-            translate([0, hole_pos, 0])
-                rotate([0,0,180]) union()
-                {
-                    circle(r = r_from_dia(30), center=true);
-                    translate([0, -10])
-                        square([30,20], center=true);
-                }
             for(i=[0,1])
-            for(j=[0,1])
-            rotate([j*180,i*180,0]) translate([-17.98, -34.6, 0])
-                round_corner(r1=3,r2=6,t1=245,t2=355,debug=false);
-            //bolt hole for raspi
-            for(i=[0,1])
-            for(j=[0,1])
-            rotate([j*180,i*180,0])
-            translate([-58/2, -49/2, 0])
-                difference()
-                {
+            {
+                mirror([0,i])
+                translate([0, -hole_pos, 0])
                     union()
                     {
-                        circle(r = r_from_dia(13), center=true);
-                        translate([-6.016, 7.35, 0])
-                            round_corner(r1=3,r2=6,t1=205,t2=309,debug=false);
-                        translate([6.23, -7.165, 0])
-                            round_corner(r1=3,r2=6,t1=132,t2=232,debug=false);
+                        circle(r = r_from_dia(30+margin), center=true);
+                        translate([0, -10])
+                            square([30+margin,20], center=true);
                     }
-                    circle(r = r_from_dia(2.1), center=true);
+             }
+            //bolt hole for raspi
+            difference()
+            {
+                union()
+                {
+                    for(i=[0,1])
+                    for(j=[0,1])
+                    rotate([j*180,i*180,0])
+                    translate([-58/2, -49/2, 0])
+                    {
+                        circle(r = r_from_dia(13+margin), center=true);
+                        rotate([0,0,atan2(58/2,49/2)])
+                            translate([-13/2,0])
+                            square([13,13+margin],center=true);
+                    }
                 }
+            }
         }
-        translate([0, -hole_pos, 0])
-            union()
-            {
-	            circle(r = r_from_dia(14), center=true);
-                translate([0, -20])
-                    square([14,40], center=true);
-            }
-        
-        translate([0, hole_pos, 0])
-            rotate([0,0,180]) union()
-            {
-	            circle(r = r_from_dia(14), center=true);
-                translate([0, -20])
-                    square([14,40], center=true);
-            }
-	    for(i=[0:7])
-	    {
-	        translate([(DOME_DIA+20)/2*cos(i*45), (DOME_DIA+20)/2*sin(i*45), 0])
-		        circle(r = r_from_dia(3.1), center=true);
-	    }
     }
 }
 
-$fn=1000;
+$fn=360;
 base_plate_middle_2D();

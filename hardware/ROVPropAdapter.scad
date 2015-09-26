@@ -1,3 +1,4 @@
+use<ROVProp.scad>
 
 module ROVPropAdapter()
 {
@@ -9,14 +10,15 @@ module ROVPropAdapter()
             {
                 union()
                 {
-			        import("ROVProp.stl");
+                    ROVProp();
+			        //import("ROVProp.stl");
                     translate([0,0,+1.5+9/2])
-                        cylinder(r=27.1/2, h=3, center=true);
+                        cylinder(r=27/2, h=3.01, center=true);
                 }
                 translate([0,0,-50-9/2+2])
-                    cylinder(r=27.1/2, h=100, center=true);
+                    cylinder(r=27.01/2, h=100, center=true);
                 translate([0,0,-9/2-.01])
-                    cylinder(r=23.5/2, h=9+3.01);
+                    cylinder(r=23.5/2, h=9+3.02);
             }
             difference()
             {
@@ -57,8 +59,8 @@ module ROVPropAdapter()
         }
         cylinder(r=2/2, h=100, center=true);
         
-//        translate([0,-50,0])
-//            cube([100,100,100], center=true);
+////        translate([0,-50,0])
+////            cube([100,100,100], center=true);
     }
 }
 

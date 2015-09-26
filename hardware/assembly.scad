@@ -29,7 +29,7 @@ module assembly()
 //        amp();
     translate([0, 0, 0])
         base_plate_assembly();
-    translate([0, 0, 4-base_plate_thick])
+    translate([DOME_DIA/3, 0, 4-base_plate_thick])
 		LAN_connector();
 	//bolt & nut
 	bolt_size = 2.6;
