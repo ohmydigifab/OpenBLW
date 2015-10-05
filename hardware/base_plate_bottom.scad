@@ -17,11 +17,11 @@ module base_plate_bottom_2D()
 	        circle(r = r_from_dia(DOME_DIA+30));
         translate([hole_pos, 0, 0])
 	        circle(r = r_from_dia(20), center=true);
-	    for(i=[0:11])
-	    {
-	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
-		        circle(r = r_from_dia(3.5), center=true);
-	    }
+//	    for(i=[0:11])
+//	    {
+//	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
+//		        circle(r = r_from_dia(3.5), center=true);
+//	    }
 		//arm
 		arm_pos = (DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2;
 	    for(i=[0:3])

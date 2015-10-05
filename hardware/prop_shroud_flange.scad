@@ -9,89 +9,51 @@ module prop_shroud_flange()
 }
 module prop_shroud_flange_2D()
 {
-	module round_corner(width, margin = 1)
-	{
-		difference()
-		{
-			translate([-margin,-margin])
-			square([width+margin*2,width+margin*2], center=true);
-			translate([width/2,width/2])
-		   		circle(r=width);
-		}
-	}
-	translate([0,-150])
-	difference()
-	{
-		union()
-		{
-		    translate([0,150/2+15])
-		    union()
-		    {
-		    	//motor bed
-		    	translate([0,60])
-		    	difference()
-		    	{
-		    		circle(r=r_from_dia(23));
-		    		circle(r=r_from_dia(6));
-			    	for(i=[0,2])
-			    	{
-			    		rotate(90*i+45)
-					    	translate([0,r_from_dia(12)])
-					    		circle(r=r_from_dia(2.1));
-				    }
-			    	for(i=[1,3])
-			    	{
-			    		rotate(90*i+45)
-					    	translate([0,r_from_dia(16)])
-					    		circle(r=r_from_dia(2.1));
-				    }
-		    	}
-		    	//support
-		    	support_width = 3;
-			    translate([0,60])
-		    	for(i=[2,3,4,6])
-		    	{
-		    		rotate(60*i)
-		    		{
-				   		translate([0,r_from_dia(28-1)+30/2])
-				    		square([support_width,35], center=true);
-				   		translate([support_width,24.54/2])
-				   		mirror([0,0])
-				   		difference()
-				   		{
-				    		round_corner(support_width);
-				   			translate([0,-support_width+0.2])
-				    			square([100,support_width], center=true);
-				    	}
-				   		translate([-support_width,24.54/2])
-				   		mirror([1,0])
-				   		difference()
-				   		{
-				    		round_corner(support_width);
-				   			translate([0,-support_width+0.2])
-				    			square([100,support_width], center=true);
-				    	}
-				   		translate([support_width,46.29])
-				   		mirror([0,1])
-				    		round_corner(support_width);
-				   		translate([-support_width,46.29])
-				   		mirror([1,1])
-				    		round_corner(support_width);
-		    		}
-		    	}
-		    	//shroud flange
-		    	difference()
-		    	{
-			    	translate([0,60])
-			    		circle(r=r_from_dia(PROP_SHROUD_DIA)+support_width-PROP_SHROUD_THICK);
-			    	translate([0,60])
-			    		circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
-			   	}
-		    }
-		}
-	}
+    roundess=3;
+    difference()
+    {
+        circle(r = r_from_dia(PROP_SHROUD_DIA)+1);
+   		circle(r=r_from_dia(5));
+        minkowski()
+        {
+    	    $fn=100;
+            prop_shroud_flange_inner_2D(margin=roundess);
+            circle(r = roundess, center=true);
+        }
+        for(i=[0,1,2,3])
+        {
+            rotate(90*i+45)
+                translate([0,r_from_dia(12)])
+                    circle(r=r_from_dia(2.1));
+            rotate(90*i+45)
+                translate([0,r_from_dia(16)])
+                    circle(r=r_from_dia(2.1));
+            rotate(90*i+45)
+                translate([0,r_from_dia((16+12)/2)])
+                    square([2.1,2], center=true);
+        }
+    }
+}
+module prop_shroud_flange_inner_2D(margin=0)
+{
+    difference()
+    {
+        circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK-margin);
+        //motor bed
+        circle(r=r_from_dia(24)+margin);
+        //support
+        support_width = 4+margin*2;
+        for(i=[2,3,4,6])
+        {
+            rotate(60*i)
+            {
+                translate([0,PROP_SHROUD_DIA/4])
+                    square([support_width,PROP_SHROUD_DIA/2], center=true);
+            }
+        }
+    }
 }
 
 $fn=360;
-prop_shroud_flange();
+prop_shroud_flange_2D();
 

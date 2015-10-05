@@ -17,38 +17,36 @@ module arm_2D()
 	    union()
 	    {
 		   	//base plate joint
-	   		translate([0,0])
-	    	difference()
-	    	{
-                if(DOME_DIA == 150)
+	        translate([0,PROP_SHROUD_DIA/2])
+            difference()
+            {
+                translate([0,-PROP_SHROUD_DIA/2])
+                    square([PROP_SHROUD_DIA-40,30],center=true);
+                minkowski()
                 {
-                    translate([0,1])
-                        square([49,20], center=true);
+                    $fn=100;
+                    roundess=6;
+                    difference()
+                    {
+                        translate([0,-PROP_SHROUD_DIA/2])
+                            square([PROP_SHROUD_DIA-20,100],center=true);
+                        union()
+                        {
+                            circle(r=r_from_dia(PROP_SHROUD_DIA)+1+roundess);
+                            translate([0,-PROP_SHROUD_DIA/2])
+                            translate([0,-(DOME_DIA+30)/2+5])
+                                circle(r=r_from_dia(DOME_DIA+30)+roundess);
+                        }
+                    }
+                    circle(r = roundess, center=true);
                 }
-                else if(DOME_DIA == 100)
-                {
-                    translate([0,1])
-                        square([51.5,20], center=true);
-                }
-                if(DOME_DIA == 150)
-                {
-                    translate([26.95,0.93])
-                        circle(r=r_from_dia(10));
-                    translate([-26.95,0.93])
-                        circle(r=r_from_dia(10));
-                    translate([0,r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK])
-                        circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
-                }
-                else if(DOME_DIA == 100)
-                {
-                    translate([27.5,2.85])
-                        circle(r=r_from_dia(7.25));
-                    translate([-27.5,2.85])
-                        circle(r=r_from_dia(7.25));
-                    translate([0,r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK])
-                        circle(r=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK);
-                }
-	  	 	}
+		    	circle(r=r_from_dia(PROP_SHROUD_DIA)+1);
+                translate([0,-PROP_SHROUD_DIA/2])
+	            translate([0,-(DOME_DIA+30)/2+5])
+	        	translate([0,-ORING_DIA])
+		    		circle(r=r_from_dia(DOME_DIA)+ORING_DIA);
+            }
+
 	        translate([0,-(DOME_DIA+30)/2+5])
 		    intersection()
 		    {
@@ -87,4 +85,3 @@ module arm_2D()
 
 $fn = 1000;
 arm_2D();
-
