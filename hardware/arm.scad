@@ -3,14 +3,14 @@ use<prop_shroud_flange.scad>
 
 module arm()
 {
-    linear_extrude(height = 5, twist = 0, slices = 0)
+    linear_extrude(height = 3, twist = 0, slices = 0)
     {
         arm_2D();
     }
 }
-module arm_2D()
+module arm_2D(margin=1)
 {
-	prop_shroud_flange_2D();
+	prop_shroud_flange_2D(margin=margin);
 	translate([0,-PROP_SHROUD_DIA/2])
 	difference()
 	{
@@ -32,7 +32,7 @@ module arm_2D()
                             square([PROP_SHROUD_DIA-20,100],center=true);
                         union()
                         {
-                            circle(r=r_from_dia(PROP_SHROUD_DIA)+1+roundess);
+                            circle(r=r_from_dia(PROP_SHROUD_DIA)+margin+roundess);
                             translate([0,-PROP_SHROUD_DIA/2])
                             translate([0,-(DOME_DIA+30)/2+5])
                                 circle(r=r_from_dia(DOME_DIA+30)+roundess);
@@ -40,7 +40,7 @@ module arm_2D()
                     }
                     circle(r = roundess, center=true);
                 }
-		    	circle(r=r_from_dia(PROP_SHROUD_DIA)+1);
+		    	circle(r=r_from_dia(PROP_SHROUD_DIA)+margin-.01);
                 translate([0,-PROP_SHROUD_DIA/2])
 	            translate([0,-(DOME_DIA+30)/2+5])
 	        	translate([0,-ORING_DIA])
