@@ -14,6 +14,7 @@ use<flow_cylinder.scad>
 use<prop_shroud.scad>
 use<bolt_nut_spacer.scad>
 use<dome.scad>
+use<ROVPropAdapter.scad>
 
 module assembly()
 {
@@ -68,8 +69,22 @@ module assembly()
 				rotate([0,180,0]) arm();
 		    translate([0, arm_pos, -15-base_plate_thick])
 				motor();
-		    translate([0, arm_pos, 8-15-base_plate_thick])
-				import("ROVPropAdapter.stl");
+            //this is for rendering speed
+            if(PROP_SHROUD_DIA == 100)
+            {
+                translate([0, arm_pos, 8-15-base_plate_thick])
+                    import("ROVPropAdapter_100mm.stl");
+            }
+            else if(PROP_SHROUD_DIA == 110)
+            {
+                translate([0, arm_pos, 8-15-base_plate_thick])
+                    import("ROVPropAdapter_110mm.stl");
+            }
+            else
+            {
+                translate([0, arm_pos, 8-15-base_plate_thick])
+                    ROVPropAdapter();
+            }
 //		    translate([0, arm_pos, 40])
 //				prop_shroud_flange();
 		    translate([0, arm_pos, -5])
@@ -79,7 +94,7 @@ module assembly()
 //		    translate([0, arm_pos, 3*15.5/2+10])
 //				flow_cylinder();
 		    translate([0, arm_pos, -15-base_plate_thick])
-				prop_shroud(height=10+base_plate_thick);
+				prop_shroud(height=14+base_plate_thick);
 		}
 	}
     translate([0, 0, 0])

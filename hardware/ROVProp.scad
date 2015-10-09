@@ -1,3 +1,4 @@
+include<params.scad>
 
 /*Soar Propeller 
 Mount to a kv750 outrunner motor
@@ -12,7 +13,7 @@ module ROVProp()
 	//Parameters
 	res=360; //resolution for cylinders
 	
-	propRad=100/2-2-1;  //radius of propeller
+	propRad=PROP_SHROUD_DIA/2-PROP_SHROUD_THICK-1;  //radius of propeller
 	bladeTwist=5; //twist of blade from hub to outerrim, twist is the is the difference of bladeTwist and startAngle, follows left hand rule
 	startAngle=22;
 	avgAngle=(startAngle+(startAngle-bladeTwist/2))/2; 
