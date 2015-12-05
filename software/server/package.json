@@ -7,6 +7,7 @@
  },
  "dependencies": {
   "uavtalk": "0.0.1",
+  "async": ">0.0.1",
   "express": "3.0.6",
   "jade": "*",
   "socket.io": "*"
