@@ -8,7 +8,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 	var DEFINITION_PATH = definition_path === undefined ? "./openpilot_definitions" : definition_path;
 	var COM_PORT = com_port === undefined ? "/dev/ttyAMA0" : com_port;
 	
-	var objMan = new Uavtalk.ObjectManager(definition_path);
+	var objMan = new Uavtalk.ObjectManager(DEFINITION_PATH);
 	var gtsObj;
 	var ftsObj;
 	
