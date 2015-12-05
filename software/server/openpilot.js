@@ -158,6 +158,4 @@ function OpenPilot(board_type, com_port, definition_path) {
 	}
 }
 
-module.exports = {
-	OpenPilot : OpenPilot
-};
+module.exports = OpenPilot;
