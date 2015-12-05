@@ -6,17 +6,19 @@ var async = require('async');
 var fs = require("fs");
 
 var op = new OpenPilot();
-async.waterfall([ function(callback) {//connect to openpilot
+async.waterfall([ function(callback) {// connect to openpilot
 	op.connect(function() {
 		callback(null);
 	});
-}, function(callback) {//start up websocket server
+}, function(callback) {// start up websocket server
 	child_process.exec('sh ./sh/init_servo.sh');
 
 	var server = require("http").createServer(function(req, res) {
-	     res.writeHead(200, {"Content-Type":"text/html"});
-	     var output = fs.readFileSync("./www/index.html", "utf-8");
-	     res.end(output);
+		res.writeHead(200, {
+			"Content-Type" : "text/html"
+		});
+		var output = fs.readFileSync("./www/index.html", "utf-8");
+		res.end(output);
 	}).listen(9001);
 
 	var io = require("socket.io").listen(server);
@@ -27,63 +29,61 @@ async.waterfall([ function(callback) {//connect to openpilot
 	var throttle = 0.0;
 	var accel_factor = 0.02;
 
-	io.sockets.on("connection", function (socket) {
+	io.sockets.on("connection", function(socket) {
 
-		socket.on("connected", function () {
+		socket.on("connected", function() {
 		});
-		  
-		socket.on("ping", function (time) {
+
+		socket.on("ping", function(time) {
 			socket.emit("pong");
 		});
-		
-		socket.on("accelerate_throttle", function (value, callback) {
-			throttle += accel_factor*value;
-			if(throttle < 0.0)
-			{
+
+		socket.on("accelerate_throttle", function(value, callback) {
+			throttle += accel_factor * value;
+			if (throttle < 0.0) {
 				throttle = 0.0;
-			}
-			else if(throttle > 1.0)
-			{
+			} else if (throttle > 1.0) {
 				throttle = 1.0;
 			}
-			op.setThrust(throttle, function(){
+			op.setThrust(throttle, function() {
 				callback();
 			});
 		});
-		
-		socket.on("setArm", function (bln, callback) {
+
+		socket.on("setArm", function(bln, callback) {
 			throttle = 0.0;
-			op.setArm(bln, function(){
+			op.setArm(bln, function() {
 				callback();
 			});
 		});
-		
-		socket.on("setRoll", function (value, callback) {
-			op.setRoll(value, function(){
+
+		socket.on("setRoll", function(value, callback) {
+			op.setRoll(value, function() {
 				callback();
 			});
 		});
-		
-		socket.on("setPitch", function (value, callback) {
-			op.setPitch(value, function(){
+
+		socket.on("setPitch", function(value, callback) {
+			op.setPitch(value, function() {
 				callback();
 			});
 		});
-		
-		socket.on("setYaw", function (value, callback) {
-			op.setYaw(value, function(){
+
+		socket.on("setYaw", function(value, callback) {
+			op.setYaw(value, function() {
 				callback();
 			});
 		});
-		
-		socket.on("getAttitude", function (callback) {
-			op.getAttitude(function(obj){
+
+		socket.on("getAttitude", function(callback) {
+			op.getAttitude(function(obj) {
 				callback(obj);
 			});
 		});
-		
-		socket.on("disconnect", function () {
+
+		socket.on("disconnect", function() {
 		});
-	}
+		
+	});
 } ], function(err, result) {
 });
