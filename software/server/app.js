@@ -35,10 +35,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("ping", function(time) {
-			socket.emit("pong", {
-				Status : op.getStatus(),
-				Attitude : op.getAttitude()
-			});
+			socket.emit("pong", "test");
 		});
 
 		socket.on("accelerate_throttle", function(value, callback) {
