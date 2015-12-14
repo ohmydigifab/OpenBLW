@@ -103,12 +103,12 @@ function OpenPilot(board_type, com_port, definition_path) {
 		setArm : function(bArm, callback) {
 			objMan.requestObject("FlightModeSettings", function(obj) {
 				if (obj == null || obj.Arming == null) {
-					callback(false);
+					callback(null);
 					return;
 				}
 				obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
-				objMan.updateObject(obj);
-				callback(true);
+				objMan.updateObject();
+				callback(obj);
 			});
 		},
 		getArm : function(callback) {
@@ -120,48 +120,59 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj.Armed);
 			});
 		},
+		setThrottle : function(value, callback) {
+			objMan.requestObject("ManualControlCommand", function(obj) {
+				if (obj == null) {
+					callback(null);
+					return;
+				}
+				obj.Throttle = value;
+				objMan.updateObject(obj);
+				callback(obj);
+			});
+		},
 		setRoll : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
-					callback(false);
+					callback(null);
 					return;
 				}
 				obj.Roll = value;
 				objMan.updateObject(obj);
-				callback(true);
+				callback(obj);
 			});
 		},
 		setPitch : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
-					callback(false);
+					callback(null);
 					return;
 				}
 				obj.Pitch = value;
 				objMan.updateObject(obj);
-				callback(true);
+				callback(obj);
 			});
 		},
 		setYaw : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
-					callback(false);
+					callback(null);
 					return;
 				}
 				obj.Yaw = value;
 				objMan.updateObject(obj);
-				callback(true);
+				callback(obj);
 			});
 		},
 		setThrust : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
-					callback(false);
+					callback(null);
 					return;
 				}
 				obj.Thrust = value;
 				objMan.updateObject(obj);
-				callback(true);
+				callback(obj);
 			});
 		},
 		getAttitude : function(callback) {

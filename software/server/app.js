@@ -59,26 +59,38 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("setArm", function(bln, callback) {
 			throttle = 0.0;
-			op.setArm(bln, function(bln) {
-				callback(bln);
+			op.setArm(bln, function(res) {
+				callback(res);
+			});
+		});
+
+		socket.on("setThrottle", function(value, callback) {
+			op.setThrottle(value, function(res) {
+				callback(res);
 			});
 		});
 
 		socket.on("setRoll", function(value, callback) {
-			op.setRoll(value, function() {
-				callback();
+			op.setRoll(value, function(res) {
+				callback(res);
 			});
 		});
 
 		socket.on("setPitch", function(value, callback) {
-			op.setPitch(value, function() {
-				callback();
+			op.setPitch(value, function(res) {
+				callback(res);
 			});
 		});
 
 		socket.on("setYaw", function(value, callback) {
-			op.setYaw(value, function() {
-				callback();
+			op.setYaw(value, function(res) {
+				callback(res);
+			});
+		});
+
+		socket.on("setThrust", function(value, callback) {
+			op.setThrust(value, function(res) {
+				callback(res);
 			});
 		});
 
