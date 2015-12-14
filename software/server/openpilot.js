@@ -7,15 +7,29 @@ function OpenPilot(board_type, com_port, definition_path) {
 	var BOARD_TYPE = board_type === undefined ? "cc3d" : board_type;
 	var DEFINITION_PATH = definition_path === undefined ? "./openpilot_definitions" : definition_path;
 	var COM_PORT = com_port === undefined ? "/dev/ttyAMA0" : com_port;
-	
+
 	var objMan = new Uavtalk.ObjectManager(DEFINITION_PATH);
 	var gtsObj;
 	var ftsObj;
-	
+
 	var STATUS_DISCONNECTED = 0;
 	var STATUS_HANDSHAKEREQ = 1;
 	var STATUS_HANDSHAKEACK = 2;
 	var STATUS_CONNECTED = 3;
+
+	var FlightModeSettingsArmingOptions = {
+		FLIGHTMODESETTINGS_ARMING_ALWAYSDISARMED : 0,
+		FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : 1,
+		FLIGHTMODESETTINGS_ARMING_ROLLLEFT : 2,
+		FLIGHTMODESETTINGS_ARMING_ROLLRIGHT : 3,
+		FLIGHTMODESETTINGS_ARMING_PITCHFORWARD : 4,
+		FLIGHTMODESETTINGS_ARMING_PITCHAFT : 5,
+		FLIGHTMODESETTINGS_ARMING_YAWLEFT : 6,
+		FLIGHTMODESETTINGS_ARMING_YAWRIGHT : 7,
+		FLIGHTMODESETTINGS_ARMING_ACCESSORY0 : 8,
+		FLIGHTMODESETTINGS_ARMING_ACCESSORY1 : 9,
+		FLIGHTMODESETTINGS_ARMING_ACCESSORY2 : 10
+	};
 
 	function getBlankGtsObj() {
 		var gtsObj = {};
@@ -92,7 +106,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					callback(false);
 					return;
 				}
-				obj.Arming = bArm ? FLIGHTMODESETTINGS_ARMING_YAWLEFT : FLIGHTSTATUS_ARMED_DISARMED;
+				obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_YAWLEFT : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
 				objMan.updateObject(obj);
 				callback(true);
 			});
