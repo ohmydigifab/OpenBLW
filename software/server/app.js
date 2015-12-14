@@ -35,9 +35,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("ping", function(time) {
-			op.getStatus(function(status) {
-				socket.emit("pong", {
-					Status : status
+			op.getFlightStatus(function(flightStatus) {
+				op.getManualControlSettings(function(manualControlSettings) {
+					socket.emit("pong", {
+						FlightStatus : flightStatus,
+						ManualControlSettings : manualControlSettings
+					});
 				});
 			});
 		});

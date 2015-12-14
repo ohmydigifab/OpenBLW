@@ -155,11 +155,16 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			});
 		},
-		getStatus : function(callback) {
+		getFlightStatus : function(callback) {
 			objMan.requestObject("FlightStatus", function(obj) {
 				callback(obj);
 			});
 		},
+		getManualControlSettings : function(callback) {
+			objMan.requestObject("ManualControlSettings", function(obj) {
+				callback(obj);
+			});
+		}
 	}
 }
 
