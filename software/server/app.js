@@ -59,8 +59,8 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("setArm", function(bln, callback) {
 			throttle = 0.0;
-			op.setArm(bln, function() {
-				callback();
+			op.setArm(bln, function(bln) {
+				callback(bln);
 			});
 		});
 

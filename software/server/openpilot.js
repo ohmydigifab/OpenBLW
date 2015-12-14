@@ -106,7 +106,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					callback(false);
 					return;
 				}
-				obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_YAWLEFT : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
+				obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
 				objMan.updateObject(obj);
 				callback(true);
 			});
