@@ -97,6 +97,15 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(true);
 			});
 		},
+		getArm : function(callback) {
+			objMan.requestObject("FlightStatus", function(obj) {
+				if (obj == null || obj.Armed == null) {
+					callback(false);
+					return;
+				}
+				callback(obj.Armed);
+			});
+		},
 		setRoll : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
@@ -141,12 +150,16 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(true);
 			});
 		},
-		getStatus : function(callback) {
-			return objMan.getObject("FlightStatus");
-		},
 		getAttitude : function(callback) {
-			return objMan.getObject("AttitudeState");
-		}
+			objMan.requestObject("AttitudeState", function(obj) {
+				callback(obj);
+			});
+		},
+		getStatus : function(callback) {
+			objMan.requestObject("FlightStatus", function(obj) {
+				callback(obj);
+			});
+		},
 	}
 }
 
