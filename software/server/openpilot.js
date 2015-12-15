@@ -105,41 +105,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 				};
 				connection(obj);
 			}, function(callback) {
-				objMan.requestObject("ManualControlSettings", function(obj) {
-					callback(null, obj);
-				});
-			}, function(obj, callback) {
-				obj.ChannelGroupsIdx0 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_GCS;// Throttle
-				obj.ChannelGroupsIdx1 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_GCS;// Roll
-				obj.ChannelGroupsIdx2 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_GCS;// Pitch
-				obj.ChannelGroupsIdx3 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_GCS;// Yaw
-				obj.ChannelGroupsIdx4 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_GCS;// FlightMode
-				obj.ChannelGroupsIdx5 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_NONE;// Collective
-				obj.ChannelGroupsIdx6 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_NONE;// Accessory0
-				obj.ChannelGroupsIdx7 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_NONE;// Accessory1
-				obj.ChannelGroupsIdx8 = ManualControlSettingsChannelGroupsOptions.MANUALCONTROLSETTINGS_CHANNELGROUPS_NONE;// Accessory2
-				obj.ChannelNumberIdx0 = 1;
-				obj.ChannelNumberIdx1 = 2;
-				obj.ChannelNumberIdx2 = 3;
-				obj.ChannelNumberIdx3 = 4;
-				obj.ChannelNumberIdx4 = 5;
-				obj.ChannelNumberIdx5 = 6;
-				obj.ChannelNumberIdx6 = 7;
-				obj.ChannelNumberIdx7 = 8;
-				obj.ChannelNumberIdx8 = 9;
-				objMan.updateObject(obj);
-				callback(null);
-			}, function(callback) {
-				objMan.requestObject("GCSReceiver", function(obj) {
-					callback(null, obj);
-				});
-			}, function(obj, callback) {
-				obj.ChannelIdx0 = 1000;//Throttle
-				obj.ChannelIdx1 = 1500;//Roll
-				obj.ChannelIdx2 = 1500;//Pitch
-				obj.ChannelIdx3 = 1500;//Yaw
-				obj.ChannelIdx4 = 1000;//FlightMode
-				objMan.updateObject(obj);
 				callback(null);
 			} ], function(err, result) {
 				callback_connected();
