@@ -11,22 +11,22 @@ async.waterfall([ function(callback) {// connect to openpilot
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	op.setThrottle(0, function(res) {
+	op.setThrottle(-1, function(res) {
 		console.log(res);
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	op.setRoll(0.5, function(res) {
+	op.setRoll(0, function(res) {
 		console.log(res);
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	op.setPitch(0.5, function(res) {
+	op.setPitch(0, function(res) {
 		console.log(res);
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	op.setYaw(0.5, function(res) {
+	op.setYaw(0, function(res) {
 		console.log(res);
 		callback(null);
 	});
