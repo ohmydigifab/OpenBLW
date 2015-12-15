@@ -40,6 +40,11 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(res);
 		callback(null);
 	});
+}, function(callback) {// start up websocket server
+	op.getManualControlSettings(function(res) {
+		console.log(res);
+		callback(null);
+	});
 } ], function(err, result) {
 	console.log(result);
 });

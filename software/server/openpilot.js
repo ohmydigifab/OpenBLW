@@ -127,6 +127,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Throttle = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
@@ -138,6 +139,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Roll = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
@@ -149,6 +151,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Pitch = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
@@ -160,6 +163,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Yaw = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
@@ -171,6 +175,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Thrust = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
