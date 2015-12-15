@@ -15,9 +15,14 @@
       "numElements": 1
     },
     {
-      "name": "PositionHoldOffset",
+      "name": "PositionHoldOffset0",
       "type": 6,
-      "numElements": 2
+      "numElements": 1
+    },
+    {
+      "name": "PositionHoldOffset1",
+      "type": 6,
+      "numElements": 1
     },
     {
       "name": "VarioControlLowPassAlpha",
@@ -45,39 +50,154 @@
       "numElements": 1
     },
     {
-      "name": "Stabilization1Settings",
+      "name": "Stabilization1Settings0",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "Stabilization2Settings",
+      "name": "Stabilization1Settings1",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "Stabilization3Settings",
+      "name": "Stabilization1Settings2",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "Stabilization4Settings",
+      "name": "Stabilization1Settings3",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "Stabilization5Settings",
+      "name": "Stabilization2Settings0",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "Stabilization6Settings",
+      "name": "Stabilization2Settings1",
       "type": 7,
-      "numElements": 4
+      "numElements": 1
     },
     {
-      "name": "FlightModePosition",
+      "name": "Stabilization2Settings2",
       "type": 7,
-      "numElements": 6
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization2Settings3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization3Settings0",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization3Settings1",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization3Settings2",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization3Settings3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization4Settings0",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization4Settings1",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization4Settings2",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization4Settings3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization5Settings0",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization5Settings1",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization5Settings2",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization5Settings3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization6Settings0",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization6Settings1",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization6Settings2",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "Stabilization6Settings3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition0",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition1",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition2",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition3",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition4",
+      "type": 7,
+      "numElements": 1
+    },
+    {
+      "name": "FlightModePosition5",
+      "type": 7,
+      "numElements": 1
     },
     {
       "name": "DisableSanityChecks",
