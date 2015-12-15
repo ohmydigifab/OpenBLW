@@ -35,49 +35,9 @@
       "numElements": 1
     },
     {
-      "name": "Channel0",
+      "name": "Channel",
       "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel1",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel2",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel3",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel4",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel5",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel6",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel7",
-      "type": 4,
-      "numElements": 1
-    },
-    {
-      "name": "Channel8",
-      "type": 4,
-      "numElements": 1
+      "numElements": 9
     },
     {
       "name": "Connected",
