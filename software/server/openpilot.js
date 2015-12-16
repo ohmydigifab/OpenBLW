@@ -115,6 +115,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, function(obj, callback) {
 				console.log(obj);
 				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
+				Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
 				objMan.updateObject(obj);
 				callback(null);
 			}, function(callback) {
