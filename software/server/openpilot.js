@@ -89,10 +89,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 					callback(null);
 				});
 			}, function(callback) {
-				objMan.requestObject("FlightTelemetryStats", function(obj) {
-					callback(null, obj);
-				});
-			}, function(obj, callback) {
 				gtsObj = getBlankGtsObj();
 				var connection = function(obj) {
 					ftsObj = obj;
@@ -110,45 +106,48 @@ function OpenPilot(board_type, com_port, definition_path) {
 						callback(null);
 						return;
 					}
-					objMan.requestObject("FlightTelemetryStats", connection);
+					objMan.getObject("FlightTelemetryStats", connection, true);
 				};
-				connection(obj);
+				objMan.getObject("FlightTelemetryStats", connection, true);
 			}, function(callback) {
-				objMan.requestObject("ManualControlCommand.Metadata", function(obj) {
-					callback(null, obj);
+				objMan.getObject("ManualControlCommand.Metadata", function(obj) {
+					Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
+					Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
+					objMan.updateObject(obj);
+					callback(null);
 				});
-			}, function(obj, callback) {
-				console.log(obj);
-				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
-				Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
-				objMan.updateObject(obj);
-				callback(null);
 			}, function(callback) {
-				objMan.requestObject("ManualControlCommand.Metadata", function(obj) {
-					callback(null, obj);
-				});
-			}, function(obj, callback) {
-				console.log(obj);
-				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
-				objMan.updateObject(obj);
-				callback(null);
+				callback(null, obj);
 			} ], function(err, result) {
 				callback_connected();
 			});
 		},
 		setArm : function(bArm, callback) {
-			objMan.requestObject("FlightModeSettings", function(obj) {
-				if (obj == null || obj.Arming == null) {
+			objMan.getObject("ManualControlCommand", function(obj) {
+				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
+				obj.Throttle = -1;
+				obj.Roll = 0;
+				obj.Pitch = 0;
+				obj.Yaw = 0;
+				obj.FlightModeSwitchPosition = 0;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
-				callback(obj);
+				objMan.getObject("FlightModeSettings", function(obj) {
+					if (obj == null || obj.Arming == null) {
+						callback(null);
+						return;
+					}
+					obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
+					objMan.updateObject(obj);
+					callback(obj);
+				});
 			});
 		},
 		getArm : function(callback) {
-			objMan.requestObject("FlightStatus", function(obj) {
+			objMan.getObject("FlightStatus", function(obj) {
 				if (obj == null || obj.Armed == null) {
 					callback(false);
 					return;
@@ -157,7 +156,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setThrottle : function(value, callback) {
-			objMan.requestObject("ManualControlCommand", function(obj) {
+			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
@@ -169,7 +168,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setRoll : function(value, callback) {
-			objMan.requestObject("ManualControlCommand", function(obj) {
+			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
@@ -181,7 +180,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setPitch : function(value, callback) {
-			objMan.requestObject("ManualControlCommand", function(obj) {
+			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
@@ -193,7 +192,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setYaw : function(value, callback) {
-			objMan.requestObject("ManualControlCommand", function(obj) {
+			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
@@ -205,7 +204,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setFlightModeSwitchPosition : function(value, callback) {
-			objMan.requestObject("ManualControlCommand", function(obj) {
+			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
@@ -217,19 +216,19 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		getAttitude : function(callback) {
-			objMan.requestObject("AttitudeState", function(obj) {
+			objMan.getObject("AttitudeState", function(obj) {
 				callback(obj);
-			});
+			}, true);
 		},
 		getFlightStatus : function(callback) {
-			objMan.requestObject("FlightStatus", function(obj) {
+			objMan.getObject("FlightStatus", function(obj) {
 				callback(obj);
-			});
+			}, true);
 		},
 		getManualControlSettings : function(callback) {
-			objMan.requestObject("ManualControlSettings", function(obj) {
+			objMan.getObject("ManualControlSettings", function(obj) {
 				callback(obj);
-			});
+			}, true);
 		}
 	};
 	return self;
