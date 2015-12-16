@@ -69,13 +69,17 @@ function OpenPilot(board_type, com_port, definition_path) {
 					baudrate : 57600
 				});
 				objMan.output_stream = function(data) {
-					console.log("data");
+					console.log("output");
 					console.log(data);
 					sp.write(data, function() {
 						sp.drain();
 					});
 				};
-				sp.on("data", objMan.input_stream);
+				sp.on("data", function(data) {
+					console.log("input");
+					console.log(data);
+					objMan.input_stream(data)
+				});
 				sp.on("open", function() {
 					callback(null);
 				});
