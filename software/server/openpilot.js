@@ -110,6 +110,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				});
 			}, function(obj, callback) {
 				console.log(obj);
+				UavtalkObjMetadataHelper.setFlightAccess(obj, UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
 				objMan.updateObject(obj);
 				callback(null);
 			} ], function(err, result) {
@@ -184,7 +185,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			});
 		},
-		setFlightModeSwitchPosition : function(value, callback) {			
+		setFlightModeSwitchPosition : function(value, callback) {
 			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
