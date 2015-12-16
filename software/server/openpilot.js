@@ -142,7 +142,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					}
 					obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTSTATUS_ARMED_DISARMED;
 					objMan.updateObject(obj);
-					callback(obj);
+					self.getArm(callback);
 				});
 			});
 		},
@@ -153,7 +153,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				callback(obj.Armed);
-			});
+			}, true);
 		},
 		setThrottle : function(value, callback) {
 			objMan.getObject("ManualControlCommand", function(obj) {
