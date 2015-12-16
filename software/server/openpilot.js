@@ -105,6 +105,12 @@ function OpenPilot(board_type, com_port, definition_path) {
 				};
 				connection(obj);
 			}, function(callback) {
+				objMan.requestObject("ManualControlCommand.Metadata", function(obj) {
+					callback(null, obj);
+				});
+			}, function(obj, callback) {
+				console.log(obj);
+				objMan.updateObject(obj);
 				callback(null);
 			} ], function(err, result) {
 				callback_connected();
@@ -131,56 +137,61 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setThrottle : function(value, callback) {
-			objMan.requestObject("GCSReceiver", function(obj) {
+			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Channel0 = value;
+				obj.Throttle = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
 		},
 		setRoll : function(value, callback) {
-			objMan.requestObject("GCSReceiver", function(obj) {
+			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Channel1 = value;
+				obj.Roll = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
 		},
 		setPitch : function(value, callback) {
-			objMan.requestObject("GCSReceiver", function(obj) {
+			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Channel2 = value;
+				obj.Pitch = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
 		},
 		setYaw : function(value, callback) {
-			objMan.requestObject("GCSReceiver", function(obj) {
+			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Channel3 = value;
+				obj.Yaw = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
 		},
-		setFlightMode : function(value, callback) {
-			objMan.requestObject("GCSReceiver", function(obj) {
+		setFlightModeSwitchPosition : function(value, callback) {			
+			objMan.requestObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
 					callback(null);
 					return;
 				}
-				obj.Channel4 = value;
+				obj.FlightModeSwitchPosition = value;
+				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
 			});
