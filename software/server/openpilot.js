@@ -58,7 +58,8 @@ function OpenPilot(board_type, com_port, definition_path) {
 		return gtsObj;
 	}
 
-	return {
+	var self = {
+		debug : false,
 		connect : function(callback_connected) {
 			async.waterfall([ function(callback) {
 				objMan.init(function() {
@@ -69,15 +70,19 @@ function OpenPilot(board_type, com_port, definition_path) {
 					baudrate : 57600
 				});
 				objMan.output_stream = function(data) {
-					console.log("output");
-					console.log(data);
+					if (self.debug) {
+						console.log("output");
+						console.log(data);
+					}
 					sp.write(data, function() {
 						sp.drain();
 					});
 				};
 				sp.on("data", function(data) {
-					console.log("input");
-					console.log(data);
+					if (self.debug) {
+						console.log("input");
+						console.log(data);
+					}
 					objMan.input_stream(data)
 				});
 				sp.on("open", function() {
@@ -226,7 +231,8 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			});
 		}
-	}
+	};
+	return self;
 }
 
 module.exports = OpenPilot;
