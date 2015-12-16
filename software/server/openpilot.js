@@ -117,6 +117,15 @@ function OpenPilot(board_type, com_port, definition_path) {
 				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
 				objMan.updateObject(obj);
 				callback(null);
+			}, function(callback) {
+				objMan.requestObject("ManualControlCommand.Metadata", function(obj) {
+					callback(null, obj);
+				});
+			}, function(obj, callback) {
+				console.log(obj);
+				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
+				objMan.updateObject(obj);
+				callback(null);
 			} ], function(err, result) {
 				callback_connected();
 			});
