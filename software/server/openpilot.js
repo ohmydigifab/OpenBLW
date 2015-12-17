@@ -88,7 +88,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				sp.on("open", function() {
 					callback(null);
 				});
-			}], function(err, result) {
+			} ], function(err, result) {
 				callback_completed();
 			});
 		},
@@ -114,17 +114,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 					objMan.getObject("FlightTelemetryStats", connection, true);
 				};
 				objMan.getObject("FlightTelemetryStats", connection, true);
-			}, function(callback) {
-				objMan.getObject("ManualControlCommand.Metadata", function(obj) {
-					Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
-					Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
-					objMan.updateObject(obj);
-					console.log("ManualControlCommand overide init");
-					callback(null);
-				});
-			}, function(callback) {
-				console.log("connection process done!");
-				callback(null);
 			} ], function(err, result) {
 				callback_completed();
 			});
@@ -134,6 +123,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
 				Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
 				objMan.updateObject(obj);
+				console.log("ManualControlCommand overide init");
 				objMan.getObject("ManualControlCommand", function(obj) {
 					if (obj == null) {
 						callback(null);
