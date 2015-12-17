@@ -36,7 +36,6 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("ping", function(time) {
 			op.getObject("FlightStatus", function(flightStatus) {
-				console.log(res);
 				op.getObject("FlightTelemetryStats", function(flightTelemetryStats) {
 					socket.emit("pong", {
 						FlightStatus : flightStatus,
@@ -54,6 +53,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 				throttle = 1.0;
 			}
 			op.setThrust(throttle, function() {
+				callback();
+			});
+		});
+
+		socket.on("connect", function(callback) {
+			op.connect(function() {
 				callback();
 			});
 		});
