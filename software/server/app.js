@@ -57,7 +57,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 		});
 
-		socket.on("connect", function(callback) {
+		socket.on("connectFcm", function(callback) {
 			op.connect(function() {
 				callback();
 			});
