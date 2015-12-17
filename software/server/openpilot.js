@@ -130,26 +130,31 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setArm : function(bArm, callback) {
-			objMan.getObject("ManualControlCommand", function(obj) {
-				if (obj == null) {
-					callback(null);
-					return;
-				}
-				obj.Throttle = -1;
-				obj.Roll = 0;
-				obj.Pitch = 0;
-				obj.Yaw = 0;
-				obj.FlightModeSwitchPosition = 0;
-				obj.Connected = 1;
+			objMan.getObject("ManualControlCommand.Metadata", function(obj) {
+				Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
+				Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
 				objMan.updateObject(obj);
-				objMan.getObject("FlightModeSettings", function(obj) {
-					if (obj == null || obj.Arming == null) {
+				objMan.getObject("ManualControlCommand", function(obj) {
+					if (obj == null) {
 						callback(null);
 						return;
 					}
-					obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSDISARMED;
+					obj.Throttle = -1;
+					obj.Roll = 0;
+					obj.Pitch = 0;
+					obj.Yaw = 0;
+					obj.FlightModeSwitchPosition = 0;
+					obj.Connected = 1;
 					objMan.updateObject(obj);
-					self.getArm(callback);
+					objMan.getObject("FlightModeSettings", function(obj) {
+						if (obj == null || obj.Arming == null) {
+							callback(null);
+							return;
+						}
+						obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSDISARMED;
+						objMan.updateObject(obj);
+						self.getArm(callback);
+					});
 				});
 			});
 		},
