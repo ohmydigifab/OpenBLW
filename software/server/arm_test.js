@@ -37,28 +37,39 @@ async.waterfall([ function(callback) {// connect to openpilot
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	setInterval(function() {
-		op.getFlightStatus(function(res) {
-			console.log(res);
-		});
-	}, 1000);
-	callback(null);
-}, function(callback) {// start up websocket server
-	setInterval(function() {
-		op.getFlightTelemetryStats(function(res) {
-			console.log(res);
-		});
-	}, 1000);
-	callback(null);
-}, function(callback) {// start up websocket server
+	var step = 0;
 	var throttle = -1;
 	setInterval(function() {
-		throttle += 0.01;
-		op.setThrottle(throttle, function(res) {
-			console.log(res);
-			callback(null);
-		});
-	}, 5000);
+		step++;
+		switch (step % 5) {
+		case 0:
+			op.getObject("FlightStatus", function(res) {
+				console.log(res);
+			});
+			break;
+		case 1:
+			op.getObject("FlightTelemetryStats", function(res) {
+				console.log(res);
+			});
+			break;
+		case 2:
+			op.getObject("ActuatorCommand", function(res) {
+				console.log(res);
+			});
+			break;
+		case 3:
+			op.getObject("ManualControlCommand", function(res) {
+				console.log(res);
+			});
+			break;
+		case 4:
+			throttle += 0.01;
+			op.setThrottle(throttle, function(res) {
+				console.log(res);
+			});
+			break;
+		}
+	}, 1000);
 	callback(null);
 } ], function(err, result) {
 	console.log(result);

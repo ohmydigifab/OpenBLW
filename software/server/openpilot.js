@@ -222,20 +222,10 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			}, true);
 		},
-		getFlightStatus : function(callback) {
-			objMan.getObject("FlightStatus", function(obj) {
+		getObject : function(name, callback, blnRenew) {
+			objMan.getObject(name, function(obj) {
 				callback(obj);
-			}, true);
-		},
-		getFlightTelemetryStats : function(callback) {
-			objMan.getObject("FlightTelemetryStats", function(obj) {
-				callback(obj);
-			}, true);
-		},
-		getManualControlSettings : function(callback) {
-			objMan.getObject("ManualControlSettings", function(obj) {
-				callback(obj);
-			}, true);
+			}, blnRenew);
 		}
 	};
 	return self;
