@@ -60,7 +60,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 
 	var self = {
 		debug : false,
-		connect : function(callback_connected) {
+		init : function(callback_completed) {
 			async.waterfall([ function(callback) {
 				objMan.init(function() {
 					callback(null);
@@ -88,7 +88,12 @@ function OpenPilot(board_type, com_port, definition_path) {
 				sp.on("open", function() {
 					callback(null);
 				});
-			}, function(callback) {
+			}], function(err, result) {
+				callback_completed();
+			});
+		},
+		connect : function(callback_completed) {
+			async.waterfall([ function(callback) {
 				gtsObj = getBlankGtsObj();
 				var connection = function(obj) {
 					ftsObj = obj;
@@ -121,7 +126,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				console.log("connection process done!");
 				callback(null);
 			} ], function(err, result) {
-				callback_connected();
+				callback_completed();
 			});
 		},
 		setArm : function(bArm, callback) {

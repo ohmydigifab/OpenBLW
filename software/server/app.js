@@ -7,6 +7,10 @@ var fs = require("fs");
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot
+	op.init(function() {
+		callback(null);
+	});
+}, function(callback) {// connect to openpilot
 	op.connect(function() {
 		callback(null);
 	});
