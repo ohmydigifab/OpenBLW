@@ -169,6 +169,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					return;
 				}
 				obj.Throttle = value;
+				obj.Thrust = value;
 				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
