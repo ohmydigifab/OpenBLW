@@ -114,10 +114,12 @@ function OpenPilot(board_type, com_port, definition_path) {
 					Uavtalk.UavtalkObjMetadataHelper.setFlightAccess(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjAccessType.ACCESS_READONLY);
 					Uavtalk.UavtalkObjMetadataHelper.setFlightTelemetryUpdateMode(obj, Uavtalk.UavtalkObjMetadataHelper.UAVObjUpdateMode.UPDATEMODE_MANUAL);
 					objMan.updateObject(obj);
+					console.log("ManualControlCommand overide init");
 					callback(null);
 				});
 			}, function(callback) {
-				callback(null, obj);
+				console.log("connection process done!");
+				callback(null);
 			} ], function(err, result) {
 				callback_connected();
 			});
