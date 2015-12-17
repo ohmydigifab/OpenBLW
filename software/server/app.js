@@ -114,5 +114,24 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 	});
+	callback(null);
+}, function(callback) {// start up websocket server
+	var step = 0;
+	setInterval(function() {
+		step++;
+		switch (step % 2) {
+		case 0:
+			op.getObject("FlightStatus", function(res) {
+				//console.log(res);
+			});
+			break;
+		case 1:
+			op.getObject("FlightTelemetryStats", function(res) {
+				//console.log(res);
+			});
+			break;
+		}
+	}, 1000);
+	callback(null);
 } ], function(err, result) {
 });
