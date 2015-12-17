@@ -41,7 +41,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 	var throttle = -1;
 	setInterval(function() {
 		step++;
-		switch (step % 5) {
+		switch (step % 7) {
 		case 0:
 			op.getObject("FlightStatus", function(res) {
 				console.log(res);
@@ -58,11 +58,21 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 			break;
 		case 3:
-			op.getObject("ManualControlCommand", function(res) {
+			op.getObject("ActuatorSettings", function(res) {
 				console.log(res);
 			});
 			break;
 		case 4:
+			op.getObject("ManualControlCommand", function(res) {
+				console.log(res);
+			});
+			break;
+		case 5:
+			op.getObject("ManualControlSettings", function(res) {
+				console.log(res);
+			});
+			break;
+		case 6:
 			throttle += 0.01;
 			op.setThrottle(throttle, function(res) {
 				console.log(res);
