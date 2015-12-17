@@ -116,6 +116,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 	});
 	callback(null);
 }, function(callback) {// start up websocket server
+	console.log("poling start!");
 	var step = 0;
 	setInterval(function() {
 		step++;
@@ -123,12 +124,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 		case 0:
 			op.getObject("FlightStatus", function(res) {
 				//console.log(res);
-			});
+			}, true);
 			break;
 		case 1:
 			op.getObject("FlightTelemetryStats", function(res) {
 				//console.log(res);
-			});
+			}, true);
 			break;
 		}
 	}, 1000);
