@@ -51,10 +51,15 @@ async.waterfall([ function(callback) {// connect to openpilot
 	}, 1000);
 	callback(null);
 }, function(callback) {// start up websocket server
-	op.getManualControlSettings(function(res) {
-		console.log(res);
-		callback(null);
-	});
+	var throttle = -1;
+	setInterval(function() {
+		throttle += 0.01;
+		op.setThrottle(throttle, function(res) {
+			console.log(res);
+			callback(null);
+		});
+	}, 5000);
+	callback(null);
 } ], function(err, result) {
 	console.log(result);
 });
