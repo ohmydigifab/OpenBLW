@@ -227,6 +227,11 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			}, true);
 		},
+		getFlightTelemetryStats : function(callback) {
+			objMan.getObject("FlightTelemetryStats", function(obj) {
+				callback(obj);
+			}, true);
+		},
 		getManualControlSettings : function(callback) {
 			objMan.getObject("ManualControlSettings", function(obj) {
 				callback(obj);

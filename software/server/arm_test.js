@@ -37,10 +37,19 @@ async.waterfall([ function(callback) {// connect to openpilot
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
-	op.getFlightStatus(function(res) {
-		console.log(res);
-		callback(null);
-	});
+	setTimeout(function() {
+		op.getFlightStatus(function(res) {
+			console.log(res);
+		});
+	}, 1000);
+	callback(null);
+}, function(callback) {// start up websocket server
+	setTimeout(function() {
+		op.getFlightTelemetryStats(function(res) {
+			console.log(res);
+		});
+	}, 1000);
+	callback(null);
 }, function(callback) {// start up websocket server
 	op.getManualControlSettings(function(res) {
 		console.log(res);
