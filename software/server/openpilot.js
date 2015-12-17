@@ -217,11 +217,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj);
 			});
 		},
-		getAttitude : function(callback) {
-			objMan.getObject("AttitudeState", function(obj) {
-				callback(obj);
-			}, true);
-		},
 		getObject : function(name, callback, blnRenew) {
 			objMan.getObject(name, function(obj) {
 				callback(obj);

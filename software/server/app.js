@@ -35,11 +35,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("ping", function(time) {
-			op.getFlightStatus(function(flightStatus) {
-				op.getManualControlSettings(function(manualControlSettings) {
+			op.getObject("FlightStatus", function(flightStatus) {
+				console.log(res);
+				op.getObject("FlightTelemetryStats", function(flightTelemetryStats) {
 					socket.emit("pong", {
 						FlightStatus : flightStatus,
-						ManualControlSettings : manualControlSettings
+						FlightTelemetryStats : flightTelemetryStats
 					});
 				});
 			});
@@ -95,9 +96,9 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("getAttitude", function(callback) {
-			op.getAttitude(function(obj) {
+			op.getObject("AttitudeState", function(obj) {
 				callback(obj);
-			});
+			}, true);
 		});
 
 		socket.on("disconnect", function() {
