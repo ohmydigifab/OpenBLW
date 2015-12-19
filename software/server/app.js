@@ -74,34 +74,28 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 		});
 
-		socket.on("setThrottle", function(value, callback) {
-			op.setThrottle(value, function(res) {
+		socket.on("setControlValue", function(value, callback) {
+			op.setControlValue(value, function(res) {
 				callback(res);
 			});
 		});
 
-		socket.on("setRoll", function(value, callback) {
-			op.setRoll(value, function(res) {
+		socket.on("getControlValue", function(callback) {
+			op.getObject("ManualControlCommand", function(obj) {
+				callback(obj);
+			}, true);
+		});
+
+		socket.on("setActuatorValue", function(value, callback) {
+			op.setActuator(value, function(res) {
 				callback(res);
 			});
 		});
 
-		socket.on("setPitch", function(value, callback) {
-			op.setPitch(value, function(res) {
-				callback(res);
-			});
-		});
-
-		socket.on("setYaw", function(value, callback) {
-			op.setYaw(value, function(res) {
-				callback(res);
-			});
-		});
-
-		socket.on("setThrust", function(value, callback) {
-			op.setThrust(value, function(res) {
-				callback(res);
-			});
+		socket.on("getActuatorValue", function(callback) {
+			op.getObject("ActuatorCommand", function(obj) {
+				callback(obj);
+			}, true);
 		});
 
 		socket.on("getAttitude", function(callback) {
