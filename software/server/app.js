@@ -78,6 +78,17 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("setControlValue", function(value, callback) {
+			function degToOne(value) {
+				value = value % 360;
+				if(value < 0){
+					value += 360;
+				}
+				return value / 360;
+			}
+			value.Throttle = value.Throttle / 100;
+			value.Roll = degToOne(value.Roll);
+			value.Pitch = degToOne(value.Pitch);
+			value.Yaw = degToOne(value.Yaw);
 			op.setControlValue(value, function(res) {
 				callback(res);
 			});
