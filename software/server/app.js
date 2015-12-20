@@ -39,11 +39,14 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("ping", function(time) {
-			op.getObject("FlightStatus", function(flightStatus) {
-				op.getObject("FlightTelemetryStats", function(flightTelemetryStats) {
-					socket.emit("pong", {
-						FlightStatus : flightStatus,
-						FlightTelemetryStats : flightTelemetryStats
+			op.getObject("ActuatorCommand", function(actuatorCommand) {
+				op.getObject("FlightStatus", function(flightStatus) {
+					op.getObject("FlightTelemetryStats", function(flightTelemetryStats) {
+						socket.emit("pong", {
+							ActuatorCommand : actuatorCommand,
+							FlightStatus : flightStatus,
+							FlightTelemetryStats : flightTelemetryStats
+						});
 					});
 				});
 			});
@@ -117,12 +120,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 		switch (step % 2) {
 		case 0:
 			op.getObject("FlightStatus", function(res) {
-				//console.log(res);
+				// console.log(res);
 			}, true);
 			break;
 		case 1:
 			op.getObject("FlightTelemetryStats", function(res) {
-				//console.log(res);
+				// console.log(res);
 			}, true);
 			break;
 		}
