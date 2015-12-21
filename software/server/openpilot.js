@@ -185,6 +185,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							obj.gyrobiasIdx2 += z;
 							console.log(obj);
 							objMan.updateObject(obj);
+							objMan.updateObject(mementoAttitudeSettings);
 							callback(true);
 						}, true);
 					} else {
