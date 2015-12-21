@@ -158,6 +158,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, true);
 		},
 		calibrateLevel : function(LEVEL_SAMPLES, callback) {
+			LEVEL_SAMPLES = LEVEL_SAMPLES ? LEVEL_SAMPLES : 100;
 			var count = 0;
 			var x = 0;
 			var y = 0;
