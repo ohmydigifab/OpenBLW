@@ -157,7 +157,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj.Armed);
 			}, true);
 		},
-		calibrateLevel : function(LEVEL_SAMPLES, callback) {
+		calibrateLevel : function(LEVEL_SAMPLES, callback_completed) {
 			var AttitudeSettingsBiasCorrectGyroOptions = {
 				ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE : 0,
 				ATTITUDESETTINGS_BIASCORRECTGYRO_TRUE : 1
@@ -175,55 +175,72 @@ function OpenPilot(board_type, com_port, definition_path) {
 				z : 0
 			};
 			var mementoAttitudeSettings = null;
-			var getSample = function() {
-				objMan.getObject("AccelState", function(objAccelState) {
-					objMan.getObject("GyroState", function(objGyroState) {
-						count++;
-						console.log("calibrateLevel : " + count);
-						calibAccel.x += objAccelState.x;
-						calibAccel.y += objAccelState.y;
-						calibAccel.z += objAccelState.z;
-						calibGyro.x += objGyroState.x;
-						calibGyro.y += objGyroState.y;
-						calibGyro.z += objGyroState.z;
-						if (count == LEVEL_SAMPLES) {
-							calibAccel.x /= LEVEL_SAMPLES;
-							calibAccel.y /= LEVEL_SAMPLES;
-							calibAccel.z /= LEVEL_SAMPLES;
-							calibGyro.x /= LEVEL_SAMPLES;
-							calibGyro.y /= LEVEL_SAMPLES;
-							calibGyro.z /= LEVEL_SAMPLES;
-							objMan.getObject("AccelGyroSettings", function(obj) {
-								obj.accelbiasIdx0 = -calibAccel.x;
-								obj.accelbiasIdx1 = -calibAccel.y;
-								obj.accelbiasIdx2 = -(calibAccel.z + 9.81);
-								obj.gyrobiasIdx0 = -calibGyro.x;
-								obj.gyrobiasIdx1 = -calibGyro.y;
-								obj.gyrobiasIdx2 = -calibGyro.z;
+			var objAccelGyroSettings = null;
+			async.waterfall([ function(callback) {
+				objMan.getObject("AccelGyroSettings", function(obj) {
+					objAccelGyroSettings = obj;
+					obj.accelbiasIdx0 = 0;
+					obj.accelbiasIdx1 = 0;
+					obj.accelbiasIdx2 = 0;
+					obj.gyrobiasIdx0 = 0;
+					obj.gyrobiasIdx1 = 0;
+					obj.gyrobiasIdx2 = 0;
+					objMan.updateObject(obj);
+					callback(null);
+				}, true);
+			}, function(callback) {
+				objMan.getObject("AttitudeSettings", function(obj) {
+					mementoAttitudeSettings = JSON.parse(JSON.stringify(obj));
+					obj.BiasCorrectGyro = AttitudeSettingsBiasCorrectGyroOptions.ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE;
+					obj.BoardRotationIdx0 = 0;
+					obj.BoardRotationIdx1 = 0;
+					obj.BoardRotationIdx2 = 0;
+					objMan.updateObject(obj);
+					console.log(mementoAttitudeSettings);
+					console.log(obj);
+					callback(null);
+				}, true);
+			}, function(callback) {
+				var getSample = function() {
+					objMan.getObject("AccelState", function(objAccelState) {
+						objMan.getObject("GyroState", function(objGyroState) {
+							count++;
+							console.log("calibrateLevel : " + count);
+							calibAccel.x += objAccelState.x;
+							calibAccel.y += objAccelState.y;
+							calibAccel.z += objAccelState.z;
+							calibGyro.x += objGyroState.x;
+							calibGyro.y += objGyroState.y;
+							calibGyro.z += objGyroState.z;
+							if (count == LEVEL_SAMPLES) {
+								calibAccel.x /= LEVEL_SAMPLES;
+								calibAccel.y /= LEVEL_SAMPLES;
+								calibAccel.z /= LEVEL_SAMPLES;
+								calibGyro.x /= LEVEL_SAMPLES;
+								calibGyro.y /= LEVEL_SAMPLES;
+								calibGyro.z /= LEVEL_SAMPLES;
+								objAccelGyroSettings.accelbiasIdx0 = -calibAccel.x;
+								objAccelGyroSettings.accelbiasIdx1 = -calibAccel.y;
+								objAccelGyroSettings.accelbiasIdx2 = -(calibAccel.z + 9.81);
+								objAccelGyroSettings.gyrobiasIdx0 = -calibGyro.x;
+								objAccelGyroSettings.gyrobiasIdx1 = -calibGyro.y;
+								objAccelGyroSettings.gyrobiasIdx2 = -calibGyro.z;
 								console.log(calibAccel);
 								console.log(calibGyro);
-								console.log(obj);
+								console.log(objAccelGyroSettings);
 								objMan.updateObject(obj);
 								objMan.updateObject(mementoAttitudeSettings);
-								callback(true);
-							}, true);
-						} else {
-							setTimeout(getSample, 100);
-						}
+								callback(null);
+							} else {
+								setTimeout(getSample, 100);
+							}
+						}, true);
 					}, true);
-				}, true);
-			};
-			objMan.getObject("AttitudeSettings", function(obj) {
-				mementoAttitudeSettings = JSON.parse(JSON.stringify(obj));
-				obj.BiasCorrectGyro = AttitudeSettingsBiasCorrectGyroOptions.ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE;
-				obj.BoardRotationIdx0 = 0;
-				obj.BoardRotationIdx1 = 0;
-				obj.BoardRotationIdx2 = 0;
-				objMan.updateObject(obj);
-				console.log(mementoAttitudeSettings);
-				console.log(obj);
+				};
 				getSample();
-			}, true);
+			} ], function(err, result) {
+				callback_completed(true);
+			});
 		},
 		setControlValue : function(value, callback) {
 			objMan.getObject("ManualControlCommand", function(obj) {
