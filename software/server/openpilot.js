@@ -186,6 +186,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					obj.gyrobiasIdx1 = 0;
 					obj.gyrobiasIdx2 = 0;
 					objMan.updateObject(obj);
+					console.log(obj);
 					callback(null);
 				}, true);
 			}, function(callback) {
@@ -228,7 +229,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 								console.log(calibAccel);
 								console.log(calibGyro);
 								console.log(objAccelGyroSettings);
-								objMan.updateObject(obj);
+								objMan.updateObject(objAccelGyroSettings);
 								objMan.updateObject(mementoAttitudeSettings);
 								callback(null);
 							} else {
