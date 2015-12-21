@@ -194,7 +194,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				}, true);
 			};
 			objMan.getObject("AttitudeSettings", function(obj) {
-				mementoAttitudeSettings = obj.clone();
+				mementoAttitudeSettings = JSON.parse(JSON.stringify(obj));
 				obj.BiasCorrectGyro = AttitudeSettingsBiasCorrectGyroOptions.ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE;
 				obj.BoardRotationIdx0 = 0;
 				obj.BoardRotationIdx1 = 0;
