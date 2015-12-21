@@ -169,8 +169,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 				y : 0,
 				z : 0
 			};
-			var y = 0;
-			var z = 0;
 			var mementoAttitudeSettings = null;
 			var getSample = function() {
 				objMan.getObject("AccelState", function(obj) {
