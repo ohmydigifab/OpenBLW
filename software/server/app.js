@@ -77,6 +77,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 		});
 
+		socket.on("calibrateLevel", function(bln, callback) {
+			op.calibrateLevel(function(res) {
+				callback(res);
+			});
+		});
+
 		socket.on("setControlValue", function(value, callback) {
 			function degToOne(value) {
 				value = value % 180;// -180 <-> +180

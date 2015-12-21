@@ -157,6 +157,36 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback(obj.Armed);
 			}, true);
 		},
+		calibrateLevel : function(LEVEL_SAMPLES, callback) {
+			var count = 0;
+			var x = 0;
+			var y = 0;
+			var z = 0;
+			var getSample = function() {
+				objMan.getObject("AccelSensor", function(obj) {
+					count++;
+					console.log(count);
+					x += obj.x;
+					y += obj.y;
+					z += obj.z;
+					if (count == LEVEL_SAMPLES) {
+						x /= LEVEL_SAMPLES;
+						y /= LEVEL_SAMPLES;
+						z /= LEVEL_SAMPLES;
+						objMan.getObject("AccelGyroSettings", function(obj) {
+							obj.gyrobiasIdx0 = x;
+							obj.gyrobiasIdx1 = y;
+							obj.gyrobiasIdx2 = z;
+							objMan.updateObject(obj);
+							callback(true);
+						});
+					} else {
+						getSample();
+					}
+				});
+			};
+			getSample();
+		},
 		setControlValue : function(value, callback) {
 			objMan.getObject("ManualControlCommand", function(obj) {
 				if (obj == null) {
