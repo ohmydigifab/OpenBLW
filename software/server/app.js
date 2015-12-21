@@ -77,7 +77,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 		});
 
-		socket.on("calibrateLevel", function(bln, callback) {
+		socket.on("calibrateLevel", function(callback) {
 			var LEVEL_SAMPLES = 100;
 			op.calibrateLevel(LEVEL_SAMPLES, function(res) {
 				callback(res);
