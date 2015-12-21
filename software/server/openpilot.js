@@ -158,11 +158,16 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, true);
 		},
 		calibrateLevel : function(LEVEL_SAMPLES, callback) {
+			var AttitudeSettingsBiasCorrectGyroOptions = {
+				ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE : 0,
+				ATTITUDESETTINGS_BIASCORRECTGYRO_TRUE : 1
+			};
 			LEVEL_SAMPLES = LEVEL_SAMPLES ? LEVEL_SAMPLES : 100;
 			var count = 0;
 			var x = 0;
 			var y = 0;
 			var z = 0;
+			var mementoAttitudeSettings = null;
 			var getSample = function() {
 				objMan.getObject("AccelState", function(obj) {
 					count++;
@@ -187,7 +192,17 @@ function OpenPilot(board_type, com_port, definition_path) {
 					}
 				}, true);
 			};
-			getSample();
+			objMan.getObject("AttitudeSettings", function(obj) {
+				mementoAttitudeSettings = obj.clone();
+				obj.BiasCorrectGyro = AttitudeSettingsBiasCorrectGyroOptions.ATTITUDESETTINGS_BIASCORRECTGYRO_FALSE;
+				obj.BoardRotationIdx0 = 0;
+				obj.BoardRotationIdx1 = 0;
+				obj.BoardRotationIdx2 = 0;
+				objMan.updateObject(obj);
+				console.log(mementoAttitudeSettings);
+				console.log(obj);
+				getSample();
+			}, true);
 		},
 		setControlValue : function(value, callback) {
 			objMan.getObject("ManualControlCommand", function(obj) {
