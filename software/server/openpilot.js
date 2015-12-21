@@ -164,7 +164,11 @@ function OpenPilot(board_type, com_port, definition_path) {
 			};
 			LEVEL_SAMPLES = LEVEL_SAMPLES ? LEVEL_SAMPLES : 100;
 			var count = 0;
-			var x = 0;
+			var calib = {
+				x : 0,
+				y : 0,
+				z : 0
+			};
 			var y = 0;
 			var z = 0;
 			var mementoAttitudeSettings = null;
@@ -172,17 +176,18 @@ function OpenPilot(board_type, com_port, definition_path) {
 				objMan.getObject("AccelState", function(obj) {
 					count++;
 					console.log("calibrateLevel : " + count);
-					x += obj.x;
-					y += obj.y;
-					z += obj.z;
+					calib.x += obj.x;
+					calib.y += obj.y;
+					calib.z += obj.z;
 					if (count == LEVEL_SAMPLES) {
-						x /= LEVEL_SAMPLES;
-						y /= LEVEL_SAMPLES;
-						z /= LEVEL_SAMPLES;
+						calib.x /= LEVEL_SAMPLES;
+						calib.y /= LEVEL_SAMPLES;
+						calib.z /= LEVEL_SAMPLES;
 						objMan.getObject("AccelGyroSettings", function(obj) {
-							obj.gyrobiasIdx0 += x;
-							obj.gyrobiasIdx1 += y;
-							obj.gyrobiasIdx2 += z;
+							obj.gyrobiasIdx0 += calib.x;
+							obj.gyrobiasIdx1 += calib.y;
+							obj.gyrobiasIdx2 += calib.z;
+							console.log(calib);
 							console.log(obj);
 							objMan.updateObject(obj);
 							objMan.updateObject(mementoAttitudeSettings);
