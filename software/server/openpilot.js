@@ -165,7 +165,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			var getSample = function() {
 				objMan.getObject("AccelState", function(obj) {
 					count++;
-					console.log(count);
+					console.log("calibrateLevel : " + count);
 					x += obj.x;
 					y += obj.y;
 					z += obj.z;
@@ -182,7 +182,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							callback(true);
 						}, true);
 					} else {
-						getSample();
+						setTimeout(getSample(), 100);
 					}
 				}, true);
 			};
