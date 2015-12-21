@@ -220,9 +220,9 @@ function OpenPilot(board_type, com_port, definition_path) {
 								calibGyro.x /= LEVEL_SAMPLES;
 								calibGyro.y /= LEVEL_SAMPLES;
 								calibGyro.z /= LEVEL_SAMPLES;
-								objAccelGyroSettings.accelbiasIdx0 = -calibAccel.x;
-								objAccelGyroSettings.accelbiasIdx1 = -calibAccel.y;
-								objAccelGyroSettings.accelbiasIdx2 = -(calibAccel.z + 9.81);
+								objAccelGyroSettings.accelbiasIdx0 = calibAccel.x;
+								objAccelGyroSettings.accelbiasIdx1 = calibAccel.y;
+								objAccelGyroSettings.accelbiasIdx2 = (calibAccel.z + 9.81);
 								objAccelGyroSettings.gyrobiasIdx0 = -calibGyro.x;
 								objAccelGyroSettings.gyrobiasIdx1 = -calibGyro.y;
 								objAccelGyroSettings.gyrobiasIdx2 = -calibGyro.z;
