@@ -164,36 +164,53 @@ function OpenPilot(board_type, com_port, definition_path) {
 			};
 			LEVEL_SAMPLES = LEVEL_SAMPLES ? LEVEL_SAMPLES : 100;
 			var count = 0;
-			var calib = {
+			var calibAccel = {
+				x : 0,
+				y : 0,
+				z : 0
+			};
+			var calibGyro = {
 				x : 0,
 				y : 0,
 				z : 0
 			};
 			var mementoAttitudeSettings = null;
 			var getSample = function() {
-				objMan.getObject("AccelState", function(obj) {
-					count++;
-					console.log("calibrateLevel : " + count);
-					calib.x += obj.x;
-					calib.y += obj.y;
-					calib.z += obj.z;
-					if (count == LEVEL_SAMPLES) {
-						calib.x /= LEVEL_SAMPLES;
-						calib.y /= LEVEL_SAMPLES;
-						calib.z /= LEVEL_SAMPLES;
-						objMan.getObject("AccelGyroSettings", function(obj) {
-							obj.gyrobiasIdx0 += calib.x;
-							obj.gyrobiasIdx1 += calib.y;
-							obj.gyrobiasIdx2 += calib.z;
-							console.log(calib);
-							console.log(obj);
-							objMan.updateObject(obj);
-							objMan.updateObject(mementoAttitudeSettings);
-							callback(true);
-						}, true);
-					} else {
-						setTimeout(getSample, 100);
-					}
+				objMan.getObject("AccelState", function(objAccelState) {
+					objMan.getObject("GyroState", function(objGyroState) {
+						count++;
+						console.log("calibrateLevel : " + count);
+						calibAccel.x += objAccelState.x;
+						calibAccel.y += objAccelState.y;
+						calibAccel.z += objAccelState.z;
+						calibGyro.x += objGyroState.x;
+						calibGyro.y += objGyroState.y;
+						calibGyro.z += objGyroState.z;
+						if (count == LEVEL_SAMPLES) {
+							calibAccel.x /= LEVEL_SAMPLES;
+							calibAccel.y /= LEVEL_SAMPLES;
+							calibAccel.z /= LEVEL_SAMPLES;
+							calibGyro.x /= LEVEL_SAMPLES;
+							calibGyro.y /= LEVEL_SAMPLES;
+							calibGyro.z /= LEVEL_SAMPLES;
+							objMan.getObject("AccelGyroSettings", function(obj) {
+								//obj.accelbiasIdx0 += calibAccel.x;
+								//obj.accelbiasIdx1 += calibAccel.y;
+								//obj.accelbiasIdx2 += calibAccel.z + 9.81;
+								obj.gyrobiasIdx0 -= calibGyro.x;
+								obj.gyrobiasIdx1 -= calibGyro.y;
+								obj.gyrobiasIdx2 -= calibGyro.z;
+								console.log(calibAccel);
+								console.log(calibGyro);
+								console.log(obj);
+								objMan.updateObject(obj);
+								objMan.updateObject(mementoAttitudeSettings);
+								callback(true);
+							}, true);
+						} else {
+							setTimeout(getSample, 100);
+						}
+					}, true);
 				}, true);
 			};
 			objMan.getObject("AttitudeSettings", function(obj) {
