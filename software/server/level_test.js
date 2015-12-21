@@ -18,7 +18,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 	});
 }, function(callback) {// start up websocket server
 	op.calibrateLevel(LEVEL_SAMPLES, function(res) {
-		callback(res, null);
+		callback(null, res);
 	});
 } ], function(err, result) {
 	console.log(result);
