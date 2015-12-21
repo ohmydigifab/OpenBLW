@@ -174,9 +174,10 @@ function OpenPilot(board_type, com_port, definition_path) {
 						y /= LEVEL_SAMPLES;
 						z /= LEVEL_SAMPLES;
 						objMan.getObject("AccelGyroSettings", function(obj) {
-							obj.gyrobiasIdx0 = x;
-							obj.gyrobiasIdx1 = y;
-							obj.gyrobiasIdx2 = z;
+							obj.gyrobiasIdx0 += x;
+							obj.gyrobiasIdx1 += y;
+							obj.gyrobiasIdx2 += z;
+							console.log(obj);
 							objMan.updateObject(obj);
 							callback(true);
 						});
