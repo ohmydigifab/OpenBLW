@@ -196,7 +196,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							objMan.getObject("AccelGyroSettings", function(obj) {
 								obj.accelbiasIdx0 = -calibAccel.x;
 								obj.accelbiasIdx1 = -calibAccel.y;
-								obj.accelbiasIdx2 = -calibAccel.z + 9.81;
+								obj.accelbiasIdx2 = -(calibAccel.z + 9.81);
 								obj.gyrobiasIdx0 = -calibGyro.x;
 								obj.gyrobiasIdx1 = -calibGyro.y;
 								obj.gyrobiasIdx2 = -calibGyro.z;
