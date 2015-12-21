@@ -163,7 +163,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			var y = 0;
 			var z = 0;
 			var getSample = function() {
-				objMan.getObject("AccelSensor", function(obj) {
+				objMan.getObject("AccelState", function(obj) {
 					count++;
 					console.log(count);
 					x += obj.x;
@@ -180,11 +180,11 @@ function OpenPilot(board_type, com_port, definition_path) {
 							console.log(obj);
 							objMan.updateObject(obj);
 							callback(true);
-						});
+						}, true);
 					} else {
 						getSample();
 					}
-				});
+				}, true);
 			};
 			getSample();
 		},
