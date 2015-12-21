@@ -182,7 +182,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							callback(true);
 						}, true);
 					} else {
-						setTimeout(getSample(), 100);
+						setTimeout(getSample, 100);
 					}
 				}, true);
 			};
