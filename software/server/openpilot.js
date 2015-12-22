@@ -214,26 +214,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							calibGyro.y += objGyroState.y;
 							calibGyro.z += objGyroState.z;
 							if (count == LEVEL_SAMPLES) {
-								calibAccel.x /= LEVEL_SAMPLES;
-								calibAccel.y /= LEVEL_SAMPLES;
-								calibAccel.z /= LEVEL_SAMPLES;
-								calibGyro.x /= LEVEL_SAMPLES;
-								calibGyro.y /= LEVEL_SAMPLES;
-								calibGyro.z /= LEVEL_SAMPLES;
-								objMan.getObject("AccelGyroSettings", function(obj) {
-									obj.accelbiasIdx0 = calibAccel.x;
-									obj.accelbiasIdx1 = calibAccel.y;
-									obj.accelbiasIdx2 = (calibAccel.z + 9.81);
-									obj.gyrobiasIdx0 = -calibGyro.x;
-									obj.gyrobiasIdx1 = -calibGyro.y;
-									obj.gyrobiasIdx2 = -calibGyro.z;
-									console.log(calibAccel);
-									console.log(calibGyro);
-									console.log(obj);
-									objMan.updateObject(obj);
-									objMan.updateObject(mementoAttitudeSettings);
-									callback(null);
-								}, true);
+								callback(null);
 							} else {
 								setTimeout(getSample, 100);
 							}
@@ -241,6 +222,32 @@ function OpenPilot(board_type, com_port, definition_path) {
 					}, true);
 				};
 				getSample();
+			}, function(callback) {
+				calibAccel.x /= LEVEL_SAMPLES;
+				calibAccel.y /= LEVEL_SAMPLES;
+				calibAccel.z /= LEVEL_SAMPLES;
+				calibGyro.x /= LEVEL_SAMPLES;
+				calibGyro.y /= LEVEL_SAMPLES;
+				calibGyro.z /= LEVEL_SAMPLES;
+				objMan.getObject("AccelGyroSettings", function(obj) {
+					obj.accelbiasIdx0 = calibAccel.x;
+					obj.accelbiasIdx1 = calibAccel.y;
+					obj.accelbiasIdx2 = (calibAccel.z + 9.81);
+					obj.gyrobiasIdx0 = -calibGyro.x;
+					obj.gyrobiasIdx1 = -calibGyro.y;
+					obj.gyrobiasIdx2 = -calibGyro.z;
+					console.log(calibAccel);
+					console.log(calibGyro);
+					console.log(obj);
+					objMan.updateObject(obj);
+					objMan.updateObject(mementoAttitudeSettings);
+					callback(null);
+				}, true);
+			}, function(callback) {
+				mementoAttitudeSettings.BiasCorrectGyro = AttitudeSettingsBiasCorrectGyroOptions.ATTITUDESETTINGS_BIASCORRECTGYRO_TRUE;
+				objMan.updateObject(mementoAttitudeSettings);
+				console.log(mementoAttitudeSettings);
+				callback(null);
 			} ], function(err, result) {
 				callback_completed(true);
 			});
