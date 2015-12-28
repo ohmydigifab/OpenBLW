@@ -142,6 +142,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 							return;
 						}
 						obj.Arming = bArm ? FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSARMED : FlightModeSettingsArmingOptions.FLIGHTMODESETTINGS_ARMING_ALWAYSDISARMED;
+						console.log(obj);
 						objMan.updateObject(obj);
 						self.getArm(callback);
 					});
