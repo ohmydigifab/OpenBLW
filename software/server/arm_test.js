@@ -70,7 +70,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 				value = value % 180;// -180 <-> +180
 				return value / 180;// -1 <-> +1
 			}
-			controlValue.Throttle += 0.01;
+			controlValue.Throttle += 1;
 			var value = {};
 			value.Throttle = controlValue.Throttle / 100;
 			value.Roll = degToOne(controlValue.Roll);
