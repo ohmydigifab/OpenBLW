@@ -32,6 +32,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 		// -180 - 180
 		Yaw : 0
 	};
+	var flightMode = 0;
 	setInterval(function() {
 		step++;
 		switch (step % 7) {
@@ -77,7 +78,9 @@ async.waterfall([ function(callback) {// connect to openpilot
 			value.Pitch = degToOne(controlValue.Pitch);
 			value.Yaw = degToOne(controlValue.Yaw);
 			op.setControlValue(value, function(res) {
-				callback(res);
+			});
+			flightMode += 0.1;
+			op.setFlightModeSwitchPosition(flightMode, function(res) {
 			});
 			break;
 		}
