@@ -22,7 +22,16 @@ async.waterfall([ function(callback) {// connect to openpilot
 	});
 }, function(callback) {// start up websocket server
 	var step = 0;
-	var throttle = -1;
+	var controlValue = {
+		// 0% - 100%
+		Throttle : 0,
+		// -180 - 180
+		Roll : 0,
+		// -180 - 180
+		Pitch : 0,
+		// -180 - 180
+		Yaw : 0
+	};
 	setInterval(function() {
 		step++;
 		switch (step % 7) {
@@ -57,9 +66,18 @@ async.waterfall([ function(callback) {// connect to openpilot
 			});
 			break;
 		case 6:
-			throttle += 0.01;
-			op.setThrottle(throttle, function(res) {
-				console.log(res);
+			function degToOne(value) {
+				value = value % 180;// -180 <-> +180
+				return value / 180;// -1 <-> +1
+			}
+			controlValue.Throttle += 0.01;
+			var value = controlValue.concat();
+			value.Throttle = value.Throttle / 100;
+			value.Roll = degToOne(value.Roll);
+			value.Pitch = degToOne(value.Pitch);
+			value.Yaw = degToOne(value.Yaw);
+			op.setControlValue(value, function(res) {
+				callback(res);
 			});
 			break;
 		}
