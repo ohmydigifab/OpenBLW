@@ -71,11 +71,11 @@ async.waterfall([ function(callback) {// connect to openpilot
 				return value / 180;// -1 <-> +1
 			}
 			controlValue.Throttle += 0.01;
-			var value = controlValue.concat();
-			value.Throttle = value.Throttle / 100;
-			value.Roll = degToOne(value.Roll);
-			value.Pitch = degToOne(value.Pitch);
-			value.Yaw = degToOne(value.Yaw);
+			var value = {};
+			value.Throttle = controlValue.Throttle / 100;
+			value.Roll = degToOne(controlValue.Roll);
+			value.Pitch = degToOne(controlValue.Pitch);
+			value.Yaw = degToOne(controlValue.Yaw);
 			op.setControlValue(value, function(res) {
 				callback(res);
 			});
