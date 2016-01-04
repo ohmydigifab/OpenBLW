@@ -108,6 +108,8 @@ function OpenPilot(board_type, com_port, definition_path) {
 				proxy = dgram.createSocket("udp4");
 				proxy.on("message", function(data, rinfo) {
 					if(self.udpProxyEnabled && !self.udpProxyTargetAddress){
+						console.log("Proxy connected");
+						console.log(rinfo);
 						self.udpProxyTargetAddress = rinfo.address;
 						self.udpProxyTargetPort = rinfo.port;
 					}
