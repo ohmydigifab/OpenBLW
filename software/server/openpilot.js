@@ -64,7 +64,8 @@ function OpenPilot(board_type, com_port, definition_path) {
 
 	var self = {
 		debug : false,
-		udpProxyEnabled : false,
+		udpProxyTargetAddress : null,
+		udpProxyTargetPort : null,
 		init : function(callback_completed) {
 			async.waterfall([ function(callback) {
 				objMan.init(function() {
@@ -75,7 +76,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					baudrate : 57600
 				});
 				objMan.output_stream = function(data) {
-					if (self.udpProxyEnabled) {
+					if (self.udpProxyTargetAddress) {
 						return;
 					}
 					if (self.debug) {
@@ -91,10 +92,10 @@ function OpenPilot(board_type, com_port, definition_path) {
 						console.log("input");
 						console.log(data);
 					}
-					if (self.udpProxyEnabled) {
+					if (self.udpProxyTargetAddress && self.udpProxyTargetPort) {
 						console.log("proxy tx");
 						console.log(data);
-						proxy.send(data, 0, data.length, 9002, self.udpProxyEnabled);
+						proxy.send(data, 0, data.length, self.udpProxyTargetPort, self.udpProxyTargetAddress);
 					} else {
 						objMan.input_stream(data);
 					}
@@ -105,9 +106,10 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, function(callback) {
 				proxy = dgram.createSocket("udp4");
 				proxy.on("message", function(data, rinfo) {
-					if (rinfo.address == self.udpProxyEnabled) {
+					if (rinfo.address == self.udpProxyTargetAddress) {
 						console.log("proxy rx");
 						console.log(data);
+						self.udpProxyTargetPort = rinfo.port;
 						sp.write(data, function() {
 							sp.drain();
 						});
