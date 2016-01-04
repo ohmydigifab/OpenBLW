@@ -2,6 +2,7 @@ var async = require('async');
 var Uavtalk = require("uavtalk");
 var EventEmitter = require('events').EventEmitter;
 var SerialPort = require("serialport").SerialPort;
+var dgram = require('dgram');
 
 function OpenPilot(board_type, com_port, definition_path) {
 	var BOARD_TYPE = board_type === undefined ? "cc3d" : board_type;
@@ -58,15 +59,19 @@ function OpenPilot(board_type, com_port, definition_path) {
 		return gtsObj;
 	}
 
+	var sp = null;
+	var proxy = null;
+
 	var self = {
 		debug : false,
+		udpProxyEnabled : false,
 		init : function(callback_completed) {
 			async.waterfall([ function(callback) {
 				objMan.init(function() {
 					callback(null);
 				});
 			}, function(callback) {
-				var sp = new SerialPort(COM_PORT, {
+				sp = new SerialPort(COM_PORT, {
 					baudrate : 57600
 				});
 				objMan.output_stream = function(data) {
@@ -83,11 +88,29 @@ function OpenPilot(board_type, com_port, definition_path) {
 						console.log("input");
 						console.log(data);
 					}
-					objMan.input_stream(data)
+					if (self.udpProxyEnabled) {
+						console.log("proxy tx");
+						console.log(data);
+						client.send(data, 0, data.length, 9002, self.udpProxyEnabled);
+					} else {
+						objMan.input_stream(data);
+					}
 				});
 				sp.on("open", function() {
 					callback(null);
 				});
+			}, function(callback) {
+				proxy = dgram.createSocket("udp4");
+				proxy.on("message", function(data, rinfo) {
+					if (rinfo.address == self.udpProxyEnabled) {
+						console.log("proxy rx");
+						console.log(data);
+						sp.write(data, function() {
+							sp.drain();
+						});
+					}
+				});
+				proxy.bind(9002);
 			} ], function(err, result) {
 				callback_completed();
 			});
