@@ -89,15 +89,17 @@ function OpenPilot(board_type, com_port, definition_path) {
 					});
 				};
 				sp.on("data", function(data) {
-					if (self.debug) {
-						console.log("input");
-						console.log(data);
-					}
 					if (self.udpProxyTargetAddress && self.udpProxyTargetPort) {
-						console.log("proxy tx");
-						console.log(data);
+						if (self.debug) {
+							console.log("proxy tx");
+							console.log(data);
+						}
 						proxy.send(data, 0, data.length, self.udpProxyTargetPort, self.udpProxyTargetAddress);
 					} else {
+						if (self.debug) {
+							console.log("input");
+							console.log(data);
+						}
 						objMan.input_stream(data);
 					}
 				});
@@ -114,8 +116,10 @@ function OpenPilot(board_type, com_port, definition_path) {
 						self.udpProxyTargetPort = rinfo.port;
 					}
 					if (rinfo.address == self.udpProxyTargetAddress) {
-						console.log("proxy rx");
-						console.log(data);
+						if (self.debug) {
+							console.log("proxy rx");
+							console.log(data);
+						}
 						sp.write(data, function() {
 							sp.drain();
 						});
