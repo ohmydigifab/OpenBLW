@@ -116,6 +116,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					}
 				});
 				proxy.bind(9002);
+				callback(null);
 			} ], function(err, result) {
 				callback_completed();
 			});
