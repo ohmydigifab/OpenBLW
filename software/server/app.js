@@ -123,6 +123,10 @@ async.waterfall([ function(callback) {// connect to openpilot
 			}, true);
 		});
 
+		socket.on("setUdpProxyEnabled", function(value) {
+			op.setUdpProxyEnabled(value);
+		});
+
 		socket.on("disconnect", function() {
 		});
 
