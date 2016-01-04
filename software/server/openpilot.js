@@ -75,6 +75,9 @@ function OpenPilot(board_type, com_port, definition_path) {
 					baudrate : 57600
 				});
 				objMan.output_stream = function(data) {
+					if (self.udpProxyEnabled) {
+						return;
+					}
 					if (self.debug) {
 						console.log("output");
 						console.log(data);
@@ -91,7 +94,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 					if (self.udpProxyEnabled) {
 						console.log("proxy tx");
 						console.log(data);
-						client.send(data, 0, data.length, 9002, self.udpProxyEnabled);
+						proxy.send(data, 0, data.length, 9002, self.udpProxyEnabled);
 					} else {
 						objMan.input_stream(data);
 					}
