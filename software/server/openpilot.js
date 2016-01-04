@@ -302,7 +302,6 @@ function OpenPilot(board_type, com_port, definition_path) {
 				obj.Roll = value.Roll;
 				obj.Pitch = value.Pitch;
 				obj.Yaw = value.Yaw;
-				obj.FlightModeSwitchPosition = 1.0;
 				obj.Connected = 1;
 				objMan.updateObject(obj);
 				callback(obj);
