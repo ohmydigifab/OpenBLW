@@ -128,6 +128,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			});
 		},
 		setUdpProxyEnabled : function(bln){
+			console.log("setUdpProxyEnabled : " + bln);
 			self.udpProxyEnabled = bln;
 			self.udpProxyTargetAddress = null;
 			self.udpProxyTargetPort = null;
