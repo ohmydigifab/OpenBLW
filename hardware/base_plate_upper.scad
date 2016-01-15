@@ -16,17 +16,39 @@ module base_plate_upper_2D()
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(14)-2;
     difference()
     {
-        translate([0, 0, 0])
-            circle(r = r_from_dia(DOME_DIA+30));
-        minkowski()
+        union()
         {
-    	    $fn=100;
             difference()
             {
-                circle(r = r_from_dia(DOME_DIA+16-1));
-                base_plate_inner_2D(margin=roundess);
+                translate([0, 0, 0])
+                    circle(r = r_from_dia(DOME_DIA+30));
+                minkowski()
+                {
+                    $fn=100;
+                    difference()
+                    {
+                        circle(r = r_from_dia(DOME_DIA+16-1));
+                        base_plate_inner_2D(margin=roundess);
+                    }
+                    circle(r = roundess, center=true);
+                }
             }
-            circle(r = roundess, center=true);
+            //bolt hole for raspi
+            translate([0, 0, 0])
+                union()
+                {
+                    for(i=[0,1])
+                    for(j=[0,1])
+                    minkowski()
+                    {
+                        $fn=100;
+                        rotate([j*180,i*180,0])
+                        translate([-56/2, -56/2, 0])
+                        rotate([0,0,45])
+                            square([2,4],center=true);
+                        circle(r = 6, center=true);
+                    }
+                }
         }
         for(i=[0,1])
         {
@@ -39,6 +61,10 @@ module base_plate_upper_2D()
         for(i=[0,1])
             mirror([0,i]) for(j=[0,1])
                 mirror([j,0]) translate([-58/2, -49/2, 0])
+                    circle(r = r_from_dia(3.5), center=true);
+        for(i=[0,1])
+            mirror([0,i]) for(j=[0,1])
+                mirror([j,0]) translate([-49/2, -58/2, 0])
                     circle(r = r_from_dia(3.5), center=true);
             
 //		bolt_size = 3.5;
@@ -57,6 +83,12 @@ module base_plate_upper_2D()
 	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
+		bolt_size = 3.5;
+	    for(i=[0:11])
+	    {
+	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
+		        circle(r = r_from_dia(bolt_size), center=true);
+	    }
     }
 }
 

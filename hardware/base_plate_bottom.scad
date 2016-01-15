@@ -22,6 +22,18 @@ module base_plate_bottom_2D()
 //	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
 //		        circle(r = r_from_dia(3.5), center=true);
 //	    }
+        
+        //bolt hole for raspi
+        //translate([-2, 0, 0])
+        for(i=[0,1])
+            mirror([0,i]) for(j=[0,1])
+                mirror([j,0]) translate([-58/2, -49/2, 0])
+                    circle(r = r_from_dia(3.5), center=true);
+        for(i=[0,1])
+            mirror([0,i]) for(j=[0,1])
+                mirror([j,0]) translate([-49/2, -58/2, 0])
+                    circle(r = r_from_dia(3.5), center=true);
+            
 		//arm
 		arm_pos = (DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2;
 	    for(i=[0:3])
@@ -32,6 +44,12 @@ module base_plate_bottom_2D()
 	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
+		bolt_size = 3.5;
+	    for(i=[0:11])
+	    {
+	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
+		        circle(r = r_from_dia(bolt_size), center=true);
+	    }
     }
 }
 
