@@ -58,9 +58,10 @@ async.waterfall([ function(callback) {// connect to openpilot
 		return dst;
 	}
 
+	var lastThrotle = 0;
 	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
-		if (controlValue.Throttle > 0) {
+		if (controlValue.Throttle > 0 || lastThrotle != 0) {
 			if (controlValueUpdating) {
 				return;
 			}
@@ -98,6 +99,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			op.setControlValue(value, function(res) {
 				controlValueUpdating = false;
 			});
+			lastThrotle = value.Throttle;
 		}
 	});
 
