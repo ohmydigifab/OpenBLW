@@ -47,15 +47,22 @@ async.waterfall([ function(callback) {// connect to openpilot
 	function degToRad(value) {
 		return Math.PI * value / 180;
 	}
+	function clone(src) {
+		var dst = {}
+		for ( var k in src) {
+			dst[k] = src[k];
+		}
+		return dst;
+	}
 
 	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
 		if (controlValue.Throttle > 0) {
-			if(controlValueUpdating){
+			if (controlValueUpdating) {
 				return;
 			}
 			controlValueUpdating = true;
-			
+
 			var value = {
 				// 0 - 1
 				Throttle : 0,
@@ -163,8 +170,9 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("getAttitude", function(callback) {
 			op.getObject("AttitudeState", function(obj) {
-				obj.Yaw -= yaw_offset;
-				callback(obj);
+				var dst = clone(obj);
+				dst.Yaw -= yaw_offset;
+				callback(dst);
 			}, true);
 		});
 
