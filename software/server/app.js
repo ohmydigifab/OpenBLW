@@ -4,7 +4,6 @@ var OpenPilot = require('./openpilot.js');
 var child_process = require('child_process');
 var async = require('async');
 var fs = require("fs");
-var quaternion = require('quaternionjs');
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot

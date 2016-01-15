@@ -332,7 +332,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, blnRenew);
 		},
 		onAttitudeStateChanged : function(callback) {
-			objMan.setRecieveCallback("AttitudeState", callback);
+			objMan.setReceiveCallback("AttitudeState", callback);
 		}
 	};
 	return self;
