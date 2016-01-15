@@ -15,7 +15,7 @@ module base_plate_bottom_2D()
     {
         translate([0, 0, 0])
 	        circle(r = r_from_dia(DOME_DIA+30));
-        translate([hole_pos, 0, 0])
+        translate([0, -hole_pos, 0])
 	        circle(r = r_from_dia(20), center=true);
 //	    for(i=[0:11])
 //	    {

@@ -22,9 +22,9 @@ module ROVProp()
 	bladeThick=2; //thickness of fin, 1mm had been strong enough
 	bladeWidth=3; // starting blade width at origin
 	nBlade=6; //number of blades, must have two or more
-	hubRad=27/2; // nosecone radius diameter is 16mm 
+	hubRad=27.5/2; // nosecone radius diameter is 16mm 
 	//hubHeight=5;// use at least 6 for nose to have threads all the way
-	hubHeight=9;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
+	hubHeight=12;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
 	shaftRad=2.5;// 5m bolt on motor
 	$fn=res;
 	

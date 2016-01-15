@@ -42,7 +42,7 @@ module prop_shroud_flange_inner_2D(margin=0)
         //motor bed
         circle(r=r_from_dia(24)+margin);
         //support
-        support_width = 4+margin*2;
+        support_width = 5+margin*2;
         for(i=[2,3,4,6])
         {
             rotate(60*i)

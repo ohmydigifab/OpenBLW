@@ -80,6 +80,16 @@ module assembly()
                 translate([0, arm_pos, 8-15-base_plate_thick])
                     import("ROVPropAdapter_110mm.stl");
             }
+            else if(PROP_SHROUD_DIA == 120)
+            {
+                translate([0, arm_pos, 8-15-base_plate_thick])
+                    import("ROVPropAdapter_120mm.stl");
+            }
+            else if(PROP_SHROUD_DIA == 130)
+            {
+                translate([0, arm_pos, 8-15-base_plate_thick])
+                    import("ROVPropAdapter_130mm_6blade.stl");
+            }
             else
             {
                 translate([0, arm_pos, 8-15-base_plate_thick])

@@ -27,8 +27,8 @@ module camera_holder_2D()
             difference()
             {
                 square([56-r_rad*2,65-r_rad*2]);
-                translate([31-30/2-r_rad2, -r_rad*2])
-                    minkowski_square([24+r_rad2,10+r_rad*2], r=r_rad2);
+//                translate([31-30/2-r_rad2, -r_rad*2])
+//                    minkowski_square([24+r_rad2,10+r_rad*2], r=r_rad2);
                 translate([56+r_rad2-r_rad, 7-r_rad*2])
                     mirror([1,0])
                     minkowski_square([7+r_rad2+r_rad,51+r_rad*2], r=r_rad2);
@@ -48,14 +48,14 @@ module camera_holder_2D()
         translate([52.5, 61.5])
         circle(r=2.6/2);
         //flight contrer attachemnt holes
-        translate([43, 8])
-        circle(r=2.2/2);
-        translate([13, 8])
-        circle(r=2.2/2);
-        translate([13, 38])
-        circle(r=2.2/2);
-        translate([43, 38])
-        circle(r=2.2/2);
+        //translate([43, 8])
+        //circle(r=2.2/2);
+        //translate([13, 8])
+        //circle(r=2.2/2);
+        //translate([13, 38])
+        //circle(r=2.2/2);
+        //translate([43, 38])
+        //circle(r=2.2/2);
         //camera attachemnt holes
         translate([18.5, 21.5])
         circle(r=1.75/2);
@@ -90,4 +90,6 @@ module camera_holder_2D()
     }
 }
 $fn=360;
+
+translate([20, -80, 0])
 camera_holder_2D();

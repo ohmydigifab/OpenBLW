@@ -28,13 +28,13 @@ module base_plate_middle_2D()
         }
         for(i=[0,1])
         {
-            mirror([0,i])
-            translate([0, -hole_pos, 0])
+            mirror([i,0])
+            translate([-hole_pos, 0, 0])
                 union()
                 {
                     circle(r = r_from_dia(14), center=true);
-                    translate([0, -20])
-                        square([14,40], center=true);
+                    translate([-20, 0])
+                        square([40,14], center=true);
                 }
         }
         //bolt hole for raspi
@@ -58,17 +58,17 @@ module base_plate_inner_2D(margin=0)
     //hole
     for(i=[0,1])
     {
-        mirror([0,i])
-        translate([0, -hole_pos, 0])
+        mirror([i,0])
+        translate([-hole_pos, 0, 0])
             union()
             {
                 circle(r = r_from_dia(16)+5+margin, center=true);
-                translate([0, -10])
-                    square([(r_from_dia(16)+5+margin)*2,20], center=true);
+                translate([-10, 0])
+                    square([20,(r_from_dia(16)+5+margin)*2], center=true);
             }
      }
     //bolt hole for raspi
-    translate([-1, -1, 0])
+    translate([0, 0, 0])
     difference()
     {
         union()
@@ -78,10 +78,10 @@ module base_plate_inner_2D(margin=0)
             rotate([j*180,i*180,0])
             translate([-58/2, -49/2, 0])
             {
-                circle(r = r_from_dia(13)+margin, center=true);
+                circle(r = r_from_dia(12)+margin, center=true);
                 rotate([0,0,atan2(58/2,49/2)])
-                    translate([-13/2,0])
-                    square([13,13+margin*2],center=true);
+                    translate([-12/2,0])
+                    square([12,12+margin*2],center=true);
             }
         }
     }
