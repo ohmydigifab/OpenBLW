@@ -79,14 +79,17 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 			var length = Math.sqrt(controlValue.Roll * controlValue.Roll + controlValue.Pitch * controlValue.Pitch);
 			var angle = radToDeg(Math.atan2(controlValue.Pitch, controlValue.Roll));
+			var roll = 0;
+			var pitch = 0;
 			if (attitude.Roll < -90 || attitude.Roll > 90) {
 				angle -= attitude.Yaw - yaw_offset;
+				roll = length * -Math.sin(degToRad(angle));
+				pitch = length * Math.cos(degToRad(angle));
 			} else {
 				angle += attitude.Yaw - yaw_offset;
+				roll = length * Math.sin(degToRad(angle));
+				pitch = length * Math.cos(degToRad(angle));
 			}
-
-			var roll = length * Math.sin(degToRad(angle));
-			var pitch = length * Math.cos(degToRad(angle));
 
 			value.Throttle = controlValue.Throttle / 100;
 			value.Roll = degToOne(roll);
