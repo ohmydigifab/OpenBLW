@@ -109,7 +109,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 			}, function(callback) {
 				proxy = dgram.createSocket("udp4");
 				proxy.on("message", function(data, rinfo) {
-					if(self.udpProxyEnabled && !self.udpProxyTargetAddress){
+					if (self.udpProxyEnabled && !self.udpProxyTargetAddress) {
 						console.log("Proxy connected");
 						console.log(rinfo);
 						self.udpProxyTargetAddress = rinfo.address;
@@ -131,7 +131,7 @@ function OpenPilot(board_type, com_port, definition_path) {
 				callback_completed();
 			});
 		},
-		setUdpProxyEnabled : function(bln){
+		setUdpProxyEnabled : function(bln) {
 			console.log("setUdpProxyEnabled : " + bln);
 			self.udpProxyEnabled = bln;
 			self.udpProxyTargetAddress = null;
@@ -330,6 +330,9 @@ function OpenPilot(board_type, com_port, definition_path) {
 			objMan.getObject(name, function(obj) {
 				callback(obj);
 			}, blnRenew);
+		},
+		onAttitudeStateChanged : function(callback) {
+			objMan.setRecieveCallback("AttitudeState", callback);
 		}
 	};
 	return self;

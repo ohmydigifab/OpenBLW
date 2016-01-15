@@ -4,6 +4,7 @@ var OpenPilot = require('./openpilot.js');
 var child_process = require('child_process');
 var async = require('async');
 var fs = require("fs");
+var quaternion = require('quaternionjs');
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot
@@ -27,11 +28,56 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 	var io = require("socket.io").listen(server);
 
-	var roll = 0.0;
-	var pitch = 0.0;
-	var yaw = 0.0;
-	var throttle = 0.0;
+	var yaw_offset = 0;
+	var controlValue = {
+		// 0% - 100%
+		Throttle : 0,
+		// -180 - 180
+		Roll : 0,
+		// -180 - 180
+		Pitch : 0,
+		// -180 - 180
+		Yaw : 0
+	};
 	var accel_factor = 0.02;
+
+	function degToOne(value) {
+		value = value % 180;// -180 <-> +180
+		return value / 180;// -1 <-> +1
+	}
+	function degToRad(value) {
+		return Math.PI * value / 180;
+	}
+
+	op.onAttitudeStateChanged(function(attitude) {
+		if (controlValue.Throttle > 0) {
+			var value = {
+				// 0 - 1
+				Throttle : 0,
+				// -1 - 1
+				Roll : 0,
+				// -1 - 1
+				Pitch : 0,
+				// -1 - 1
+				Yaw : 0
+			};
+
+			var length = Math.sqrt(controlValue.Roll * controlValue.Roll + controlValue.Pitch * controlValue.Pitch);
+			var angle = Math.atan2(controlValue.Roll, controlValue.Pitch);
+			angle -= attitude.Yaw - yaw_offset;
+
+			var roll = length * Math.sin(degToRad(angle));
+			var pitch = length * Math.cos(degToRad(angle));
+
+			value.Throttle = controlValue.Throttle / 100;
+			value.Roll = degToOne(roll);
+			value.Pitch = degToOne(pitch);
+			value.Yaw = degToOne(controlValue.Yaw);
+			op.setControlValue(value, function(res) {
+			});
+			console.log(value);
+		}
+	});
 
 	io.sockets.on("connection", function(socket) {
 
@@ -53,13 +99,13 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("accelerate_throttle", function(value, callback) {
-			throttle += accel_factor * value;
-			if (throttle < 0.0) {
-				throttle = 0.0;
-			} else if (throttle > 1.0) {
-				throttle = 1.0;
+			controlValue.Throttle += accel_factor * value;
+			if (controlValue.Throttle < 0.0) {
+				controlValue.Throttle = 0.0;
+			} else if (controlValue.Throttle > 1.0) {
+				controlValue.Throttle = 1.0;
 			}
-			op.setThrust(throttle, function() {
+			op.setThrust(controlValue.Throttle, function() {
 				callback();
 			});
 		});
@@ -71,7 +117,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 		});
 
 		socket.on("setArm", function(bln, callback) {
-			throttle = 0.0;
+			controlValue.Throttle = 0.0;
 			op.setArm(bln, function(res) {
 				callback(res);
 			});
@@ -80,29 +126,21 @@ async.waterfall([ function(callback) {// connect to openpilot
 		socket.on("calibrateLevel", function(callback) {
 			var LEVEL_SAMPLES = 100;
 			op.calibrateLevel(LEVEL_SAMPLES, function(res) {
-				callback(res);
+				op.getObject("AttitudeState", function(attitude) {
+					yaw_offset = attitude.Yaw;
+					console.log("yaw_offset : " + yaw_offset);
+					callback(res);
+				});
 			});
 		});
 
 		socket.on("setControlValue", function(value, callback) {
-			function degToOne(value) {
-				value = value % 180;// -180 <-> +180
-				return value / 180;// -1 <-> +1
-			}
-			value.Throttle = value.Throttle / 100;
-			value.Roll = degToOne(value.Roll);
-			value.Pitch = degToOne(value.Pitch);
-			value.Yaw = degToOne(value.Yaw);
-			op.setControlValue(value, function(res) {
-				callback(res);
-			});
-			console.log(value);
+			controlValue = value;
+			callback();
 		});
 
 		socket.on("getControlValue", function(callback) {
-			op.getObject("ManualControlCommand", function(obj) {
-				callback(obj);
-			}, true);
+			callback(controlValue);
 		});
 
 		socket.on("setActuatorValue", function(value, callback) {
@@ -119,6 +157,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("getAttitude", function(callback) {
 			op.getObject("AttitudeState", function(obj) {
+				obj.Yaw -= yaw_offset;
 				callback(obj);
 			}, true);
 		});
