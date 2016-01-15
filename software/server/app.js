@@ -47,6 +47,9 @@ async.waterfall([ function(callback) {// connect to openpilot
 	function degToRad(value) {
 		return Math.PI * value / 180;
 	}
+	function radToDeg(value) {
+		return 180 * value / Math.PI;
+	}
 	function clone(src) {
 		var dst = {}
 		for ( var k in src) {
@@ -75,7 +78,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			};
 
 			var length = Math.sqrt(controlValue.Roll * controlValue.Roll + controlValue.Pitch * controlValue.Pitch);
-			var angle = Math.atan2(controlValue.Roll, controlValue.Pitch);
+			var angle = radToDeg(Math.atan2(controlValue.Roll, controlValue.Pitch));
 			angle += attitude.Yaw - yaw_offset;
 
 			var roll = length * Math.sin(degToRad(angle));
