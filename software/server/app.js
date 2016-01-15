@@ -78,7 +78,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			};
 
 			var length = Math.sqrt(controlValue.Roll * controlValue.Roll + controlValue.Pitch * controlValue.Pitch);
-			var angle = radToDeg(Math.atan2(controlValue.Roll, controlValue.Pitch));
+			var angle = radToDeg(Math.atan2(controlValue.Pitch, controlValue.Roll));
 			if (attitude.Roll < -90 || attitude.Roll > 90) {
 				angle -= attitude.Yaw - yaw_offset;
 			} else {
