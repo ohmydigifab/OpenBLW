@@ -3,7 +3,6 @@ use<fish_eye_lens.scad>
 use<camera.scad>
 use<amp.scad>
 use<base_plate_assembly.scad>
-use<LAN_connector.scad>
 use<arm.scad>
 use<arm_upper.scad>
 use<prop_shroud_flange.scad>
@@ -30,8 +29,6 @@ module assembly()
 //        amp();
     translate([0, 0, 0])
         base_plate_assembly();
-    translate([DOME_DIA/3, 0, 4-base_plate_thick])
-		LAN_connector();
 	//bolt & nut
 	bolt_size = 2.6;
 	translate([0, 0, 7.5])

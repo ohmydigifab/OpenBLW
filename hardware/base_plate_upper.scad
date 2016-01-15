@@ -50,7 +50,7 @@ module base_plate_upper_2D()
                     }
                 }
         }
-        for(i=[0,1])
+        for(i=[0])
         {
             mirror([i,0])
             translate([-hole_pos, 0, 0])
