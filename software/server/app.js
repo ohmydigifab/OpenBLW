@@ -76,7 +76,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 			var length = Math.sqrt(controlValue.Roll * controlValue.Roll + controlValue.Pitch * controlValue.Pitch);
 			var angle = Math.atan2(controlValue.Roll, controlValue.Pitch);
-			angle -= attitude.Yaw - yaw_offset;
+			angle += attitude.Yaw - yaw_offset;
 
 			var roll = length * Math.sin(degToRad(angle));
 			var pitch = length * Math.cos(degToRad(angle));
@@ -88,7 +88,6 @@ async.waterfall([ function(callback) {// connect to openpilot
 			op.setControlValue(value, function(res) {
 				controlValueUpdating = false;
 			});
-			console.log(value);
 		}
 	});
 
