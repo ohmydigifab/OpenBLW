@@ -48,8 +48,14 @@ async.waterfall([ function(callback) {// connect to openpilot
 		return Math.PI * value / 180;
 	}
 
+	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
 		if (controlValue.Throttle > 0) {
+			if(controlValueUpdating){
+				return;
+			}
+			controlValueUpdating = true;
+			
 			var value = {
 				// 0 - 1
 				Throttle : 0,
@@ -73,6 +79,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 			value.Pitch = degToOne(pitch);
 			value.Yaw = degToOne(controlValue.Yaw);
 			op.setControlValue(value, function(res) {
+				controlValueUpdating = false;
 			});
 			console.log(value);
 		}
