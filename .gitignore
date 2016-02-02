@@ -30,5 +30,6 @@
 # temporary files
 *.l#*
 *.s#*
+*.b#*
 ~$*
 
