@@ -15445,6 +15445,8 @@ DIN A3, landscape with location and doc. field</description>
 <part name="C17" library="resistor" deviceset="C-EU" device="C0402" value="10n"/>
 <part name="GND26" library="supply" deviceset="GND" device=""/>
 <part name="GND30" library="supply" deviceset="GND" device=""/>
+<part name="V33" library="supply" deviceset="+3V3" device=""/>
+<part name="V35" library="supply" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -16209,6 +16211,8 @@ DIN A3, landscape with location and doc. field</description>
 <instance part="GND23" gate="1" x="106.68" y="40.64"/>
 <instance part="V29" gate="G$1" x="45.72" y="78.74"/>
 <instance part="V30" gate="G$1" x="157.48" y="78.74"/>
+<instance part="V33" gate="G$1" x="228.6" y="309.88" rot="R270"/>
+<instance part="V35" gate="G$1" x="50.8" y="309.88" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -16529,6 +16533,24 @@ DIN A3, landscape with location and doc. field</description>
 <wire x1="45.72" y1="76.2" x2="45.72" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="U1" gate="A" pin="CAM_3V3@15"/>
 <wire x1="45.72" y1="48.26" x2="55.88" y2="48.26" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="PCB1" gate="G$1" pin="42/GPIO28-45_VREF"/>
+<wire x1="177.8" y1="309.88" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
+<pinref part="V33" gate="G$1" pin="+3V3"/>
+<pinref part="PCB1" gate="G$1" pin="40/GPIO0-27_VREF"/>
+<wire x1="177.8" y1="312.42" x2="226.06" y2="312.42" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="312.42" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
+<junction x="226.06" y="309.88"/>
+</segment>
+<segment>
+<pinref part="V35" gate="G$1" pin="+3V3"/>
+<pinref part="PCB1" gate="G$1" pin="39/GPIO0-27_VREF"/>
+<wire x1="76.2" y1="312.42" x2="53.34" y2="312.42" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="312.42" x2="53.34" y2="309.88" width="0.1524" layer="91"/>
+<junction x="53.34" y="309.88"/>
+<pinref part="PCB1" gate="G$1" pin="41/GPIO28-45_VREF"/>
+<wire x1="53.34" y1="309.88" x2="76.2" y2="309.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="UART0_TX" class="0">
