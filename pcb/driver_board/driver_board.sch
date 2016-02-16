@@ -12297,10 +12297,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <parts>
 <part name="FRAME1" library="frames" deviceset="A3L-LOC" device=""/>
 <part name="FRAME2" library="frames" deviceset="A3L-LOC" device=""/>
-<part name="Q1" library="openblw" deviceset="NMOS-FET" device="SOT23"/>
+<part name="Q1" library="openblw" deviceset="NMOS-FET" device="SOT23" value="IRLML6346TRPBF"/>
 <part name="U1" library="openblw" deviceset="AL5812" device="MP-13"/>
-<part name="LED1" library="openblw" deviceset="LTW-5630AZL" device=""/>
-<part name="LED2" library="openblw" deviceset="LTW-5630AZL" device=""/>
+<part name="LED1" library="openblw" deviceset="LTW-5630AZL" device="" value="LTW-5630AZL50"/>
+<part name="LED2" library="openblw" deviceset="LTW-5630AZL" device="" value="LTW-5630AZL50"/>
 <part name="R1" library="resistor" deviceset="R-EU_" device="R0402" value="4.99K"/>
 <part name="C1" library="resistor" deviceset="C-EU" device="C0402" value="100n"/>
 <part name="GND1" library="supply" deviceset="GND" device=""/>
@@ -12317,14 +12317,14 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="GND6" library="supply" deviceset="GND" device=""/>
 <part name="GND7" library="supply" deviceset="GND" device=""/>
 <part name="GND8" library="supply" deviceset="GND" device=""/>
-<part name="C2" library="resistor" deviceset="CPOL-EU" device="153CLV-0810"/>
-<part name="C3" library="resistor" deviceset="CPOL-EU" device="153CLV-0810"/>
+<part name="C2" library="resistor" deviceset="CPOL-EU" device="153CLV-0810" value="UWT1E221MNL1GS(220u)"/>
+<part name="C3" library="resistor" deviceset="CPOL-EU" device="153CLV-0810" value="UWT1E221MNL1GS(220u)"/>
 <part name="SUPPLY13" library="supply2" deviceset="GND" device=""/>
 <part name="H1" library="holes" deviceset="MOUNT-PAD-ROUND" device="2.8"/>
 <part name="H2" library="holes" deviceset="MOUNT-PAD-ROUND" device="2.8"/>
 <part name="H3" library="holes" deviceset="MOUNT-PAD-ROUND" device="2.8"/>
 <part name="H4" library="holes" deviceset="MOUNT-PAD-ROUND" device="2.8"/>
-<part name="JP1" library="pinhead" deviceset="PINHD-1X4" device=""/>
+<part name="JP1" library="pinhead" deviceset="PINHD-1X4" device="" value="M20-9990446"/>
 <part name="U$1" library="openblw" deviceset="282836-2" device=""/>
 </parts>
 <sheets>
