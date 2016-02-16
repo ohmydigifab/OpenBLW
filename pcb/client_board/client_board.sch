@@ -13557,7 +13557,7 @@ PJ-102BH (2.5 x 5.5 MM)</description>
 <part name="C11" library="resistor" deviceset="CPOL-EU" device="153CLV-0405" value="UUD1A220MCL1GS(22u)"/>
 <part name="V9" library="supply" deviceset="+12V" device=""/>
 <part name="C15" library="resistor" deviceset="CPOL-EU" device="153CLV-0405" value="UUD1E100MCL1GS(10u)"/>
-<part name="FB1" library="resistor" deviceset="L-EU" device="L5650M" value="MI0805K601R-10"/>
+<part name="FB1" library="resistor" deviceset="L-EU" device="L5650M" value="HR2220V801R-10"/>
 <part name="L3" library="openblw" deviceset="SRP1250A" device="" value="SRP1245A-100M"/>
 <part name="C16" library="resistor" deviceset="C-EU" device="C0402" value="EMK105BJ105KV-F(1u)"/>
 <part name="R18" library="resistor" deviceset="R-EU_" device="R0402" value="ERJ-2GEJ102X(1K)"/>
@@ -13571,7 +13571,7 @@ PJ-102BH (2.5 x 5.5 MM)</description>
 <part name="J2" library="con-dc-power" deviceset="PJ-102AH/BH" device="" value="PJ-102AH"/>
 <part name="V4" library="supply" deviceset="+12V" device=""/>
 <part name="J3" library="SparkFun-Boards" deviceset="RASPBERRYPI-40-PIN-GPIO" device="" value="SFH11-PBPC-D20-ST-BK"/>
-<part name="FB2" library="resistor" deviceset="L-EU" device="L5650M" value="MI0805K601R-10"/>
+<part name="FB2" library="resistor" deviceset="L-EU" device="L5650M" value="HR2220V801R-10"/>
 <part name="JP2" library="pinhead" deviceset="PINHD-2X3" device="" value="M20-9980346"/>
 <part name="JP3" library="pinhead" deviceset="PINHD-2X3" device="" value="M20-9980346"/>
 <part name="V7" library="supply" deviceset="+3V3" device=""/>
@@ -13614,7 +13614,7 @@ PJ-102BH (2.5 x 5.5 MM)</description>
 <instance part="J2" gate="G$1" x="25.4" y="215.9" rot="MR180"/>
 <instance part="V4" gate="1" x="147.32" y="226.06"/>
 <instance part="J3" gate="G$1" x="152.4" y="144.78"/>
-<instance part="FB2" gate="G$1" x="48.26" y="215.9" rot="R90"/>
+<instance part="FB2" gate="G$1" x="73.66" y="215.9" rot="R90"/>
 <instance part="JP2" gate="A" x="38.1" y="142.24" rot="R90"/>
 <instance part="JP3" gate="A" x="71.12" y="142.24"/>
 <instance part="V7" gate="G$1" x="60.96" y="129.54" rot="R180"/>
@@ -13705,7 +13705,7 @@ PJ-102BH (2.5 x 5.5 MM)</description>
 <wire x1="33.02" y1="213.36" x2="33.02" y2="215.9" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="S"/>
 <wire x1="30.48" y1="213.36" x2="33.02" y2="213.36" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="215.9" x2="38.1" y2="215.9" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="215.9" x2="38.1" y2="215.9" width="0.1524" layer="91"/>
 <junction x="33.02" y="215.9"/>
 <pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="38.1" y1="215.9" x2="33.02" y2="215.9" width="0.1524" layer="91"/>
@@ -13832,7 +13832,7 @@ PJ-102BH (2.5 x 5.5 MM)</description>
 </net>
 <net name="AGND" class="2">
 <segment>
-<wire x1="99.06" y1="215.9" x2="53.34" y2="215.9" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="215.9" x2="78.74" y2="215.9" width="0.1524" layer="91"/>
 <pinref part="FB2" gate="G$1" pin="2"/>
 <pinref part="U$1" gate="G$1" pin="CON01"/>
 </segment>

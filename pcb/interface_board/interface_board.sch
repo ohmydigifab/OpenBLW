@@ -22485,7 +22485,7 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="FRAME2" library="frames" deviceset="A3P-LOC" device=""/>
 <part name="FRAME1" library="frames" deviceset="A3L-LOC" device=""/>
 <part name="C15" library="resistor" deviceset="CPOL-EU" device="153CLV-0405" value="UUD1E100MCL1GS(10u)"/>
-<part name="FB1" library="resistor" deviceset="L-EU" device="L5650M" value="MI0805K601R-10"/>
+<part name="FB1" library="resistor" deviceset="L-EU" device="L5650M" value="HR2220V801R-10"/>
 <part name="C16" library="resistor" deviceset="C-EU" device="C0402" value="1u"/>
 <part name="R18" library="resistor" deviceset="R-EU_" device="R0402" value="1K"/>
 <part name="C17" library="resistor" deviceset="C-EU" device="C0402" value="10n"/>
@@ -22556,7 +22556,7 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="R20" library="rcl" deviceset="R-EU_" device="R0603" value="12k"/>
 <part name="R37" library="rcl" deviceset="R-EU_" device="R0603" value="12k"/>
 <part name="K1" library="openblw" deviceset="61400416021" device=""/>
-<part name="FB4" library="resistor" deviceset="L-EU" device="L5650M" value="MI0805K601R-10"/>
+<part name="FB4" library="resistor" deviceset="L-EU" device="L5650M" value="HR2220V801R-10"/>
 <part name="V6" library="supply" deviceset="+3V3" device=""/>
 <part name="GND10" library="supply" deviceset="GND" device=""/>
 <part name="FRAME3" library="frames" deviceset="A3L-LOC" device=""/>
