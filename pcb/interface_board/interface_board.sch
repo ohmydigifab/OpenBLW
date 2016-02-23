@@ -390,8 +390,8 @@
 <smd name="M1" x="-32.28" y="12" dx="4.5" dy="4.6" layer="1"/>
 <smd name="M2" x="32.82" y="12" dx="4.5" dy="4.6" layer="1"/>
 <text x="-31.98" y="-0.75" size="1.778" layer="21">DDR2 STD</text>
-<hole x="-33.13" y="0" drill="1.1"/>
-<hole x="33.67" y="0" drill="0.6"/>
+<hole x="-33.13" y="0" drill="1.6"/>
+<hole x="33.67" y="0" drill="1.1"/>
 <polygon width="0.1016" layer="21">
 <vertex x="-31.93" y="-3.05"/>
 <vertex x="-32.305" y="-2.3"/>
@@ -22141,6 +22141,18 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <rectangle x1="0.3556" y1="-0.7239" x2="1.1057" y2="0.7262" layer="51"/>
 <rectangle x1="-0.1001" y1="-0.4001" x2="0.1001" y2="0.4001" layer="35"/>
 </package>
+<package name="CTS_32X25">
+<wire x1="-1.6" y1="-1.2" x2="1.6" y2="-1.2" width="0.127" layer="21"/>
+<wire x1="-1.6" y1="-1.2" x2="-1.6" y2="1.3" width="0.127" layer="21"/>
+<wire x1="-1.6" y1="1.3" x2="1.6" y2="1.3" width="0.127" layer="21"/>
+<wire x1="1.6" y1="-1.2" x2="1.6" y2="1.3" width="0.127" layer="21"/>
+<smd name="3" x="1.1" y="0.8" dx="1.2" dy="0.9" layer="1"/>
+<smd name="2" x="1.1" y="-0.7" dx="1.2" dy="0.9" layer="1"/>
+<smd name="4" x="-1.1" y="0.8" dx="1.2" dy="0.9" layer="1"/>
+<smd name="1" x="-1.1" y="-0.7" dx="1.2" dy="0.9" layer="1"/>
+<text x="-1.7" y="1.4" size="0.75" layer="25">&gt;NAME</text>
+<text x="-1.7" y="-2.1" size="0.75" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="LAN9512">
@@ -22228,6 +22240,21 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="-2.54" y1="0" x2="-1.27" y2="0" width="0.254" layer="94"/>
 <wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
 <text x="-2.54" y="3.81" size="1.27" layer="95">&gt;Name</text>
+</symbol>
+<symbol name="CTS_25X53">
+<wire x1="-1.27" y1="1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-0.635" y1="-1.27" x2="-0.635" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0.635" y1="1.27" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<pin name="X1" x="-2.54" y="0" visible="off" length="point" swaplevel="1"/>
+<pin name="X2" x="2.54" y="0" visible="off" length="point" swaplevel="1" rot="R180"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.27" y2="0" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="0" x2="1.27" y2="0" width="0.1524" layer="94"/>
+<text x="-2.54" y="2.54" size="1.27" layer="95">&gt;Name</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -22326,6 +22353,22 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="CTS_32X25_SMD" prefix="Q">
+<gates>
+<gate name="G$2" symbol="CTS_25X53" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CTS_32X25">
+<connects>
+<connect gate="G$2" pin="X1" pad="1"/>
+<connect gate="G$2" pin="X2" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -22371,19 +22414,19 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="PCB1" library="openblw" deviceset="RPI_COMPUTE" device="" value="1473005-4"/>
 <part name="U1" library="openblw" deviceset="RPI_CAMERA" device="" value="SFW15R-1STE1LF"/>
 <part name="U2" library="openblw" deviceset="RPI_CAMERA" device="" value="SFW15R-1STE1LF"/>
-<part name="U5" library="openblw" deviceset="PAM2306" device="" value="PAM2306AYPKE"/>
+<part name="U5" library="openblw" deviceset="PAM2306" device="" value="PAM2306DYPAA"/>
 <part name="L1" library="openblw" deviceset="BOURNS-SRN4018" device="" value="SRN4018-4R7M(4.7u)"/>
 <part name="L2" library="openblw" deviceset="BOURNS-SRN4018" device="" value="SRN4018-4R7M(4.7u)"/>
 <part name="F1" library="openblw" deviceset="MF-MSMF*?" device="" technology="075/24" value="MF-MSMF200-2"/>
 <part name="IC1" library="openblw" deviceset="VR_1OUT" device="XX" value="V7805-1000"/>
 <part name="R1" library="resistor" deviceset="R-EU_" device="R0402" value="100K"/>
-<part name="R2" library="resistor" deviceset="R-EU_" device="R0402" value="0R"/>
-<part name="R3" library="resistor" deviceset="R-EU_" device="R0402" value="0R"/>
-<part name="R4" library="resistor" deviceset="R-EU_" device="R0402" value="NR"/>
-<part name="R5" library="resistor" deviceset="R-EU_" device="R0402" value="NR"/>
+<part name="R2" library="resistor" deviceset="R-EU_" device="R0402" value="450K"/>
+<part name="R3" library="resistor" deviceset="R-EU_" device="R0402" value="200K"/>
+<part name="R4" library="resistor" deviceset="R-EU_" device="R0402" value="100K"/>
+<part name="R5" library="resistor" deviceset="R-EU_" device="R0402" value="100K"/>
 <part name="C1" library="resistor" deviceset="C-EU" device="C0402" value="100n"/>
-<part name="C4" library="resistor" deviceset="C-EU" device="C0402" value="NF"/>
-<part name="C5" library="resistor" deviceset="C-EU" device="C0402" value="NF"/>
+<part name="C4" library="resistor" deviceset="C-EU" device="C0402" value="100p"/>
+<part name="C5" library="resistor" deviceset="C-EU" device="C0402" value="100p"/>
 <part name="C6" library="resistor" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="C7" library="resistor" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="GND1" library="supply" deviceset="GND" device=""/>
@@ -22491,8 +22534,6 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="C17" library="resistor" deviceset="C-EU" device="C0402" value="10n"/>
 <part name="GND26" library="supply" deviceset="GND" device=""/>
 <part name="GND30" library="supply" deviceset="GND" device=""/>
-<part name="V36" library="supply" deviceset="+5V" device=""/>
-<part name="V37" library="supply" deviceset="+5V" device=""/>
 <part name="U$1" library="openblw" deviceset="282836-2" device=""/>
 <part name="U$2" library="openblw" deviceset="282836-2" device="" value="M20-9980346"/>
 <part name="V33" library="supply" deviceset="+12V" device=""/>
@@ -22554,7 +22595,6 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="FB2" library="raspi" deviceset="FERRITE_BEAD" device="" value="742792022"/>
 <part name="FB3" library="raspi" deviceset="FERRITE_BEAD" device="" value="742792022"/>
 <part name="R20" library="rcl" deviceset="R-EU_" device="R0603" value="12k"/>
-<part name="R37" library="rcl" deviceset="R-EU_" device="R0603" value="12k"/>
 <part name="K1" library="openblw" deviceset="61400416021" device=""/>
 <part name="FB4" library="resistor" deviceset="L-EU" device="L5650M" value="HR2220V801R-10"/>
 <part name="V6" library="supply" deviceset="+3V3" device=""/>
@@ -22565,6 +22605,13 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <part name="JP3" library="pinhead" deviceset="PINHD-2X3" device="" value="M20-9980346"/>
 <part name="V7" library="supply" deviceset="+3V3" device=""/>
 <part name="GND11" library="supply" deviceset="GND" device=""/>
+<part name="V11" library="supply" deviceset="+3V3" device=""/>
+<part name="V14" library="supply" deviceset="+3V3" device=""/>
+<part name="C44" library="rcl" deviceset="C-EU" device="C0603" value="20p"/>
+<part name="C45" library="rcl" deviceset="C-EU" device="C0603" value="20p"/>
+<part name="R19" library="rcl" deviceset="R-EU_" device="R0603" value="1M"/>
+<part name="Q6" library="raspi" deviceset="CTS_32X25_SMD" device=""/>
+<part name="GND53" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -23249,11 +23296,11 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <instance part="PORT18" gate="G$1" x="182.88" y="200.66"/>
 <instance part="PORT19" gate="G$1" x="182.88" y="198.12"/>
 <instance part="PORT20" gate="G$1" x="182.88" y="195.58"/>
-<instance part="R11" gate="G$1" x="213.36" y="248.92" rot="R270"/>
-<instance part="R12" gate="G$1" x="220.98" y="248.92" rot="R270"/>
+<instance part="R11" gate="G$1" x="228.6" y="248.92" rot="R270"/>
+<instance part="R12" gate="G$1" x="236.22" y="248.92" rot="R270"/>
 <instance part="R13" gate="G$1" x="210.82" y="304.8" rot="R270"/>
 <instance part="R14" gate="G$1" x="218.44" y="304.8" rot="R270"/>
-<instance part="GND27" gate="1" x="220.98" y="236.22"/>
+<instance part="GND27" gate="1" x="236.22" y="236.22"/>
 <instance part="GND28" gate="1" x="68.58" y="101.6"/>
 <instance part="GND29" gate="1" x="187.96" y="99.06"/>
 <instance part="PORT21" gate="G$1" x="180.34" y="353.06"/>
@@ -23271,8 +23318,8 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <instance part="GND23" gate="1" x="106.68" y="40.64"/>
 <instance part="V29" gate="G$1" x="45.72" y="78.74"/>
 <instance part="V30" gate="G$1" x="157.48" y="78.74"/>
-<instance part="V36" gate="1" x="43.18" y="309.88" rot="R90"/>
-<instance part="V37" gate="1" x="236.22" y="309.88" rot="R270"/>
+<instance part="V11" gate="G$1" x="238.76" y="309.88" rot="R270"/>
+<instance part="V14" gate="G$1" x="40.64" y="309.88" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -23281,12 +23328,12 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <segment>
 <pinref part="R12" gate="G$1" pin="2"/>
 <pinref part="GND27" gate="1" pin="GND"/>
-<wire x1="220.98" y1="243.84" x2="220.98" y2="241.3" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="243.84" x2="236.22" y2="241.3" width="0.1524" layer="91"/>
 <pinref part="R11" gate="G$1" pin="2"/>
-<wire x1="220.98" y1="241.3" x2="220.98" y2="238.76" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="243.84" x2="213.36" y2="241.3" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="241.3" x2="220.98" y2="241.3" width="0.1524" layer="91"/>
-<junction x="220.98" y="241.3"/>
+<wire x1="236.22" y1="241.3" x2="236.22" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="243.84" x2="228.6" y2="241.3" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="241.3" x2="236.22" y2="241.3" width="0.1524" layer="91"/>
+<junction x="236.22" y="241.3"/>
 </segment>
 <segment>
 <pinref part="PCB1" gate="G$1" pin="26/GND"/>
@@ -23313,7 +23360,8 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="187.96" y1="185.42" x2="187.96" y2="177.8" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="177.8" x2="187.96" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="170.18" x2="187.96" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="187.96" y1="154.94" x2="187.96" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="154.94" x2="187.96" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="149.86" x2="187.96" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="147.32" x2="187.96" y2="132.08" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="132.08" x2="187.96" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="124.46" x2="187.96" y2="114.3" width="0.1524" layer="91"/>
@@ -23389,6 +23437,9 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <pinref part="PCB1" gate="G$1" pin="196/GND"/>
 <wire x1="177.8" y1="114.3" x2="187.96" y2="114.3" width="0.1524" layer="91"/>
 <junction x="187.96" y="114.3"/>
+<pinref part="PCB1" gate="G$1" pin="168/USB_OTGID"/>
+<wire x1="177.8" y1="149.86" x2="187.96" y2="149.86" width="0.1524" layer="91"/>
+<junction x="187.96" y="149.86"/>
 </segment>
 <segment>
 <pinref part="PCB1" gate="G$1" pin="1/GND"/>
@@ -23593,6 +23644,26 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="45.72" y1="76.2" x2="45.72" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="U1" gate="A" pin="CAM_3V3@15"/>
 <wire x1="45.72" y1="48.26" x2="55.88" y2="48.26" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="PCB1" gate="G$1" pin="39/GPIO0-27_VREF"/>
+<wire x1="76.2" y1="312.42" x2="53.34" y2="312.42" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="312.42" x2="53.34" y2="309.88" width="0.1524" layer="91"/>
+<pinref part="PCB1" gate="G$1" pin="41/GPIO28-45_VREF"/>
+<wire x1="53.34" y1="309.88" x2="76.2" y2="309.88" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="309.88" x2="53.34" y2="309.88" width="0.1524" layer="91"/>
+<junction x="53.34" y="309.88"/>
+<pinref part="V14" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="PCB1" gate="G$1" pin="42/GPIO28-45_VREF"/>
+<wire x1="177.8" y1="309.88" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
+<pinref part="PCB1" gate="G$1" pin="40/GPIO0-27_VREF"/>
+<wire x1="177.8" y1="312.42" x2="226.06" y2="312.42" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="312.42" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="309.88" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
+<junction x="226.06" y="309.88"/>
+<pinref part="V11" gate="G$1" pin="+3V3"/>
 </segment>
 </net>
 <net name="UART0_TX" class="0">
@@ -23951,16 +24022,16 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <segment>
 <pinref part="PCB1" gate="G$1" pin="82/GPIO44"/>
 <pinref part="R12" gate="G$1" pin="1"/>
-<wire x1="177.8" y1="259.08" x2="220.98" y2="259.08" width="0.1524" layer="91"/>
-<wire x1="220.98" y1="259.08" x2="220.98" y2="254" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="259.08" x2="236.22" y2="259.08" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="259.08" x2="236.22" y2="254" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$34" class="0">
 <segment>
 <pinref part="PCB1" gate="G$1" pin="84/GPIO45"/>
 <pinref part="R11" gate="G$1" pin="1"/>
-<wire x1="177.8" y1="256.54" x2="213.36" y2="256.54" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="256.54" x2="213.36" y2="254" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="256.54" x2="228.6" y2="256.54" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="256.54" x2="228.6" y2="254" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="CAM1_IO0" class="0">
@@ -24118,6 +24189,7 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <segment>
 <pinref part="PCB1" gate="G$1" pin="90/GPIO47_1V8"/>
 <wire x1="177.8" y1="248.92" x2="195.58" y2="248.92" width="0.1524" layer="91"/>
+<label x="195.58" y="248.92" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="EXT0/UART1_TX" class="0">
@@ -24134,26 +24206,11 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <pinref part="PCB1" gate="G$1" pin="72/GPIO41"/>
 </segment>
 </net>
-<net name="+5V" class="5">
+<net name="LAN_RUN" class="0">
 <segment>
-<pinref part="PCB1" gate="G$1" pin="39/GPIO0-27_VREF"/>
-<wire x1="76.2" y1="312.42" x2="53.34" y2="312.42" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="312.42" x2="53.34" y2="309.88" width="0.1524" layer="91"/>
-<pinref part="PCB1" gate="G$1" pin="41/GPIO28-45_VREF"/>
-<wire x1="53.34" y1="309.88" x2="76.2" y2="309.88" width="0.1524" layer="91"/>
-<pinref part="V36" gate="1" pin="+5V"/>
-<wire x1="45.72" y1="309.88" x2="53.34" y2="309.88" width="0.1524" layer="91"/>
-<junction x="53.34" y="309.88"/>
-</segment>
-<segment>
-<pinref part="PCB1" gate="G$1" pin="42/GPIO28-45_VREF"/>
-<wire x1="177.8" y1="309.88" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
-<pinref part="PCB1" gate="G$1" pin="40/GPIO0-27_VREF"/>
-<wire x1="177.8" y1="312.42" x2="226.06" y2="312.42" width="0.1524" layer="91"/>
-<wire x1="226.06" y1="312.42" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
-<pinref part="V37" gate="1" pin="+5V"/>
-<wire x1="233.68" y1="309.88" x2="226.06" y2="309.88" width="0.1524" layer="91"/>
-<junction x="226.06" y="309.88"/>
+<pinref part="PCB1" gate="G$1" pin="21/GPIO6"/>
+<wire x1="76.2" y1="335.28" x2="45.72" y2="335.28" width="0.1524" layer="91"/>
+<label x="45.72" y="335.28" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
@@ -24220,9 +24277,13 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <attribute name="NAME" x="212.09" y="100.33" size="1.27" layer="95"/>
 </instance>
 <instance part="R20" gate="G$1" x="320.04" y="142.24" rot="R90"/>
-<instance part="R37" gate="G$1" x="307.34" y="60.96" rot="R90"/>
 <instance part="K1" gate="G$1" x="281.94" y="53.34" rot="R270"/>
 <instance part="FRAME3" gate="G$1" x="0" y="0"/>
+<instance part="C44" gate="G$1" x="165.1" y="73.66" rot="R90"/>
+<instance part="C45" gate="G$1" x="165.1" y="63.5" rot="R90"/>
+<instance part="R19" gate="G$1" x="180.34" y="68.58" rot="R270"/>
+<instance part="Q6" gate="G$2" x="175.26" y="68.58" rot="R90"/>
+<instance part="GND53" gate="1" x="157.48" y="73.66" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -24375,6 +24436,15 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <segment>
 <pinref part="GND12" gate="1" pin="GND"/>
 <pinref part="K1" gate="G$1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C44" gate="G$1" pin="1"/>
+<wire x1="162.56" y1="73.66" x2="160.02" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="C45" gate="G$1" pin="1"/>
+<wire x1="162.56" y1="63.5" x2="160.02" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="63.5" x2="160.02" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="GND53" gate="1" pin="GND"/>
+<junction x="160.02" y="73.66"/>
 </segment>
 </net>
 <net name="N$37" class="0">
@@ -24543,7 +24613,7 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <pinref part="K1" gate="G$1" pin="VCC"/>
 </segment>
 </net>
-<net name="USBD3_N" class="0">
+<net name="USBD3_N" class="3">
 <segment>
 <pinref part="IC6" gate="G$1" pin="USBDM3"/>
 <wire x1="261.62" y1="86.36" x2="261.62" y2="73.66" width="0.1524" layer="91"/>
@@ -24552,7 +24622,7 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <pinref part="K1" gate="G$1" pin="D-"/>
 </segment>
 </net>
-<net name="USBD3_P" class="0">
+<net name="USBD3_P" class="3">
 <segment>
 <pinref part="IC6" gate="G$1" pin="USBDP3"/>
 <wire x1="264.16" y1="86.36" x2="264.16" y2="71.12" width="0.1524" layer="91"/>
@@ -24625,6 +24695,16 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="236.22" y1="114.3" x2="231.14" y2="114.3" width="0.1524" layer="91"/>
 <label x="231.14" y="114.3" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="C45" gate="G$1" pin="2"/>
+<wire x1="170.18" y1="63.5" x2="175.26" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="63.5" x2="175.26" y2="66.04" width="0.1524" layer="91"/>
+<label x="175.26" y="63.5" size="1.778" layer="95" rot="R270" xref="yes"/>
+<pinref part="R19" gate="G$1" pin="2"/>
+<wire x1="175.26" y1="63.5" x2="180.34" y2="63.5" width="0.1524" layer="91"/>
+<junction x="175.26" y="63.5"/>
+<pinref part="Q6" gate="G$2" pin="X1"/>
+</segment>
 </net>
 <net name="XO" class="0">
 <segment>
@@ -24632,19 +24712,24 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="236.22" y1="116.84" x2="231.14" y2="116.84" width="0.1524" layer="91"/>
 <label x="231.14" y="116.84" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="C44" gate="G$1" pin="2"/>
+<wire x1="170.18" y1="73.66" x2="175.26" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="73.66" x2="175.26" y2="71.12" width="0.1524" layer="91"/>
+<label x="175.26" y="73.66" size="1.778" layer="95" rot="R90" xref="yes"/>
+<pinref part="R19" gate="G$1" pin="1"/>
+<wire x1="175.26" y1="73.66" x2="180.34" y2="73.66" width="0.1524" layer="91"/>
+<junction x="175.26" y="73.66"/>
+<pinref part="Q6" gate="G$2" pin="X2"/>
+</segment>
 </net>
-<net name="GPIO6" class="0">
+<net name="LAN_RUN" class="0">
 <segment>
 <pinref part="IC6" gate="G$1" pin="NRESET"/>
 <wire x1="284.48" y1="86.36" x2="284.48" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="284.48" y1="76.2" x2="302.26" y2="76.2" width="0.1524" layer="91"/>
-<wire x1="302.26" y1="76.2" x2="302.26" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="302.26" y1="76.2" x2="302.26" y2="66.04" width="0.1524" layer="91"/>
 <label x="302.26" y="66.04" size="1.778" layer="95" rot="R270" xref="yes"/>
-<pinref part="R37" gate="G$1" pin="2"/>
-<wire x1="302.26" y1="68.58" x2="302.26" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="307.34" y1="66.04" x2="307.34" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="307.34" y1="68.58" x2="302.26" y2="68.58" width="0.1524" layer="91"/>
-<junction x="302.26" y="68.58"/>
 </segment>
 </net>
 <net name="N$44" class="0">
@@ -24797,11 +24882,6 @@ Source: http://www.gennum.com/video/pdf/36655DOC.pdf</description>
 <wire x1="281.94" y1="86.36" x2="281.94" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="281.94" y1="81.28" x2="279.4" y2="81.28" width="0.1524" layer="91"/>
 <label x="279.4" y="81.28" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="R37" gate="G$1" pin="1"/>
-<wire x1="307.34" y1="55.88" x2="307.34" y2="53.34" width="0.1524" layer="91"/>
-<label x="307.34" y="53.34" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
 <pinref part="IC6" gate="G$1" pin="VDD33IO@2"/>

@@ -400,8 +400,8 @@
 <smd name="M1" x="-32.28" y="12" dx="4.5" dy="4.6" layer="1"/>
 <smd name="M2" x="32.82" y="12" dx="4.5" dy="4.6" layer="1"/>
 <text x="-31.98" y="-0.75" size="1.778" layer="21">DDR2 STD</text>
-<hole x="-33.13" y="0" drill="1.1"/>
-<hole x="33.67" y="0" drill="0.6"/>
+<hole x="-33.13" y="0" drill="1.6"/>
+<hole x="33.67" y="0" drill="1.1"/>
 <polygon width="0.1016" layer="21">
 <vertex x="-31.93" y="-3.05"/>
 <vertex x="-32.305" y="-2.3"/>
