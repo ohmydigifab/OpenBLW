@@ -19,38 +19,30 @@ async.waterfall([ function(callback) {// connect to openpilot
 	child_process.exec('sh ./sh/init_servo.sh');
 
 	var server = require("http").createServer(function(req, res) {
-		console.log(req);
-		res.writeHead(200, {
-			"Content-Type" : "text/html"
-		});
-		var output = fs.readFileSync("./www/index.html", "utf-8");
-		res.end(output);
-	}).listen(9001);
-
-	var app = express();
-
-	app.configure(function() {
-		app.set('views', __dirname + '/views');
-		app.set('view engine', 'haml');
-	});
-
-	app.get('/', function(req, res) {
-		var exec = require('child_process').exec;
-		var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
-			console.log('stdout: ' + stdout);
-			console.log('stderr: ' + stderr);
-			if (error !== null) {
-				console.log('exec error: ' + error);
-			}
-			fs.readFile('/tmp/test_1.jpg', function(err, data) {
-				res.send(data, {
-					'Content-Type' : 'image/jpeg'
-				}, 200);
+		if (req.url == '/vr.jpeg') {
+			console.log("vr.jpeg");
+			res.writeHead(200, {
+				"Content-Type" : "image/jpeg"
 			});
-		});
-	});
-
-	app.listen(9002);
+			var exec = require('child_process').exec;
+			var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
+				console.log('stdout: ' + stdout);
+				console.log('stderr: ' + stderr);
+				if (error !== null) {
+					console.log('exec error: ' + error);
+				}
+				fs.readFile('/tmp/test_1.jpeg', function(err, data) {
+					res.end(data);
+				});
+			});
+		} else {
+			res.writeHead(200, {
+				"Content-Type" : "text/html"
+			});
+			var output = fs.readFileSync("./www/index.html", "utf-8");
+			res.end(output);
+		}
+	}).listen(9001);
 
 	var io = require("socket.io").listen(server);
 
