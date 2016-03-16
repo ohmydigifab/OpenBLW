@@ -4,6 +4,7 @@ var OpenPilot = require('./openpilot.js');
 var child_process = require('child_process');
 var async = require('async');
 var fs = require("fs");
+var express = require('express');
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot
@@ -24,6 +25,36 @@ async.waterfall([ function(callback) {// connect to openpilot
 		var output = fs.readFileSync("./www/index.html", "utf-8");
 		res.end(output);
 	}).listen(9001);
+
+	var app = express.createServer();
+
+	app.configure(function() {
+		app.set('views', __dirname + '/views');
+		app.set('view engine', 'haml');
+		app.use(express.bodyDecoder());
+		app.use(express.methodOverride());
+		app.use(express.cookieDecoder());
+		app.use(app.router);
+		app.use(express.staticProvider(__dirname + '/public'));
+	});
+
+	app.get('/', function(req, res) {
+		var exec = require('child_process').exec;
+		var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
+			console.log('stdout: ' + stdout);
+			console.log('stderr: ' + stderr);
+			if (error !== null) {
+				console.log('exec error: ' + error);
+			}
+			fs.readFile('/tmp/test_1.jpg', function(err, data) {
+				res.send(data, {
+					'Content-Type' : 'image/jpeg'
+				}, 200);
+			});
+		});
+	});
+
+	app.listen(9002);
 
 	var io = require("socket.io").listen(server);
 
