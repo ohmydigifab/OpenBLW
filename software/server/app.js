@@ -19,8 +19,11 @@ async.waterfall([ function(callback) {// connect to openpilot
 	child_process.exec('sh ./sh/init_servo.sh');
 
 	var server = require("http").createServer(function(req, res) {
-		console.log(req.url);
-		if (req.url == '/vr.jpeg') {
+		var url = req.url.split("?")[0];
+		var query = req.url.split("?")[1];
+		console.log(url);
+		console.log(query);
+		if (url == '/vr.jpeg') {
 			res.writeHead(200, {
 				"Content-Type" : "image/jpeg"
 			});
