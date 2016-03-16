@@ -24,9 +24,6 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
-			res.writeHead(200, {
-				"Content-Type" : "image/jpeg"
-			});
 			var exec = require('child_process').exec;
 			var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
 				console.log('stdout: ' + stdout);
@@ -35,6 +32,12 @@ async.waterfall([ function(callback) {// connect to openpilot
 					console.log('exec error: ' + error);
 				}
 				fs.readFile('/tmp/test_1.jpeg', function(err, data) {
+					res.writeHead(200, {
+						"Content-Type" : "image/jpeg",
+						"Content-Length" : data.length,
+						"Accept-Ranges" : "bytes",
+						"Cache-Control" : "no-cache"
+					});
 					res.end(data);
 				});
 			});
