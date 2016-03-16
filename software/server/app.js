@@ -19,6 +19,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 	child_process.exec('sh ./sh/init_servo.sh');
 
 	var server = require("http").createServer(function(req, res) {
+		console.log(req);
 		res.writeHead(200, {
 			"Content-Type" : "text/html"
 		});
@@ -31,11 +32,6 @@ async.waterfall([ function(callback) {// connect to openpilot
 	app.configure(function() {
 		app.set('views', __dirname + '/views');
 		app.set('view engine', 'haml');
-		app.use(express.bodyDecoder());
-		app.use(express.methodOverride());
-		app.use(express.cookieDecoder());
-		app.use(app.router);
-		app.use(express.staticProvider(__dirname + '/public'));
 	});
 
 	app.get('/', function(req, res) {
