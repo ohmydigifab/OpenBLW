@@ -26,7 +26,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 		res.end(output);
 	}).listen(9001);
 
-	var app = express.createServer();
+	var app = express();
 
 	app.configure(function() {
 		app.set('views', __dirname + '/views');
