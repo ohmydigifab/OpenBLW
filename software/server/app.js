@@ -33,10 +33,11 @@ async.waterfall([ function(callback) {// connect to openpilot
 				}
 				fs.readFile('/tmp/test_1.jpeg', function(err, data) {
 					res.writeHead(200, {
-						"Content-Type" : "image/jpeg",
-						"Content-Length" : data.length,
-						"Accept-Ranges" : "bytes",
-						"Cache-Control" : "no-cache"
+						'Content-Type' : 'image/jpeg',
+						'Content-Length' : data.length,
+						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+						'Expires' : '-1',
+						'Pragma' : 'no-cache',
 					});
 					res.end(data);
 				});
