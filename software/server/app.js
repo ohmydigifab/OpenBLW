@@ -37,6 +37,7 @@ async.waterfall([ function(callback) {// connect to openpilot
     			var child = child_process.exec('/home/pi/git/omxcv/raspi-vr -i /tmp/capture.raw -o /tmp/capture.jpeg', function(error, stdout, stderr) {
     				console.log('stdout: ' + stdout);
     				console.log('stderr: ' + stderr);
+    				console.log(cam);
     				if (error !== null) {
     					console.log('exec error: ' + error);
     				}
