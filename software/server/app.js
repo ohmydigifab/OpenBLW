@@ -51,7 +51,7 @@ async.waterfall([ function(callback) {// connect to openpilot
     					res.end(data);
     				});
     			});
-            });)
+            });
 		} else {
 			res.writeHead(200, {
 				"Content-Type" : "text/html"
