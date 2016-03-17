@@ -5,6 +5,8 @@ var child_process = require('child_process');
 var async = require('async');
 var fs = require("fs");
 var express = require('express');
+var v4l2camera = require("v4l2camera");
+var cam = new v4l2camera.Camera("/dev/video0");
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot
@@ -24,24 +26,38 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
-			var exec = require('child_process').exec;
-			var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
-				console.log('stdout: ' + stdout);
-				console.log('stderr: ' + stderr);
-				if (error !== null) {
-					console.log('exec error: ' + error);
-				}
-				fs.readFile('/tmp/test_1.jpeg', function(err, data) {
-					res.writeHead(200, {
-						'Content-Type' : 'image/jpeg',
-						'Content-Length' : data.length,
-						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
-						'Expires' : '-1',
-						'Pragma' : 'no-cache',
-					});
-					res.end(data);
+			cam.start();
+			cam.capture(function(success) {
+				var frame = cam.frameRaw();
+				var data = Buffer(frame);
+				res.writeHead(200, {
+					'Content-Type' : 'image/jpeg',
+					'Content-Length' : data.length,
+					'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+					'Expires' : '-1',
+					'Pragma' : 'no-cache',
 				});
+				res.end(data);
+				cam.stop();
 			});
+//			var exec = require('child_process').exec;
+//			var child = exec('/home/pi/git/raspi-vr/raspi-vr', function(error, stdout, stderr) {
+//				console.log('stdout: ' + stdout);
+//				console.log('stderr: ' + stderr);
+//				if (error !== null) {
+//					console.log('exec error: ' + error);
+//				}
+//				fs.readFile('/tmp/test_1.jpeg', function(err, data) {
+//					res.writeHead(200, {
+//						'Content-Type' : 'image/jpeg',
+//						'Content-Length' : data.length,
+//						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+//						'Expires' : '-1',
+//						'Pragma' : 'no-cache',
+//					});
+//					res.end(data);
+//				});
+//			});
 		} else {
 			res.writeHead(200, {
 				"Content-Type" : "text/html"
