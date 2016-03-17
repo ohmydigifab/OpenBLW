@@ -34,7 +34,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 	        var rgb = Buffer(cam.toRGB());
 	        fs.writeFile("/tmp/capture.raw", rgb, function(err) {
                 if (err) throw err;
-    			var child = child_process.exec('/home/pi/git/raspi-vr/raspi-vr /tmp/capture.raw /tmp/capture.jpeg', function(error, stdout, stderr) {
+    			var child = child_process.exec('/home/pi/git/omxcv/raspi-vr -i /tmp/capture.raw -o /tmp/capture.jpeg', function(error, stdout, stderr) {
     				console.log('stdout: ' + stdout);
     				console.log('stderr: ' + stderr);
     				if (error !== null) {
