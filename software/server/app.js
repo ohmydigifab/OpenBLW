@@ -39,8 +39,8 @@ async.waterfall([ function(callback) {// connect to openpilot
 					'Pragma' : 'no-cache',
 				});
 				res.end(data);
+				cam.toJpegAsEquirectangular();
 			});
-			cam.toJpegAsEquirectangular();
 		} else {
 			res.writeHead(200, {
 				"Content-Type" : "text/html"
