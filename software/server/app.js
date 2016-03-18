@@ -30,8 +30,8 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
+			cam.toJpegAsEquirectangular();
 			fs.readFile('/tmp/capture.jpeg', function(err, data) {
-				cam.toJpegAsEquirectangular();
 				res.writeHead(200, {
 					'Content-Type' : 'image/jpeg',
 					'Content-Length' : data.length,
