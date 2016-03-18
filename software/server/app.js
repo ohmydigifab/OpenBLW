@@ -30,16 +30,21 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
-			cam.toJpegAsEquirectangular();
 			fs.readFile('/tmp/capture.jpeg', function(err, data) {
-				res.writeHead(200, {
-					'Content-Type' : 'image/jpeg',
-					'Content-Length' : data.length,
-					'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
-					'Expires' : '-1',
-					'Pragma' : 'no-cache',
-				});
-				res.end(data);
+				if (err) {
+					res.writeHead(404);
+					res.end();
+				} else {
+					res.writeHead(200, {
+						'Content-Type' : 'image/jpeg',
+						'Content-Length' : data.length,
+						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+						'Expires' : '-1',
+						'Pragma' : 'no-cache',
+					});
+					res.end(data);
+				}
+				cam.toJpegAsEquirectangular();
 			});
 		} else {
 			res.writeHead(200, {
