@@ -9,9 +9,8 @@ var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
 cam.start();
 cam.capture(function loop() {
-    cam.capture(loop);
+	cam.capture(loop);
 });
-
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// connect to openpilot
@@ -31,27 +30,17 @@ async.waterfall([ function(callback) {// connect to openpilot
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
-	        var rgb = Buffer(cam.toRGB());
-	        fs.writeFile("/tmp/capture.raw", rgb, function(err) {
-                if (err) throw err;
-    			var child = child_process.exec('/home/pi/git/omxcv/raspi-vr -i /tmp/capture.raw -o /tmp/capture.jpeg', function(error, stdout, stderr) {
-    				console.log('stdout: ' + stdout);
-    				console.log('stderr: ' + stderr);
-    				if (error !== null) {
-    					console.log('exec error: ' + error);
-    				}
-    				fs.readFile('/tmp/capture.jpeg', function(err, data) {
-    					res.writeHead(200, {
-    						'Content-Type' : 'image/jpeg',
-    						'Content-Length' : data.length,
-    						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
-    						'Expires' : '-1',
-    						'Pragma' : 'no-cache',
-    					});
-    					res.end(data);
-    				});
-    			});
-            });
+			cam.toJpegAsEquirectangular();
+			fs.readFile('/tmp/capture.jpeg', function(err, data) {
+				res.writeHead(200, {
+					'Content-Type' : 'image/jpeg',
+					'Content-Length' : data.length,
+					'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+					'Expires' : '-1',
+					'Pragma' : 'no-cache',
+				});
+				res.end(data);
+			});
 		} else {
 			res.writeHead(200, {
 				"Content-Type" : "text/html"
