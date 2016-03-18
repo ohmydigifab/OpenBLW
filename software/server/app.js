@@ -5,7 +5,7 @@ var child_process = require('child_process');
 var async = require('async');
 var fs = require("fs");
 var express = require('express');
-var v4l2camera = require("v4l2camera");
+var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
 cam.start();
 cam.capture(function loop() {
