@@ -35,6 +35,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 				if (err) {
 					res.writeHead(404);
 					res.end();
+					console.log("404");
 				} else {
 					res.writeHead(200, {
 						'Content-Type' : 'image/jpeg',
@@ -44,6 +45,7 @@ async.waterfall([ function(callback) {// connect to openpilot
 						'Pragma' : 'no-cache',
 					});
 					res.end(data);
+					console.log("200");
 				}
 			});
 		} else {
