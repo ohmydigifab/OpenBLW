@@ -45,7 +45,6 @@ async.waterfall([ function(callback) {// connect to openpilot
 					});
 					res.end(data);
 				}
-				cam.toJpegAsEquirectangular();
 			});
 		} else {
 			res.writeHead(200, {
