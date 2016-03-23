@@ -7,13 +7,44 @@ var fs = require("fs");
 var express = require('express');
 var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
-cam.start();
-cam.capture(function loop() {
-	cam.capture(loop);
-});
+var gpio = require('node-gpio');
+var PWM = gpio.PWM;
+var upper_led = new PWM("40");
+var bottom_led = new PWM("41");
 
 var op = new OpenPilot();
-async.waterfall([ function(callback) {// connect to openpilot
+async.waterfall([ function(callback) {// exit sequence
+	process.on('SIGINT', function() {
+		console.log("led shutting down");
+		upper_led.stop();
+		upper_led.close();
+		bottom_led.stop();
+		bottom_led.close();
+		console.log("camera shutting down");
+		cam.stop();
+		console.log("exit process done");
+		process.exit();
+	})
+	callback(null);
+}, function(callback) {// led startup
+	console.log("led starting up");
+	upper_led.open();
+	upper_led.frequency = 100;
+	upper_led.dutyCycle = 0;
+	upper_led.start();
+	bottom_led.open();
+	bottom_led.frequency = 100;
+	bottom_led.dutyCycle = 0;
+	bottom_led.start();
+	callback(null);
+}, function(callback) {// camera startup
+	console.log("camera starting up");
+	cam.start();
+	cam.capture(function loop() {
+		cam.capture(loop);
+	});
+	callback(null);
+}, function(callback) {// connect to openpilot
 	op.init(function() {
 		callback(null);
 	});
@@ -221,6 +252,14 @@ async.waterfall([ function(callback) {// connect to openpilot
 
 		socket.on("setUdpProxyEnabled", function(value) {
 			op.setUdpProxyEnabled(value);
+		});
+
+		socket.on("setUpperLedValue", function(value) {
+			upper_led.dutyCycle = value;
+		});
+
+		socket.on("setBottomLedValue", function(value) {
+			bottom_led.dutyCycle = value;
 		});
 
 		socket.on("disconnect", function() {
