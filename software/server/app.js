@@ -20,8 +20,8 @@ async.waterfall([ function(callback) {// exit sequence
 		upper_led.close();
 		bottom_led.stop();
 		bottom_led.close();
-		console.log("camera shutting down");
-		cam.stop();
+		//console.log("camera shutting down");
+		//cam.stop();
 		console.log("exit process done");
 		process.exit();
 	})
@@ -29,10 +29,12 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// led startup
 	console.log("led starting up");
 	upper_led.open();
+	upper_led.setMode(gpio.OUT);
 	upper_led.frequency = 100;
 	upper_led.dutyCycle = 0;
 	upper_led.start();
 	bottom_led.open();
+	upper_led.setMode(gpio.OUT);
 	bottom_led.frequency = 100;
 	bottom_led.dutyCycle = 0;
 	bottom_led.start();
