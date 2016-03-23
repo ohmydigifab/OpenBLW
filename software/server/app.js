@@ -34,7 +34,7 @@ async.waterfall([ function(callback) {// exit sequence
 	upper_led.dutyCycle = 0;
 	upper_led.start();
 	bottom_led.open();
-	upper_led.setMode(gpio.OUT);
+	bottom_led.setMode(gpio.OUT);
 	bottom_led.frequency = 100;
 	bottom_led.dutyCycle = 0;
 	bottom_led.start();
