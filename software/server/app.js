@@ -44,6 +44,15 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// start up websocket server
 	child_process.exec('sh ./sh/init_servo.sh');
 
+	var veicle_attitude = {
+		// -180 - 180
+		Roll : 0,
+		// -180 - 180
+		Pitch : 0,
+		// -180 - 180
+		Yaw : 0
+	};
+	
 	var server = require("http").createServer(function(req, res) {
 		var url = req.url.split("?")[0];
 		var query = req.url.split("?")[1];
@@ -115,6 +124,7 @@ async.waterfall([ function(callback) {// exit sequence
 	var lastThrottle = 0;
 	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
+		veicle_attitude = attitude;
 		if (controlValue.Throttle > 0 || lastThrottle != 0) {
 			if (controlValueUpdating) {
 				return;
