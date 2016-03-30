@@ -7,37 +7,24 @@ var fs = require("fs");
 var express = require('express');
 var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
-var gpio = require('node-gpio');
-var PWM = gpio.PWM;
-var upper_led = new PWM("40");
-var bottom_led = new PWM("41");
+var piblaster = require('pi-blaster.js');
 
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// exit sequence
 	process.on('SIGINT', function() {
 		console.log("led shutting down");
-		upper_led.stop();
-		upper_led.close();
-		bottom_led.stop();
-		bottom_led.close();
-		//console.log("camera shutting down");
-		//cam.stop();
+		piblaster.setPwm(40, 0);
+		piblaster.setPwm(41, 0);
+		// console.log("camera shutting down");
+		// cam.stop();
 		console.log("exit process done");
 		process.exit();
 	})
 	callback(null);
 }, function(callback) {// led startup
 	console.log("led starting up");
-	upper_led.open();
-	upper_led.setMode(gpio.OUT);
-	upper_led.frequency = 100;
-	upper_led.dutyCycle = 0;
-	upper_led.start();
-	bottom_led.open();
-	bottom_led.setMode(gpio.OUT);
-	bottom_led.frequency = 100;
-	bottom_led.dutyCycle = 0;
-	bottom_led.start();
+	piblaster.setPwm(40, 0);
+	piblaster.setPwm(41, 0);
 	callback(null);
 }, function(callback) {// camera startup
 	console.log("camera starting up");
@@ -79,6 +66,8 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
+				//console.log(veicle_attitude);
+				cam.setRotation(-veicle_attitude.Roll,-veicle_attitude.Pitch,-veicle_attitude.Yaw);
 				cam.toJpegAsEquirectangular();
 			});
 		} else {
@@ -257,11 +246,11 @@ async.waterfall([ function(callback) {// exit sequence
 		});
 
 		socket.on("setUpperLedValue", function(value) {
-			upper_led.dutyCycle = value;
+			piblaster.setPwm(40, value / 100.0);
 		});
 
 		socket.on("setBottomLedValue", function(value) {
-			bottom_led.dutyCycle = value;
+			piblaster.setPwm(41, value / 100.0);
 		});
 
 		socket.on("disconnect", function() {
