@@ -89,24 +89,22 @@ async.waterfall([ function(callback) {// exit sequence
 				cam.toJpegAsEquirectangular();
 			});
 		} else if (url == '/vr.mp4') {
-			child_process.exec('ffmpeg -y -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4', function() {
-				fs.readFile('/tmp/movie.mp4', function(err, data) {
-					if (err) {
-						res.writeHead(404);
-						res.end();
-						console.log("404");
-					} else {
-						res.writeHead(200, {
-							'Content-Type' : 'video/mp4',
-							'Content-Length' : data.length,
-							'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
-							'Expires' : '-1',
-							'Pragma' : 'no-cache',
-						});
-						res.end(data);
-						console.log("200");
-					}
-				});
+			fs.readFile('/tmp/movie.mp4', function(err, data) {
+				if (err) {
+					res.writeHead(404);
+					res.end();
+					console.log("404");
+				} else {
+					res.writeHead(200, {
+						'Content-Type' : 'video/mp4',
+						'Content-Length' : data.length,
+						'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+						'Expires' : '-1',
+						'Pragma' : 'no-cache',
+					});
+					res.end(data);
+					console.log("200");
+				}
 			});
 		} else {
 			res.writeHead(200, {
@@ -295,10 +293,13 @@ async.waterfall([ function(callback) {// exit sequence
 
 		socket.on("startRecord", function() {
 			cam.startRecord();
+			recording = true;
 		});
 
 		socket.on("stopRecord", function() {
+			recording = false;
 			cam.stopRecord();
+			child_process.exec('ffmpeg -y -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4');
 		});
 
 		socket.on("disconnect", function() {
