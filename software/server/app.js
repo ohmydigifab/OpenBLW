@@ -9,6 +9,9 @@ var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
 var piblaster = require('pi-blaster.js');
 
+var recoding = false;
+var framecount = 0;
+
 var op = new OpenPilot();
 async.waterfall([ function(callback) {// exit sequence
 	process.on('SIGINT', function() {
@@ -31,6 +34,14 @@ async.waterfall([ function(callback) {// exit sequence
 	cam.start();
 	cam.capture(function loop() {
 		cam.capture(loop);
+		if (recoding) {
+			framecount++;
+			if (framecount == 100) {
+				recoding = false;
+				framecount = 0;
+				cam.stopRecord();
+			}
+		}
 	});
 	callback(null);
 }, function(callback) {// connect to openpilot
@@ -52,7 +63,7 @@ async.waterfall([ function(callback) {// exit sequence
 		// -180 - 180
 		Yaw : 0
 	};
-	
+
 	var server = require("http").createServer(function(req, res) {
 		var url = req.url.split("?")[0];
 		var query = req.url.split("?")[1];
@@ -75,9 +86,27 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				//console.log(veicle_attitude);
-				cam.setRotation(-veicle_attitude.Roll,-veicle_attitude.Pitch,-veicle_attitude.Yaw);
 				cam.toJpegAsEquirectangular();
+			});
+		} else if (url == '/vr.mp4') {
+			child_process.exec('ffmpeg -y -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4', function() {
+				fs.readFile('/tmp/movie.mp4', function(err, data) {
+					if (err) {
+						res.writeHead(404);
+						res.end();
+						console.log("404");
+					} else {
+						res.writeHead(200, {
+							'Content-Type' : 'video/mp4',
+							'Content-Length' : data.length,
+							'Cache-Control' : 'private, no-cache, no-store, must-revalidate',
+							'Expires' : '-1',
+							'Pragma' : 'no-cache',
+						});
+						res.end(data);
+						console.log("200");
+					}
+				});
 			});
 		} else {
 			res.writeHead(200, {
@@ -125,6 +154,7 @@ async.waterfall([ function(callback) {// exit sequence
 	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
 		veicle_attitude = attitude;
+		cam.setRotation(-veicle_attitude.Roll, -veicle_attitude.Pitch, -veicle_attitude.Yaw);
 		if (controlValue.Throttle > 0 || lastThrottle != 0) {
 			if (controlValueUpdating) {
 				return;
@@ -261,6 +291,14 @@ async.waterfall([ function(callback) {// exit sequence
 
 		socket.on("setBottomLedValue", function(value) {
 			piblaster.setPwm(41, value / 100.0);
+		});
+
+		socket.on("startRecord", function() {
+			cam.startRecord();
+		});
+
+		socket.on("stopRecord", function() {
+			cam.stopRecord();
 		});
 
 		socket.on("disconnect", function() {
