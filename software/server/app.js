@@ -29,6 +29,9 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// camera startup
 	console.log("camera starting up");
 	cam.start();
+	cam.capture(function loop() {
+		cam.capture(loop);
+	});
 	callback(null);
 }, function(callback) {// connect to openpilot
 	op.init(function() {
@@ -72,10 +75,9 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam.capture(function() {
-					cam.setRotation(-veicle_attitude.Roll,-veicle_attitude.Pitch,-veicle_attitude.Yaw);
-					cam.toJpegAsEquirectangular();
-				});
+				//console.log(veicle_attitude);
+				cam.setRotation(-veicle_attitude.Roll,-veicle_attitude.Pitch,-veicle_attitude.Yaw);
+				cam.toJpegAsEquirectangular();
 			});
 		} else {
 			res.writeHead(200, {
