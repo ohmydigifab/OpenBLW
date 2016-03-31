@@ -9,7 +9,7 @@ var v4l2camera = require("node-vrcam");
 var cam = new v4l2camera.Camera("/dev/video0");
 var piblaster = require('pi-blaster.js');
 
-var recoding = false;
+var recording = false;
 var framecount = 0;
 
 var op = new OpenPilot();
@@ -34,10 +34,10 @@ async.waterfall([ function(callback) {// exit sequence
 	cam.start();
 	cam.capture(function loop() {
 		cam.capture(loop);
-		if (recoding) {
+		if (recording) {
 			framecount++;
 			if (framecount == 100) {
-				recoding = false;
+				recording = false;
 				framecount = 0;
 				cam.stopRecord();
 				console.log("camera recording stop");
