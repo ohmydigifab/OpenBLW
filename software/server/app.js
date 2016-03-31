@@ -71,7 +71,7 @@ async.waterfall([ function(callback) {// exit sequence
 		console.log(url);
 		console.log(query);
 		if (url == '/vr.jpeg') {
-			fs.readFile('/tmp/capture.jpeg', function(err, data) {
+			fs.readFile('/tmp/vr.jpeg', function(err, data) {
 				if (err) {
 					res.writeHead(404);
 					res.end();
@@ -87,7 +87,7 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam.toJpegAsEquirectangular();
+				cam.toJpegAsEquirectangular('/tmp/vr.jpeg');
 			});
 		} else if (url == '/vr.mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
@@ -293,7 +293,7 @@ async.waterfall([ function(callback) {// exit sequence
 		});
 
 		socket.on("startRecord", function() {
-			cam.startRecord();
+			cam.startRecord('/tmp/movie.h264', 16000);
 			console.log("camera recording start");
 			recording = true;
 		});
