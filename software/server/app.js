@@ -302,7 +302,7 @@ async.waterfall([ function(callback) {// exit sequence
 			recording = false;
 			cam.stopRecord();
 			console.log("camera recording stop");
-			child_process.exec('ffmpeg -y -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4');
+			child_process.exec('ffmpeg -y -r 5 -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4');
 		});
 
 		socket.on("disconnect", function() {
