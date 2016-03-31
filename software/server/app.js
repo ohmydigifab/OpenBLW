@@ -40,6 +40,7 @@ async.waterfall([ function(callback) {// exit sequence
 				recoding = false;
 				framecount = 0;
 				cam.stopRecord();
+				console.log("camera recording stop");
 			}
 		}
 	});
@@ -293,12 +294,14 @@ async.waterfall([ function(callback) {// exit sequence
 
 		socket.on("startRecord", function() {
 			cam.startRecord();
+			console.log("camera recording start");
 			recording = true;
 		});
 
 		socket.on("stopRecord", function() {
 			recording = false;
 			cam.stopRecord();
+			console.log("camera recording stop");
 			child_process.exec('ffmpeg -y -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4 && python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4');
 		});
 
