@@ -97,9 +97,9 @@ async.waterfall([ function(callback) {// exit sequence
 				}
 			});
 			cam.capture(function() {
-				var cmd = 'mv ' + filename + ' /tmp/vr.jpeg';
-				console.log(cmd);
 				cam.toJpegAsEquirectangular(function(filename) {
+					var cmd = 'mv ' + filename + ' /tmp/vr.jpeg';
+					console.log(cmd);
 					child_process.exec(cmd);
 				});
 			});
