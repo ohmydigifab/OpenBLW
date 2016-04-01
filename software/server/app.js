@@ -32,14 +32,14 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// camera startup
 	console.log("camera starting up");
 	cam.start();
-	var loop = function() {
-		cam.capture(function() {
-			cam.toJpegAsEquirectangular(function(filename) {
-				child_process.exec('mv ' + filename + ' /tmp/vr.jpeg', loop);
-			});
-		});
-	};
-	loop();
+//	var loop = function() {
+//		cam.capture(function() {
+//			cam.toJpegAsEquirectangular(function(filename) {
+//				child_process.exec('mv ' + filename + ' /tmp/vr.jpeg', loop);
+//			});
+//		});
+//	};
+//	loop();
 	// cam.capture(function loop() {
 	// cam.capture(loop);
 	// if (recording) {
@@ -95,6 +95,13 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
+			});
+			cam.capture(function() {
+				var cmd = 'mv ' + filename + ' /tmp/vr.jpeg';
+				console.log(cmd);
+				cam.toJpegAsEquirectangular(function(filename) {
+					child_process.exec(cmd);
+				});
 			});
 		} else if (url == '/vr.mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
