@@ -32,18 +32,27 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// camera startup
 	console.log("camera starting up");
 	cam.start();
-//	cam.capture(function loop() {
-//		cam.capture(loop);
-//		if (recording) {
-//			framecount++;
-//			if (framecount == 100) {
-//				recording = false;
-//				framecount = 0;
-//				cam.stopRecord();
-//				console.log("camera recording stop");
-//			}
-//		}
-//	});
+	var loop = function()
+	{
+		cam.capture(function() {
+			cam.toJpegAsEquirectangular(function(filename) {
+				child_process.exec('mv ' + filename + ' /tmp/vr.jpeg', loop);
+			});
+		});
+	};
+	loop();
+	// cam.capture(function loop() {
+	// cam.capture(loop);
+	// if (recording) {
+	// framecount++;
+	// if (framecount == 100) {
+	// recording = false;
+	// framecount = 0;
+	// cam.stopRecord();
+	// console.log("camera recording stop");
+	// }
+	// }
+	// });
 	callback(null);
 }, function(callback) {// connect to openpilot
 	op.init(function() {
@@ -87,11 +96,6 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam.capture(function() {
-					cam.toJpegAsEquirectangular(function(filename){
-						child_process.exec('mv ' + filename + ' /tmp/vr.jpeg');
-					});
-				});
 			});
 		} else if (url == '/vr.mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
