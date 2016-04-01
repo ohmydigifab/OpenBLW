@@ -70,7 +70,7 @@ async.waterfall([ function(callback) {// exit sequence
 		var query = req.url.split("?")[1];
 		console.log(url);
 		console.log(query);
-		if (url.split(".")[1]; == 'jpeg') {
+		if (url.split(".")[1] == 'jpeg') {
 			fs.readFile('/tmp/vr.jpeg', function(err, data) {
 				if (err) {
 					res.writeHead(404);
@@ -89,7 +89,7 @@ async.waterfall([ function(callback) {// exit sequence
 				}
 				cam.toJpegAsEquirectangular('/tmp/vr.jpeg');
 			});
-		} else if (url.split(".")[1]; == 'mp4') {
+		} else if (url.split(".")[1] == 'mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
 				if (err) {
 					res.writeHead(404);
