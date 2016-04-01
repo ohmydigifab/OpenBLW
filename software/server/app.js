@@ -32,8 +32,7 @@ async.waterfall([ function(callback) {// exit sequence
 }, function(callback) {// camera startup
 	console.log("camera starting up");
 	cam.start();
-	var loop = function()
-	{
+	var loop = function() {
 		cam.capture(function() {
 			cam.toJpegAsEquirectangular(function(filename) {
 				child_process.exec('mv ' + filename + ' /tmp/vr.jpeg', loop);
