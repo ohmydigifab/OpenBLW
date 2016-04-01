@@ -88,7 +88,9 @@ async.waterfall([ function(callback) {// exit sequence
 					console.log("200");
 				}
 				cam.capture(function() {
-					cam.toJpegAsEquirectangular('/tmp/vr.jpeg');
+					cam.toJpegAsEquirectangular(function(filename){
+						child_process.exec('mv ' + filename + ' /tmp/vr.jpeg');
+					});
 				});
 			});
 		} else if (url == '/vr.mp4') {
