@@ -87,7 +87,8 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam.toJpegAsEquirectangular('/tmp/vr.jpeg');
+				cam.toJpegAsEquirectangular('/tmp/_vr.jpeg');
+				child_process.exec('mv /tmp/_vr.jpeg /tmp/vr.jpeg');
 			});
 		} else if (url.split(".")[1] == 'mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
