@@ -6,7 +6,8 @@ var async = require('async');
 var fs = require("fs");
 var express = require('express');
 var v4l2camera = require("node-vrcam");
-var cam = new v4l2camera.Camera("/dev/video0");
+var cam1 = new v4l2camera.Camera("/dev/video0");
+var cam2 = new v4l2camera.Camera("/dev/video0");
 var piblaster = require('pi-blaster.js');
 
 var recording = false;
@@ -19,7 +20,7 @@ async.waterfall([ function(callback) {// exit sequence
 		piblaster.setPwm(40, 0);
 		piblaster.setPwm(41, 0);
 		// console.log("camera shutting down");
-		// cam.stop();
+		// cam1.stop();
 		console.log("exit process done");
 		process.exit();
 	})
@@ -31,18 +32,22 @@ async.waterfall([ function(callback) {// exit sequence
 	callback(null);
 }, function(callback) {// camera startup
 	console.log("camera starting up");
-	cam.start();
-	cam.capture(function loop() {
-		cam.capture(loop);
+	cam1.start();
+	cam1.capture(function loop() {
+		cam1.capture(loop);
 		if (recording) {
 			framecount++;
 			if (framecount == 100) {
 				recording = false;
 				framecount = 0;
-				cam.stopRecord();
+				cam1.stopRecord();
 				console.log("camera recording stop");
 			}
 		}
+	});
+	cam2.start();
+	cam2.capture(function loop2() {
+		cam2.capture(loop2);
 	});
 	callback(null);
 }, function(callback) {// connect to openpilot
@@ -87,7 +92,7 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam.toJpegAsEquirectangular('/tmp/_vr.jpeg');
+				cam1.toJpegAsEquirectangular(cam2, '/tmp/_vr.jpeg');
 				child_process.exec('mv /tmp/_vr.jpeg /tmp/vr.jpeg');
 			});
 		} else if (url.split(".")[1] == 'mp4') {
@@ -154,7 +159,7 @@ async.waterfall([ function(callback) {// exit sequence
 	var controlValueUpdating = false;
 	op.onAttitudeStateChanged(function(attitude) {
 		veicle_attitude = attitude;
-		cam.setRotation(-veicle_attitude.Roll, -veicle_attitude.Pitch, -veicle_attitude.Yaw);
+		cam1.setRotation(-veicle_attitude.Roll, -veicle_attitude.Pitch, -veicle_attitude.Yaw);
 		if (controlValue.Throttle > 0 || lastThrottle != 0) {
 			if (controlValueUpdating) {
 				return;
@@ -294,14 +299,14 @@ async.waterfall([ function(callback) {// exit sequence
 		});
 
 		socket.on("startRecord", function() {
-			cam.startRecord('/tmp/movie.h264', 16000);
+			cam1.startRecord('/tmp/movie.h264', 16000);
 			console.log("camera recording start");
 			recording = true;
 		});
 
 		socket.on("stopRecord", function(callback) {
 			recording = false;
-			cam.stopRecord();
+			cam1.stopRecord();
 			console.log("camera recording stop");
 			var ffmpeg_cmd = 'ffmpeg -y -r 5 -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4';
 			var spatialmedia_cmd = 'python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4';
