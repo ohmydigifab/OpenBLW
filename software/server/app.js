@@ -317,8 +317,9 @@ async.waterfall([ function(callback) {// exit sequence
 			cam1.stopRecord();
 			console.log("camera recording stop");
 			var ffmpeg_cmd = 'ffmpeg -y -r 5 -i /tmp/movie.h264 -c:v copy /tmp/movie.mp4';
+			var delh264_cmd = 'rm /tmp/movie.h264';
 			var spatialmedia_cmd = 'python ~/git/spatial-media/spatialmedia -i /tmp/movie.mp4 /tmp/vr.mp4';
-			var cmd = ffmpeg_cmd + ' && ' + spatialmedia_cmd;
+			var cmd = ffmpeg_cmd + ' && ' + delh264_cmd + ' && ' + spatialmedia_cmd;
 			console.log(cmd);
 			child_process.exec(cmd, callback);
 		});
