@@ -36,23 +36,8 @@ async.waterfall([ function(callback) {// exit sequence
 		child_process.exec('sh /home/pi/start-uv4l.sh', function() {
 			cam1 = new v4l2camera.Camera("/dev/video0");
 			cam1.start();
-			cam1.capture(function loop() {
-				cam1.capture(loop);
-				if (recording) {
-					framecount++;
-					if (framecount == 100) {
-						recording = false;
-						framecount = 0;
-						cam1.stopRecord();
-						console.log("camera recording stop");
-					}
-				}
-			});
 			cam2 = new v4l2camera.Camera("/dev/video1");
 			cam2.start();
-			cam2.capture(function loop2() {
-				cam2.capture(loop2);
-			});
 			callback(null);
 		});
 	});
@@ -83,6 +68,11 @@ async.waterfall([ function(callback) {// exit sequence
 		console.log(url);
 		console.log(query);
 		if (url.split(".")[1] == 'jpeg') {
+			cam2.capture();
+			cam1.capture(function() {
+				cam1.toJpegAsEquirectangular(cam2, '/tmp/_vr.jpeg');
+				child_process.exec('mv /tmp/_vr.jpeg /tmp/vr.jpeg');
+			});
 			fs.readFile('/tmp/vr.jpeg', function(err, data) {
 				if (err) {
 					res.writeHead(404);
@@ -99,8 +89,6 @@ async.waterfall([ function(callback) {// exit sequence
 					res.end(data);
 					console.log("200");
 				}
-				cam1.toJpegAsEquirectangular(cam2, '/tmp/_vr.jpeg');
-				child_process.exec('mv /tmp/_vr.jpeg /tmp/vr.jpeg');
 			});
 		} else if (url.split(".")[1] == 'mp4') {
 			fs.readFile('/tmp/movie.mp4', function(err, data) {
