@@ -6,8 +6,8 @@ var async = require('async');
 var fs = require("fs");
 var express = require('express');
 var v4l2camera = require("node-vrcam");
-var cam1 = new v4l2camera.Camera("/dev/video0");
-var cam2 = new v4l2camera.Camera("/dev/video1");
+var cam1;
+var cam2;
 var piblaster = require('pi-blaster.js');
 
 var recording = false;
@@ -35,6 +35,7 @@ async.waterfall([ function(callback) {// exit sequence
 	child_process.exec('sudo killall uv4l', function() {
 		child_process.exec('sh /home/pi/start-uv4l.sh', function() {
 			setTimeout(function() {
+				cam1 = new v4l2camera.Camera("/dev/video0");
 				cam1.start();
 				cam1.capture(function loop() {
 					cam1.capture(loop);
@@ -48,6 +49,7 @@ async.waterfall([ function(callback) {// exit sequence
 						}
 					}
 				});
+				cam2 = new v4l2camera.Camera("/dev/video1");
 				cam2.start();
 				cam2.capture(function loop2() {
 					cam2.capture(loop2);
