@@ -6,8 +6,8 @@ var async = require('async');
 var fs = require("fs");
 var express = require('express');
 var v4l2camera = require("node-vrcam");
-var cam1 = new v4l2camera.Camera("/dev/video1");
-var cam2 = new v4l2camera.Camera("/dev/video0");
+var cam1 = new v4l2camera.Camera("/dev/video0");
+var cam2 = new v4l2camera.Camera("/dev/video1");
 var piblaster = require('pi-blaster.js');
 
 var recording = false;
