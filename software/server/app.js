@@ -41,7 +41,7 @@ async.waterfall([ function(callback) {// exit sequence
 				if (recording) {
 					cam1.addFrame(cam2);
 					framecount++;
-					if (framecount == 100) {
+					if (framecount == 300) {
 						recording = false;
 						framecount = 0;
 						cam1.stopRecord();
