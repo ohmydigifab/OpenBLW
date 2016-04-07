@@ -32,24 +32,28 @@ async.waterfall([ function(callback) {// exit sequence
 	callback(null);
 }, function(callback) {// camera startup
 	console.log("camera starting up");
-	cam1.start();
-	cam1.capture(function loop() {
-		cam1.capture(loop);
-		if (recording) {
-			framecount++;
-			if (framecount == 100) {
-				recording = false;
-				framecount = 0;
-				cam1.stopRecord();
-				console.log("camera recording stop");
-			}
-		}
+	child_process.exec('sudo killall uv4l', function(){
+		child_process.exec('sh /home/pi/start-uv4l.sh', function(){
+			cam1.start();
+			cam1.capture(function loop() {
+				cam1.capture(loop);
+				if (recording) {
+					framecount++;
+					if (framecount == 100) {
+						recording = false;
+						framecount = 0;
+						cam1.stopRecord();
+						console.log("camera recording stop");
+					}
+				}
+			});
+			cam2.start();
+			cam2.capture(function loop2() {
+				cam2.capture(loop2);
+			});
+			callback(null);
+		});
 	});
-	cam2.start();
-	cam2.capture(function loop2() {
-		cam2.capture(loop2);
-	});
-	callback(null);
 }, function(callback) {// connect to openpilot
 	op.init(function() {
 		callback(null);
@@ -59,6 +63,7 @@ async.waterfall([ function(callback) {// exit sequence
 		callback(null);
 	});
 }, function(callback) {// start up websocket server
+	console.log("websocket server starting up");
 	child_process.exec('sh ./sh/init_servo.sh');
 
 	var veicle_attitude = {
